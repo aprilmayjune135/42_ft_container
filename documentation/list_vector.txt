@@ -1,0 +1,64 @@
+******************************
+**		Member functions	**
+******************************
+>> Basic:
+        (constructor)
+    [v] (1) empty container constructor (default constructor)
+    [x] (2) fill constructor
+    [x] (3) range constructor
+    [x] (4) copy constructor
+    [v]	(destructor)
+    [x]	operator=
+
+>> Iterators:
+    [x]	begin
+    [x]	end
+    [x]	rbegin
+    [x]	rend
+
+>> Capacity:
+    [v]	size
+    [v]	max_size
+    [x]	resize
+    [v]	capacity
+    [v]	empty
+    [x]	reserve
+
+>> Element access:
+    [x]	operator[]
+    [x]	at
+    [x]	front
+    [x]	back
+
+>> Modifiers:
+    [x]	assign
+    [x]	push_back
+    [x]	pop_back
+    [x]	insert
+    [x]	erase
+    [x]	swap
+    [v]	clear
+
+>> Allocator:
+    [x]	get_allocator
+
+******************************************
+**		Non-member function overloads	**
+******************************************
+    [x]	relational operators
+    [x]	swap
+
+
+**************************************
+**		Template specializations	**
+**************************************
+>>	vector<bool>
+
+
+
+------------------------------------------------------------------------
+Date:
+
+2022-01-25 (Tue):
+    - constructor(1) empty container constructor (default constructor)
+    - destructor
