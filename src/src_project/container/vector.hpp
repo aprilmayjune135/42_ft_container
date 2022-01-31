@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
-#include <iterator>
 #include <cassert>
+#include "../iterator/RandomAccessIterator.hpp"
 
 namespace ft {
 
@@ -16,18 +16,19 @@ class vector {
 		typedef value_type*				pointer;
 		typedef const value_type*		const_pointer;
 
-		typedef std::random_access_iterator_tag		iterator;
-		// TODO: add const_iterator?
-		typedef std::iterator_traits<iterator>::difference_type	difference_type; // TODO: to check if this is correct
-
+		typedef RandomAccessIterator<T>		iterator;
+		typedef const iterator				const_iterator;
+		typedef	iterator 					reverse_iterator; //TODO: to change
+		typedef const reverse_iterator		const_reverse_iterator;
+		typedef typename iterator_traits<iterator>::difference_type			difference_type;
 		typedef std::size_t							size_type;
 	
 	/**** key private member ****/
 	private:
 		allocator_type	allocator;
 		pointer			data;
-		size_type		size;
-		size_type		capacity;
+		size_type		data_size;
+		size_type		data_capacity;
 	
 	public:
 	/**** constructor & destructor & operator ****/
@@ -40,6 +41,15 @@ class vector {
 		vector&	operator=(const vector& rhs);
 
 	/**** iterator ****/
+		iterator				begin();
+		const_iterator			begin() const;
+		iterator				end();
+		const_iterator			end() const;
+		reverse_iterator		rbegin();
+		const_reverse_iterator	rbegin() const;
+		iterator				rend();
+		const_reverse_iterator	rend() const;
+
 	
 	/**** capacity ****/
 		size_type	size() const;
@@ -77,16 +87,16 @@ template< class T, class Alloc >
 vector<T, Alloc>::vector(const allocator_type& alloc):
 allocator(alloc),
 data(NULL),
-size(0),
-capacity(0) {}
+data_size(0),
+data_capacity(0) {}
 
 /* fill constructor */
 template< class T, class Alloc >
 vector<T, Alloc>::vector(size_type n, const value_type& val, const allocator_type& alloc):
 allocator(alloc),
 data(NULL),
-size(n),
-capacity(n) {
+data_size(n),
+data_capacity(n) {
 	//TODO: call assign()
 }
 
@@ -119,42 +129,70 @@ vector<T, Alloc>&	vector<T, Alloc>::operator=(const vector& rhs){
 
 
 /*********************************************/ 
+/**					iterator				**/ 
+/*********************************************/
+template< class T, class Alloc >
+typename vector<T, Alloc>::iterator				vector<T, Alloc>::begin() { return iterator(data); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::begin() const { return const_iterator(data); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::iterator				vector<T, Alloc>::end() { return iterator(data + data_size); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::const_iterator			vector<T, Alloc>::end() const { return const_iterator(data + data_size); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::reverse_iterator		vector<T, Alloc>::rbegin() { return reverse_iterator(data + data_size); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rbegin() const { return const_reverse_iterator(data + data_size); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::iterator				vector<T, Alloc>::rend() { return reverse_iterator(data); }
+
+template< class T, class Alloc >
+typename vector<T, Alloc>::const_reverse_iterator	vector<T, Alloc>::rend() const { return const_reverse_iterator(data); }
+
+
+/*********************************************/ 
 /**					capacity				**/ 
 /*********************************************/
 template< class T, class Alloc>
-vector<T, Alloc>::size_type	vector<T, Alloc>::size() const{
-	return size;
+typename vector<T, Alloc>::size_type	vector<T, Alloc>::size() const{
+	return data_size;
 }
 
 template< class T, class Alloc>
-vector<T, Alloc>::size_type	vector<T, Alloc>::max_size() const{
+typename vector<T, Alloc>::size_type	vector<T, Alloc>::max_size() const{
 	return allocator.max_size();
 }
 
 template< class T, class Alloc>
-void	vector<T, Alloc>::resize(size_type n, value_type val = value_type()){
+void	vector<T, Alloc>::resize(size_type n, value_type val){
 	// TODO
 }
 
 template< class T, class Alloc>
-vector<T, Alloc>::size_type	vector<T, Alloc>::capacity() const{
-	return capacity;
+typename vector<T, Alloc>::size_type	vector<T, Alloc>::capacity() const{
+	return data_capacity;
 }
 
 template< class T, class Alloc>
 bool	vector<T, Alloc>::empty() const{
-	return size == 0;
+	return data_size == 0;
 }
 
 template< class T, class Alloc>
 void	vector<T, Alloc>::reserve(size_type n){
-	if (n > capacity)
+	if (n > data_capacity)
 	{
-		new_data = allocator.allocate(n);
+		pointer new_data = allocator.allocate(n);
 		// TODO: assign
 		deallocateData();
 		data = new_data;
-		capacity = n;
+		data_capacity = n;
 	}
 }
 
@@ -164,11 +202,11 @@ void	vector<T, Alloc>::reserve(size_type n){
 /*********************************************/
 template< class T, class Alloc >
 void	vector<T, Alloc>::clear(){
-	size_type	n = size;
+	size_type	n = data_size;
 	for (size_type i = 0; i < n; ++i) {
 		destroyElement(i);
 	}
-	assert(size == 0);
+	assert(data_size == 0);
 }
 
 
@@ -177,15 +215,15 @@ void	vector<T, Alloc>::clear(){
 /*********************************************/
 template< class T, class Alloc >
 void	vector<T, Alloc>::destroyElement(size_type index) {
-	assert(index < size);
+	assert(index < data_size);
 	allocator.destroy(data + index);
-	size--;
+	data_size--;
 }
 
 template< class T, class Alloc >
 void	vector<T, Alloc>::deallocateData() {
 	clear();
-	allocator.deallocate(data, capacity);
+	allocator.deallocate(data, data_capacity);
 	data = NULL;
 }
 

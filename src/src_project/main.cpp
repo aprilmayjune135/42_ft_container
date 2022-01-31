@@ -1,9 +1,10 @@
 #include <iostream>
+#include "container/vector.hpp"
 
 #ifndef CATCH
 int main()
 {
-	justTrying(5);
+	ft::vector<int>	lemon;
 	return 0;
 }
 #endif

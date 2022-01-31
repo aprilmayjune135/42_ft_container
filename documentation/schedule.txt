@@ -8,17 +8,18 @@
 
 2022-01-27 (Thu): iterator
 	- iterator_traits (still bit confused...)
-	- inheritance: Iterator.hpp -> BidirectionalIterator.hpp -> RandomAccessIterator.hpp 		(TODO: arithmetic operator, inequality, +=/-=, [])
+	- inheritance: Iterator -> BidirectionalIterator -> RandomAccessIterator 		(TODO: arithmetic operator, inequality, +=/-=, [])
+
+2022-01-31 (Mon): iterator + vector
+	- iterator: RandomAccessIterator (finish)
+	- vector: iterator member function
+	- fix iterator+vector compilation error.
 
 **************************
 **		Next To Do		**
 **************************
->> RandomAccessIterator: 
-	- arithmetic operator, 
-	- inequality, 
-	- +=/-=, 
-	- []
-
+- implement reverse_iterator
+- vector::assign()
 
 ******************************
 **		General To Do		**

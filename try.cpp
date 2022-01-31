@@ -32,12 +32,13 @@ void	printCapacity(std::vector<int> const & v) {
 	std::cout << "size " << v.size() << " | capacity " << v.capacity() << " | max_size " << v.max_size() << '\n';
 }
 
+template<class T>
 class Apple {
 	protected:
-		int	a;
+		T	a;
 	public:
 		Apple();
-		Apple(int n): a(n) {};
+		Apple(T n): a(n) {};
 		Apple(const Apple&	src) {
 			a = src.a;
 			std::cout << "copy-constructor called!\n";
@@ -53,26 +54,39 @@ class Apple {
 		void	printApple() const {std::cout << a << '\n';};
 };
 
-class AppleTje : public Apple {
+template<class T>
+class AppleTje : public Apple<T> {
 	public:
 		AppleTje();
-		AppleTje(int n): Apple(n) { a = n; };
-		bool	operator==(const AppleTje& rhs) const {return a == rhs.a;};
-		AppleTje&	operator++() { a += 100; return *this; };
+		AppleTje(T n): Apple<T>(n) {};
+		AppleTje&	operator=(const AppleTje& src) {
+			this->a = src.a;
+			return *this;
+		};
+		bool	operator==(const AppleTje& rhs) const {return this->a == rhs.a;};
+		AppleTje&	operator++() { this->a += 100; return *this; };
 
 };
 
-void	increaseApple(Apple* apple)
-{
+template<class T>
+void	increaseApple(Apple<T>* apple) {
 	++(*apple);
 	apple->printApple();
 }
 
+AppleTje<int>	createApple() {
+	return AppleTje<int>(18);
+}
+
 int main() {
-	std::vector<int> v {5, 4, 3, 2, 1};
-	std::vector<int>::const_iterator	i_1 = v.begin();
-	std::vector<int>::const_iterator	i_2 = v.begin() + 1;
-	std::cout << (i_1 < i_2) << '\n';
+
+	AppleTje<int>	piggy = createApple();
+	piggy.printApple();
+	// std::vector<int> v {50, 40, 30, 20, 10};
+	// std::vector<int>::const_iterator	i_1 = v.begin();
+	// std::vector<int>::const_iterator	i_2 = v.begin() + 2;
+	// std::cout << (i_2 - i_1) << '\n';
+
 	//std::vector<int> lemon(5, 14);
 	//printVector(lemon);
 	//printCapacity(lemon);

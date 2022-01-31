@@ -13,7 +13,7 @@ class Iterator {
 		typedef const value_type*			const_pointer;
 		typedef value_type&					reference;
 		typedef const value_type&			const_reference;
-		typedef random_access_iterator_tag  iterator_category;
+		typedef Category  					iterator_category;
 
 	/****	pointer to store the content ****/
 	protected:
@@ -21,6 +21,8 @@ class Iterator {
 	
 	public:
 	/**** constructor & destructor ****/
+		Iterator(): p(NULL) {};
+		Iterator(pointer p_src): p(p_src) {};
 		Iterator(const Iterator& src): p(src.p) {};
 		virtual ~Iterator() {};
 		Iterator&	operator=(const Iterator& rhs) {

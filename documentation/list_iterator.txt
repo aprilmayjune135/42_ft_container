@@ -42,19 +42,19 @@ https://www.cplusplus.com/reference/iterator/
 **************************************************************
 **		RandomAccessIterator : public BidirectionalIterator	**
 **************************************************************
-[x]  Supports the arithmetic operators + and - between an iterator and an integer value,
+[v]  Supports the arithmetic operators + and - between an iterator and an integer value,
 	or subtracting an iterator from another.
 		a + n
 		n + a
 		a - n
 		a - b
-[x]  Can be compared with inequality relational operators (<, >, <= and >=).
+[v]  Can be compared with inequality relational operators (<, >, <= and >=).
 		a < b
 		a > b
 		a <= b
 		a >= b
-[x]  Supports compound assignment operations += and -=
+[v]  Supports compound assignment operations += and -=
 		a += n
 		a -= n
-[x]  Supports the offset dereference operator ([])
+[v]  Supports the offset dereference operator ([])
 		a[n]
