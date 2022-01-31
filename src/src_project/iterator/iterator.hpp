@@ -1,14 +1,44 @@
 #pragma once
+#include <cstddef>
 
 namespace ft {
 
-template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T&>
-struct iterator {
-  typedef T         value_type;
-  typedef Distance  difference_type;
-  typedef Pointer   pointer;
-  typedef Reference reference;
-  typedef Category  iterator_category;
+template <class T, class Category>
+class Iterator {
+	/**** typedef ****/
+	public:
+		typedef T         					value_type;
+		typedef std::ptrdiff_t				difference_type;
+		typedef value_type*					pointer;
+		typedef const value_type*			const_pointer;
+		typedef value_type&					reference;
+		typedef const value_type&			const_reference;
+		typedef random_access_iterator_tag  iterator_category;
+
+	/****	pointer to store the content ****/
+	protected:
+		pointer	p;
+	
+	public:
+	/**** constructor & destructor ****/
+		Iterator(const Iterator& src): p(src.p) {};
+		virtual ~Iterator() {};
+		Iterator&	operator=(const Iterator& rhs) {
+			p = rhs.p;
+			return *this;
+		};
+
+	/**** operator - prefix/postfix ++ ****/
+		Iterator&			operator++() { 
+			++p;
+			return *this;
+		};
+		const Iterator	operator++(int) {
+			const Iterator	old(*this);
+			++p;
+			return old;
+		};
+
 };
 
 } /* end of namespace ft */

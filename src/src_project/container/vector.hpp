@@ -22,6 +22,7 @@ class vector {
 
 		typedef std::size_t							size_type;
 	
+	/**** key private member ****/
 	private:
 		allocator_type	allocator;
 		pointer			data;
@@ -29,18 +30,18 @@ class vector {
 		size_type		capacity;
 	
 	public:
-	/**** Constructor & Destructor & Operator ****/
+	/**** constructor & destructor & operator ****/
 		explicit vector(const allocator_type& alloc = allocator_type());
 		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
 		template<class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type());
-		vector(const vector& x);
+		vector(const vector& src);
 		~vector();
-		vector&	operator=(const vector& x);
+		vector&	operator=(const vector& rhs);
 
-	/**** Iterator ****/
+	/**** iterator ****/
 	
-	/**** Capacity ****/
+	/**** capacity ****/
 		size_type	size() const;
 		size_type	max_size() const;
 		void		resize(size_type n, value_type val = value_type());
@@ -48,16 +49,16 @@ class vector {
 		bool		empty() const;
 		void		reserve(size_type n);
 
-	/**** Element Access ****/
+	/**** element access ****/
 
-	/**** Modifiers ****/
+	/**** modifiers ****/
 		void	clear();
 
-	/**** Allocator ****/
+	/**** allocator ****/
 
-	/**** Non-member Function Overloads ****/
+	/**** non-member function overloads ****/
 
-	/**** Template Specialization ****/
+	/**** template specialization ****/
 
 	private:
 		void	destroyElement(size_type index);
@@ -69,9 +70,9 @@ class vector {
 };
 
 /*****************************************************/ 
-/**			Constructor	& Destructor & Operator		**/ 
+/**			constructor	& destructor & operator		**/ 
 /*****************************************************/
-/* Empty/default constructor */
+/* empty/default constructor */
 template< class T, class Alloc >
 vector<T, Alloc>::vector(const allocator_type& alloc):
 allocator(alloc),
@@ -79,7 +80,7 @@ data(NULL),
 size(0),
 capacity(0) {}
 
-/* Fill constructor */
+/* fill constructor */
 template< class T, class Alloc >
 vector<T, Alloc>::vector(size_type n, const value_type& val, const allocator_type& alloc):
 allocator(alloc),
@@ -89,7 +90,7 @@ capacity(n) {
 	//TODO: call assign()
 }
 
-/* Range constructor */
+/* range constructor */
 template< class T, class Alloc >
 template< class InputIterator >
 vector<T, Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc) :
@@ -97,27 +98,28 @@ allocator(alloc) {
 	// TODO:
 }
 
-/* Copy constructor */
+/* copy constructor */
 template< class T, class Alloc >
-vector<T, Alloc>::vector(const vector& x) {
+vector<T, Alloc>::vector(const vector& src) {
 	// TODO:
 }
 
-/* Destructor */
+/* destructor */
 template< class T, class Alloc >
 vector<T, Alloc>::~vector() {
 	deallocateData();
 }
 
-/* Operator */
+/* operator */
 template< class T, class Alloc >
-vector<T, Alloc>&	vector<T, Alloc>::operator=(const vector& x){
-
+vector<T, Alloc>&	vector<T, Alloc>::operator=(const vector& rhs){
+	// TODO:
+	return *this;
 }
 
 
 /*********************************************/ 
-/**					Capacity				**/ 
+/**					capacity				**/ 
 /*********************************************/
 template< class T, class Alloc>
 vector<T, Alloc>::size_type	vector<T, Alloc>::size() const{
@@ -158,7 +160,7 @@ void	vector<T, Alloc>::reserve(size_type n){
 
 
 /*********************************************/ 
-/**					Modifiers				**/ 
+/**					modifiers				**/ 
 /*********************************************/
 template< class T, class Alloc >
 void	vector<T, Alloc>::clear(){
@@ -171,7 +173,7 @@ void	vector<T, Alloc>::clear(){
 
 
 /*********************************************/ 
-/**			Private Member Function			**/ 
+/**			private member function			**/ 
 /*********************************************/
 template< class T, class Alloc >
 void	vector<T, Alloc>::destroyElement(size_type index) {

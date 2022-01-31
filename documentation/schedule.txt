@@ -1,0 +1,25 @@
+**************************
+**			Done		**
+**************************
+2022-01-25 (Tue): vector
+	- constructor (default) & destructor
+	- capacity (size, max_size, capacity, empty)
+	- iterator (confused....)
+
+2022-01-27 (Thu): iterator
+	- iterator_traits (still bit confused...)
+	- inheritance: Iterator.hpp -> BidirectionalIterator.hpp -> RandomAccessIterator.hpp 		(TODO: arithmetic operator, inequality, +=/-=, [])
+
+**************************
+**		Next To Do		**
+**************************
+>> RandomAccessIterator: 
+	- arithmetic operator, 
+	- inequality, 
+	- +=/-=, 
+	- []
+
+
+******************************
+**		General To Do		**
+******************************
