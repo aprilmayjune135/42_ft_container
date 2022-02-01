@@ -29,80 +29,44 @@ class RandomAccessIterator : public BidirectionalIterator<Category, T> {
 			this->p = rhs.p;
 			return *this;
 		};
-		bool	operator==(const RandomAccessIterator& rhs) const { return this->p == rhs.p; };
-		bool	operator!=(const RandomAccessIterator& rhs) const { return this->p != rhs.p; };
-
-	/**** operator - dereference ****/
-		reference		operator*() { return *this->p; };
-		const_reference	operator*() const { return *this->p; };
-		reference		operator->() { return *this->p; };
-		const_reference	operator->() const { return *this->p; };
-
-	/**** operator - prefix/postfix ++/-- ****/
-		RandomAccessIterator&			operator++() { 
-			++this->p;
-			return *this;
-		};
-		const RandomAccessIterator	operator++(int) {
-			const RandomAccessIterator	old(*this);
-			++this->p;
-			return old;
-		};
-		RandomAccessIterator&			operator--() { 
-			--this->p;
-			return *this;
-		};
-		const RandomAccessIterator	operator--(int) {
-			const RandomAccessIterator	old(*this);
-			--this->p;
-			return old;
-		};
 
 	/**** operator - arithmetic ****/
-	friend const RandomAccessIterator	operator+(const RandomAccessIterator& a, size_type n) {
-		const RandomAccessIterator	ret(a);
-		ret.p = a.p + n;
+	const RandomAccessIterator	operator+(difference_type n) const {
+		const RandomAccessIterator	ret(*this);
+		ret.p = this->p + n;
 		return ret;
 	};
-	friend const RandomAccessIterator	operator+(size_type n, const RandomAccessIterator& a) {
+	friend const RandomAccessIterator	operator+(difference_type n, const RandomAccessIterator& a) {
 		return a + n;
 	};
-	friend const RandomAccessIterator	operator-(const RandomAccessIterator& a, size_type n) {
-		const RandomAccessIterator	ret(a);
-		ret.p = a.p - n;
+	const RandomAccessIterator	operator-(difference_type n) const {
+		const RandomAccessIterator	ret(*this);
+		ret.p = this->p - n;
 		return ret;
 	};
-	friend difference_type	operator-(const RandomAccessIterator& a, const RandomAccessIterator& b) {
-		return a.p - b.p;
+	friend difference_type	operator-(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) {
+		return lhs.p - rhs.p;
 	};
 
 	/**** operator - inequality rational ****/
-	friend bool	operator<(const RandomAccessIterator& a, const RandomAccessIterator& b) {
-		return (a - b) < 0;
-	};
-	friend bool	operator<=(const RandomAccessIterator& a, const RandomAccessIterator& b) {
-		return (a - b) <= 0;
-	};
-	friend bool	operator>(const RandomAccessIterator& a, const RandomAccessIterator& b) {
-		return (a - b) > 0;
-	};
-	friend bool	operator>=(const RandomAccessIterator& a, const RandomAccessIterator& b) {
-		return (a - b) >= 0;
-	};
+	friend bool	operator<(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs - rhs) < 0; };
+	friend bool	operator<=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs- rhs) <= 0; };
+	friend bool	operator>(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs - rhs) > 0; };
+	friend bool	operator>=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs- rhs) >= 0; };
 
 	/**** operator - compound assignment ****/
-	RandomAccessIterator&	operator+=(size_type n) {
+	RandomAccessIterator&	operator+=(difference_type n) {
 		this->p += n;
 		return *this;
 	};
-	RandomAccessIterator&	operator-=(size_type n) {
+	RandomAccessIterator&	operator-=(difference_type n) {
 		this->p -= n;
 		return *this;
 	};
 
 	/**** operator - offset dereference ****/
-	value_type&	operator[](size_type n) {
-		return *this->p;
+	value_type&	operator[](difference_type n) const {
+		return *(this->p + n);
 	}
 };
 

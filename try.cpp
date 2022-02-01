@@ -69,6 +69,20 @@ class AppleTje : public Apple<T> {
 };
 
 template<class T>
+class AppleChik : public Apple<T> {
+	public:
+		AppleChik();
+		AppleChik(T n): Apple<T>(n) {};
+		AppleChik&	operator=(const AppleChik& src) {
+			this->a = src.a;
+			return *this;
+		};
+		bool	operator==(const AppleChik& rhs) const {return this->a == rhs.a;};
+		AppleChik&	operator++() { this->a += 100; return *this; };
+
+};
+
+template<class T>
 void	increaseApple(Apple<T>* apple) {
 	++(*apple);
 	apple->printApple();
@@ -79,13 +93,35 @@ AppleTje<int>	createApple() {
 }
 
 int main() {
+	AppleTje<int>	a(5);
+	AppleChik<int>	b(5);
+	std::cout << (a == b) << '\n';
 
-	AppleTje<int>	piggy = createApple();
-	piggy.printApple();
-	// std::vector<int> v {50, 40, 30, 20, 10};
-	// std::vector<int>::const_iterator	i_1 = v.begin();
-	// std::vector<int>::const_iterator	i_2 = v.begin() + 2;
-	// std::cout << (i_2 - i_1) << '\n';
+	// std::vector<int>	vector;
+	// typedef typename std::vector<int>::iterator it;
+	// typedef typename std::vector<int>::reverse_iterator rev_it;
+	// for (int i = 0; i < 10; i++) {vector.push_back(i);}
+	// for (it i = vector.begin(); i != vector.end(); ++i) {
+	// 	std::cout << *i << " ";
+	// }
+	// std::cout << '\n';
+
+	// std::vector<double>	vector_double;
+	// typedef typename std::vector<double>::iterator it_double;
+	// typedef typename std::vector<double>::reverse_iterator rev_it_double;
+	// for (int i = 0; i < 10; i++) {vector_double.push_back(i + 0.5);}
+	// for (it_double i = vector_double.begin(); i != vector_double.end(); ++i) {
+	// 	std::cout << *i << " ";
+	// }
+	// std::cout << '\n';
+
+	// rev_it	r_begin(vector.begin());
+	// rev_it	r_end(vector.end());
+	// rev_it	r_end_double(r_end + 2);
+	// rev_it	r_begin_double(r_begin - 2);
+	// for (rev_it r_i = r_end_double; r_i != r_begin_double; ++r_i) {
+	// 	std::cout << *r_i << "-" << *r_i.base() << " ";
+	// }
 
 	//std::vector<int> lemon(5, 14);
 	//printVector(lemon);

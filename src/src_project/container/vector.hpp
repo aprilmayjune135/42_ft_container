@@ -2,6 +2,7 @@
 #include <memory>
 #include <cassert>
 #include "../iterator/RandomAccessIterator.hpp"
+#include "../iterator/ReverseIterator.hpp"
 
 namespace ft {
 
@@ -18,7 +19,7 @@ class vector {
 
 		typedef RandomAccessIterator<T>		iterator;
 		typedef const iterator				const_iterator;
-		typedef	iterator 					reverse_iterator; //TODO: to change
+		typedef	ReverseIterator<iterator> 	reverse_iterator;
 		typedef const reverse_iterator		const_reverse_iterator;
 		typedef typename iterator_traits<iterator>::difference_type			difference_type;
 		typedef std::size_t							size_type;

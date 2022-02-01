@@ -29,32 +29,32 @@ class BidirectionalIterator : public Iterator<Category, T> {
 			this->p = rhs.p;
 			return *this;
 		};
-		bool	operator==(const BidirectionalIterator& rhs) const { return this->p == rhs.p; };
-		bool	operator!=(const BidirectionalIterator& rhs) const { return this->p != rhs.p; };
+		friend bool	operator==(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p == rhs.p; };
+		friend bool	operator!=(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p != rhs.p; };
 
 	/**** operator - dereference ****/
-		reference		operator*() { return *this->p; };
-		const_reference	operator*() const { return *this->p; };
-		reference		operator->() { return *this->p; };
-		const_reference	operator->() const { return *this->p; };
+		reference		operator*() { return *(this->p); };
+		const_reference	operator*() const { return *(this->p); };
+		pointer			operator->() { return this->p; };
+		const_pointer	operator->() const { return this->p; };
 
 	/**** operator - prefix/postfix ++/-- ****/
-		BidirectionalIterator&			operator++() { 
-			++this->p;
+		BidirectionalIterator&	operator++() { 
+			++(this->p);
 			return *this;
 		};
-		const BidirectionalIterator	operator++(int) {
+		const BidirectionalIterator	operator++(int) {  // return const is to prevent behavior like ++++;
 			const BidirectionalIterator	old(*this);
-			++this->p;
+			++(this->p);
 			return old;
 		};
-		BidirectionalIterator&			operator--() { 
-			--this->p;
+		BidirectionalIterator&	operator--() { 
+			--(this->p);
 			return *this;
 		};
 		const BidirectionalIterator	operator--(int) {
 			const BidirectionalIterator	old(*this);
-			--this->p;
+			--(this->p);
 			return old;
 		};
 

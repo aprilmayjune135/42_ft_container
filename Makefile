@@ -15,7 +15,7 @@ endif
 
 ###### CFLAG ######
 CFLAG = -Wall -Wextra -Werror -pedantic 
-CFLAG += -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function
+CFLAG += -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-unused-local-typedef
 ifdef CATCH
 	CFLAG += -std=c++17 -DCATCH
 else
