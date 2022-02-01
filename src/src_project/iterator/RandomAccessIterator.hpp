@@ -32,17 +32,13 @@ class RandomAccessIterator : public BidirectionalIterator<Category, T> {
 
 	/**** operator - arithmetic ****/
 	const RandomAccessIterator	operator+(difference_type n) const {
-		const RandomAccessIterator	ret(*this);
-		ret.p = this->p + n;
-		return ret;
+		return RandomAccessIterator(this->p + n);
 	};
 	friend const RandomAccessIterator	operator+(difference_type n, const RandomAccessIterator& a) {
 		return a + n;
 	};
 	const RandomAccessIterator	operator-(difference_type n) const {
-		const RandomAccessIterator	ret(*this);
-		ret.p = this->p - n;
-		return ret;
+		return RandomAccessIterator(this->p - n);
 	};
 	friend difference_type	operator-(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) {
 		return lhs.p - rhs.p;

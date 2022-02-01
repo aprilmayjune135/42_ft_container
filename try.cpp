@@ -28,7 +28,7 @@ void	printVector(std::vector<int> const & v) {
 	std::cout << '\n';
 }
 
-void	printCapacity(std::vector<int> const & v) {
+void	printCapacityInfo(std::vector<int> const & v) {
 	std::cout << "size " << v.size() << " | capacity " << v.capacity() << " | max_size " << v.max_size() << '\n';
 }
 
@@ -93,10 +93,6 @@ AppleTje<int>	createApple() {
 }
 
 int main() {
-	AppleTje<int>	a(5);
-	AppleChik<int>	b(5);
-	std::cout << (a == b) << '\n';
-
 	// std::vector<int>	vector;
 	// typedef typename std::vector<int>::iterator it;
 	// typedef typename std::vector<int>::reverse_iterator rev_it;
@@ -123,14 +119,16 @@ int main() {
 	// 	std::cout << *r_i << "-" << *r_i.base() << " ";
 	// }
 
-	//std::vector<int> lemon(5, 14);
-	//printVector(lemon);
-	//printCapacity(lemon);
-	//lemon.reserve(2);
-	//printVector(lemon);
-	//printCapacity(lemon);
-	//lemon.reserve(10);
-	//printVector(lemon);
-	//printCapacity(lemon);
-	//return 0;
+	std::vector<int> lemon(10, 14);
+	printVector(lemon);
+	printCapacityInfo(lemon);
+	lemon.resize(2, 111);
+	printVector(lemon);
+	printCapacityInfo(lemon);
+	lemon.resize(20, 111);
+	printVector(lemon);
+	printCapacityInfo(lemon);
+
+
+	return 0;
 }

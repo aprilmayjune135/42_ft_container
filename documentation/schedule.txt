@@ -15,11 +15,16 @@
 	- vector: iterator member function
 	- fix iterator+vector compilation error.
 
+2022-02-01 (Tue): reverse_iterator + vector
+	- reverse_iterator (finish)
+	- vector: fill constructor, resize(), assign_fill(), operator[], at(), front(), back()
+
 **************************
 **		Next To Do		**
 **************************
-- implement reverse_iterator
-- vector::assign()
+- vector.push_back()
+- start planning on catch test
+
 
 ******************************
 **		General To Do		**

@@ -4,34 +4,36 @@
 >> Basic:
         (constructor)
     [v] (1) empty container constructor (default constructor)
-    [x] (2) fill constructor
+    [v] (2) fill constructor
     [x] (3) range constructor
     [x] (4) copy constructor
     [v]	(destructor)
     [x]	operator=
 
 >> Iterators:
-    [x]	begin
-    [x]	end
-    [x]	rbegin
-    [x]	rend
+    [v]	begin (regular + const)
+    [v]	end (regular + const)
+    [v]	rbegin (regular + const)
+    [v]	rend (regular + const)
 
 >> Capacity:
     [v]	size
     [v]	max_size
-    [x]	resize
+    [v]	resize
     [v]	capacity
     [v]	empty
     [x]	reserve
 
 >> Element access:
-    [x]	operator[]
-    [x]	at
-    [x]	front
-    [x]	back
+    [v]	operator[]
+    [v]	at
+    [v]	front
+    [v]	back
 
 >> Modifiers:
     [x]	assign
+        [x]	range
+        [v]	fill
     [x]	push_back
     [x]	pop_back
     [x]	insert

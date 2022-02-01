@@ -1,0 +1,41 @@
+http://www.cplusplus.com/reference/iterator/reverse_iterator/
+
+******************************************
+**			Reverse Iterator(base)		**
+******************************************
+>> constructor
+	[v] default
+	[v] initialization
+	[v] copye
+
+>> member function
+	[v] base() const
+
+>> deference operator
+	[v] operator*() const
+	[v] operator->()  const
+	[v] operator[](difference_type n) const
+
+>> prefix/post fix operator
+	[v] pre:  operator++()
+	[v] post: operator++(int)
+	[v] pre:  operator--()
+	[v] post: operator--(int)
+
+>> arithmetic operator
+	[v] operator+(difference_type n)
+	[v] [friend] overload operator+(difference_type n, const ReverseIterator& rhs)
+	[v] operator-(difference_type n)
+	[v] [friend] overload operator-(const ReverseIterator& lhs, const ReverseIterator& rhs)
+
+>> compound assignment operator
+	[v] operator+=(difference_type n)
+	[v] operator-=(difference_type n)
+
+>> rational operator
+	[v] [friend] operator==(const ReverseIterator& lhs, const ReverseIterator& rhs)
+	[v] [friend] operator!=(const ReverseIterator& lhs, const ReverseIterator& rhs)
+	[v] [friend] operator<(const ReverseIterator& lhs, const ReverseIterator& rhs)
+	[v] [friend] operator<=(const ReverseIterator& lhs, const ReverseIterator& rhs)
+	[v] [friend] operator>(const ReverseIterator& lhs, const ReverseIterator& rhs)
+	[v] [friend] operator>=(const ReverseIterator& lhs, const ReverseIterator& rhs)
