@@ -24,15 +24,14 @@
 	- study: enable_if, assign(range member)
 
 2022-02-03 (Thu): vector
-	- (finally)figure out: enable_if, is_iterator, assign(range member)
-	- range constructor
+	- (finally)figure out: enable_if, is_iterator, assign(range member incl. pointer)
+	- constructor: range, copy, operator=
+	- push_back, pop_back, insert_fill(without change capacity)
 
 **************************
 **		Next To Do		**
 **************************
-- check range constructor whehter to use pointer.
-
-- vector.push_back()
+- vector.insert_fill(new capacity)
 - start planning on catch test
 
 

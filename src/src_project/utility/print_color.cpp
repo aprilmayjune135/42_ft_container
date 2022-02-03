@@ -1,4 +1,5 @@
-#include "utility.hpp"
+#include "print_color.hpp"
+#include "color.hpp"
 #include <iostream>
 
 namespace utility {
@@ -31,5 +32,6 @@ void	printTitle(const std::string& title) {
 	std::cout << MAGENTA_BOLD << "**********    " << title << "    **********"
 		<< RESET_COLOR << '\n';
 }
+
 
 } /* end of namespace utility */

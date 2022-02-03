@@ -120,6 +120,14 @@ struct foo {
 };
 
 int main() {
+	std::vector<int>	one(10, 1);
+	printCapacityInfo(one);
+	std::vector<int>::iterator la = one.begin() + 5;
+	ptrdiff_t dif = la - one.begin();
+	std::cout << dif << '\n';
+
+
+
 
 	// std::vector<int>	vector;
 	// typedef typename std::vector<int>::iterator it;

@@ -5,10 +5,10 @@
         (constructor)
     [v] (1) empty container constructor (default constructor)
     [v] (2) fill constructor
-    [x] (3) range constructor
-    [x] (4) copy constructor
+    [v] (3) range constructor
+    [v] (4) copy constructor
     [v]	(destructor)
-    [x]	operator=
+    [v]	operator=
 
 >> Iterators:
     [v]	begin (regular + const)
@@ -31,12 +31,15 @@
     [v]	back
 
 >> Modifiers:
-    [x]	assign
-        [x]	range
+    [v]	assign
+        [v]	range
         [v]	fill
-    [x]	push_back
-    [x]	pop_back
+    [v]	push_back
+    [v]	pop_back
     [x]	insert
+        [x] single element
+        [x]	fill
+        [x]	range
     [x]	erase
     [x]	swap
     [v]	clear
