@@ -22,7 +22,7 @@
     [v]	resize
     [v]	capacity
     [v]	empty
-    [x]	reserve
+    [v]	reserve
 
 >> Element access:
     [v]	operator[]

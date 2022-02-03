@@ -52,7 +52,15 @@ class Apple {
 		virtual Apple&	operator++() { a += 2; return *this; };
 		bool	operator==(const Apple& rhs) const {return a == rhs.a;};
 		void	printApple() const {std::cout << a << '\n';};
+		template <class U>
+		void	doubleTemplate(U copy);
 };
+
+template<class T>
+template<class U>
+void	Apple<T>::doubleTemplate(U copy) {
+	std::cout << copy << '\n';
+}
 
 template<class T>
 class AppleTje : public Apple<T> {
@@ -92,7 +100,27 @@ AppleTje<int>	createApple() {
 	return AppleTje<int>(18);
 }
 
+struct Test {
+  typedef int foo;
+};
+
+#include <type_traits>
+
+template <typename... Ts>
+using void_t = void;
+
+template <typename T, typename = void>
+struct has_typedef_foobar : std::false_type {};
+
+template <typename T>
+struct has_typedef_foobar<T, void_t<typename T::foobar> > : std::true_type {};
+
+struct foo {
+  using foobar = float;
+};
+
 int main() {
+
 	// std::vector<int>	vector;
 	// typedef typename std::vector<int>::iterator it;
 	// typedef typename std::vector<int>::reverse_iterator rev_it;
@@ -118,17 +146,6 @@ int main() {
 	// for (rev_it r_i = r_end_double; r_i != r_begin_double; ++r_i) {
 	// 	std::cout << *r_i << "-" << *r_i.base() << " ";
 	// }
-
-	std::vector<int> lemon(10, 14);
-	printVector(lemon);
-	printCapacityInfo(lemon);
-	lemon.resize(2, 111);
-	printVector(lemon);
-	printCapacityInfo(lemon);
-	lemon.resize(20, 111);
-	printVector(lemon);
-	printCapacityInfo(lemon);
-
 
 	return 0;
 }

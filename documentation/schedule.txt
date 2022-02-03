@@ -19,9 +19,19 @@
 	- reverse_iterator (finish)
 	- vector: fill constructor, resize(), assign_fill(), operator[], at(), front(), back()
 
+2022-02-02 (Wed): vector
+	- resize(), reserve()
+	- study: enable_if, assign(range member)
+
+2022-02-03 (Thu): vector
+	- (finally)figure out: enable_if, is_iterator, assign(range member)
+	- range constructor
+
 **************************
 **		Next To Do		**
 **************************
+- check range constructor whehter to use pointer.
+
 - vector.push_back()
 - start planning on catch test
 
