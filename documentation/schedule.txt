@@ -26,12 +26,17 @@
 2022-02-03 (Thu): vector
 	- (finally)figure out: enable_if, is_iterator, assign(range member incl. pointer)
 	- constructor: range, copy, operator=
-	- push_back, pop_back, insert_fill(without change capacity)
+	- push_back, pop_back, insert_fill(with current capacity)
+
+2022-02-07 (Mon): vector
+	- insert_fill(with new capacity), insert_range, moveElements
+	- erase_single, erase_range
+	- swap (WIP)
 
 **************************
 **		Next To Do		**
 **************************
-- vector.insert_fill(new capacity)
+- vector.swap (build friend non-member overload)
 - start planning on catch test
 
 

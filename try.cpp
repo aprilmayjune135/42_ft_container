@@ -120,12 +120,15 @@ struct foo {
 };
 
 int main() {
-	std::vector<int>	one(10, 1);
+	std::vector<int>	one(5, 1);
+	std::vector<int>	two(11, 2);
+	std::cout << "before:\n";
 	printCapacityInfo(one);
-	std::vector<int>::iterator la = one.begin() + 5;
-	ptrdiff_t dif = la - one.begin();
-	std::cout << dif << '\n';
-
+	printCapacityInfo(two);
+	one.swap(two);
+	std::cout << "after:\n";
+	printCapacityInfo(one);
+	printCapacityInfo(two);
 
 
 

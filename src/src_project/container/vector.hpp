@@ -5,6 +5,8 @@
 #include "../utility/print_color.hpp"
 #include <memory>
 #include <cassert>
+#include <algorithm>
+#include <iostream>
 
 namespace ft {
 
@@ -80,13 +82,17 @@ class vector {
 		void	pop_back();
 		iterator	insert(iterator position, const_reference val);
 		void	insert(iterator position, size_type n, const_reference val);
-		// template <class InputIterator>
-		// void	insert(iterator position, InputIterator first, InputIterator last);
+		template <class InputIterator>
+		void	insert(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy = 0);
+		iterator	erase(iterator position);
+		iterator	erase(iterator first, iterator last);
+		void	swap(vector& x);
 		void	clear();
 
 	/**** allocator ****/
 
 	/**** non-member function overloads ****/
+		friend	void	swap(vector& x, vector& y);
 
 	/**** template specialization ****/
 
@@ -101,7 +107,13 @@ class vector {
 		void	reallocateCapacity(size_type n);
 		void	prepareAssign(size_type n);
 		void	moveElement(size_type position_from, size_type position_to);
+		void	moveElements(size_type position_from, size_type position_to, size_type n);
 		void	insertWithCurrentCapacity(iterator position, size_type n, const_reference val);
+		void	insertWithNewCapacity(iterator position, size_type n, const_reference val);
+		template <class InputIterator>
+		void	insertWithCurrentCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy = 0);
+		template <class InputIterator>
+		void	insertWithNewCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy = 0);
 
 };
 
@@ -319,8 +331,9 @@ void	vector<T, Alloc>::pop_back() {
 
 template <class T, class Alloc>
 typename vector<T, Alloc>::iterator	vector<T, Alloc>::insert(iterator position, const_reference val) {
+	difference_type pos = position - begin();
 	insert(position, 1, val);
-	return position;
+	return begin() + pos;
 }
 
 template <class T, class Alloc>
@@ -328,6 +341,44 @@ void	vector<T, Alloc>::insert(iterator position, size_type n, const_reference va
 	if (data_size + n <= data_capacity) {
 		insertWithCurrentCapacity(position, n, val);
 	}
+	else {
+		insertWithNewCapacity(position, n, val);
+	}
+}
+
+template <class T, class Alloc>
+template <class InputIterator>
+void	vector<T, Alloc>::insert(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
+	size_type n = static_cast<size_type>(last - first);
+	if (data_size + n <= data_capacity) {
+		insertWithCurrentCapacity<InputIterator>(position, first, last, dummy);
+	}
+	else {
+		insertWithNewCapacity<InputIterator>(position, first, last, dummy);
+	}
+
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator position) {
+	size_type	pos = static_cast<size_type>(position - begin());
+	moveElements(pos + 1, pos, data_size - pos - 1);
+	data_size--;
+	return begin() + pos;
+}
+
+template <class T, class Alloc>
+void	vector<T, Alloc>::swap(vector& x) {
+	swap(*this, x);
+}
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator first, iterator last) {
+	size_type	pos = static_cast<size_type>(first - begin());
+	size_type	n = static_cast<size_type>(last - first);
+	moveElements(pos + n, pos, data_size - pos - 1);
+	data_size -= n;
+	return begin() + pos;
 }
 
 template <class T, class Alloc>
@@ -336,6 +387,22 @@ void	vector<T, Alloc>::clear(){
 		destroyData(0, data_size);
 	}
 	assert(data_size == 0);
+}
+
+/*********************************************/ 
+/**		non-member function overload		**/ 
+/*********************************************/
+template <class T, class Alloc>
+void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y) {
+	typename vector<T, Alloc>::pointer		temp_data = x.data;
+	typename vector<T, Alloc>::size_type	temp_size = x.data_size;
+	typename vector<T, Alloc>::size_type	temp_capacity = x.data_capacity;
+	x.data = y.data;
+	x.data_size = y.data_size;
+	x.data_capacity = y.data_capacity;
+	y.data = temp_data;
+	y.data_size = temp_size;
+	y.data_capacity = temp_capacity;
 }
 
 /*********************************************/ 
@@ -416,23 +483,107 @@ void	vector<T, Alloc>::prepareAssign(size_type n) {
 	}
 }
 
+/*
+**	move one element from old to new position.
+**	content on new position is destroyed
+**	no impact on data_size or data_capacity.
+*/
 template <class T, class Alloc>
 void	vector<T, Alloc>::moveElement(size_type position_from, size_type position_to) {
 	allocator.construct(data + position_to, data[position_from]);
 	allocator.destroy(data + position_from);
 }
 
+/*
+**	move n elements (starting from 'position_from') either left or right.
+**	no impact on data_size or data_capacity.
+*/
+template <class T, class Alloc>
+void	vector<T, Alloc>::moveElements(size_type position_from, size_type position_to, size_type n) {
+	if (position_from > position_to) {
+		for (size_type i = 0; i < n; ++i) {
+			moveElement(position_from + i, position_to + i);
+		}
+	}
+	else {
+		size_type	position_end_new = position_to + n - 1;
+		size_type	position_end_current = position_from + n - 1;
+		for (size_type i = 0; i < n; ++i) {
+			moveElement(position_end_current - i, position_end_new - i);
+		}
+	}
+}
+
 template <class T, class Alloc>
 void	vector<T, Alloc>::insertWithCurrentCapacity(iterator position, size_type n, const_reference val) {
-	size_type pos_insert = static_cast<size_type>(position - begin());
-	size_type pos_new_end = data_size + n - 1;
-	size_type pos_current_end = data_size - 1;
-	for (size_type i = 0; i < data_size - pos_insert; ++i) {
-		moveElement(pos_current_end - i, pos_new_end - i);
-	}
+	size_type	pos_insert = static_cast<size_type>(position - begin());
+	moveElements(pos_insert, pos_insert + n, data_size - pos_insert);
 	for (size_type i = 0; i < n; ++i) {
 		constructElement(pos_insert + i, val);
 	}
 }
+
+template <class T, class Alloc>
+void	vector<T, Alloc>::insertWithNewCapacity(iterator position, size_type n, const_reference val) {
+	size_type	new_capacity = data_capacity + std::max(n, data_capacity);
+	pointer	new_data = allocator.allocate(new_capacity);
+	size_type	new_size = data_size + n;
+	size_type	pos_insert = static_cast<size_type>(position - begin());
+	size_type	pos_insert_end = pos_insert + n;
+	size_type	pos_new_end = new_size - 1;
+	size_type	pos_current_end = data_size - 1;
+	for (size_type i = 0; i < pos_insert; ++i) {
+		allocator.construct(new_data + i, *(data + i));
+	}
+	for (size_type i = pos_insert; i < pos_insert_end; ++i) {
+		allocator.construct(new_data + i, val);
+	}
+	for (size_type i = pos_insert_end; i < new_size; ++i) {
+		allocator.construct(new_data + i, *(data + i - n));
+	}
+	destructAll();
+	data = new_data;
+	data_size = new_size;
+	data_capacity = new_capacity;
+}
+
+
+template <class T, class Alloc>
+template <class InputIterator>
+void	vector<T, Alloc>::insertWithCurrentCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
+	size_type	n = static_cast<size_type>(last - first);
+	size_type	pos_insert = static_cast<size_type>(position - begin());
+	moveElements(pos_insert, pos_insert + n, data_size - pos_insert);
+	for (size_type i = 0; i < n; ++i) {
+		constructElement(pos_insert + i, *(first + i));
+	}
+}
+
+template <class T, class Alloc>
+template <class InputIterator>
+void	vector<T, Alloc>::insertWithNewCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
+	size_type	n = static_cast<size_type>(last - first);
+	size_type	new_capacity = data_capacity + std::max(n, data_capacity);
+	pointer	new_data = allocator.allocate(new_capacity);
+	size_type	new_size = data_size + n;
+	size_type	pos_insert = static_cast<size_type>(position - begin());
+	size_type	pos_insert_end = pos_insert + n;
+	size_type	pos_new_end = new_size - 1;
+	size_type	pos_current_end = data_size - 1;
+	for (size_type i = 0; i < pos_insert; ++i) {
+		allocator.construct(new_data + i, *(data + i));
+	}
+	for (size_type i = pos_insert; i < pos_insert_end; ++i) {
+		allocator.construct(new_data + i, *(first + i - pos_insert));
+	}
+	for (size_type i = pos_insert_end; i < new_size; ++i) {
+		allocator.construct(new_data + i, *(data + i - n));
+	}
+	destructAll();
+	data = new_data;
+	data_size = new_size;
+	data_capacity = new_capacity;
+}
+
 
 } /* end of namespace ft */

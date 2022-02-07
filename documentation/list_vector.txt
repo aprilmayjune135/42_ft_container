@@ -36,11 +36,13 @@
         [v]	fill
     [v]	push_back
     [v]	pop_back
-    [x]	insert
-        [x] single element
-        [x]	fill
-        [x]	range
-    [x]	erase
+    [v]	insert
+        [v] single element
+        [v]	fill
+        [v]	range
+    [v]	erase
+        [v] single element
+        [v]	range
     [x]	swap
     [v]	clear
 

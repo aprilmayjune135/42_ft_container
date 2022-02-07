@@ -61,11 +61,80 @@ void	testFT() {
 	}
 	std::cout << '\n';
 
-	utility::printYellow(">> insert_fill");
-	v_push.insert(v_push.begin() + 3, 6, 99);
+	utility::printYellow(">> insert_fill (1)");
+	v_push.insert(v_push.begin() + 3, 7, 44);
 	std::cout << v_push.size() << " | " << v_push.capacity() << " | " << '\n';
 	for (size_t i = 0; i < v_push.size(); ++i) {
 		std::cout << v_push[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_fill (2)");
+	v_push.insert(v_push.begin() + 3, 17, 77);
+	std::cout << v_push.size() << " | " << v_push.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_push.size(); ++i) {
+		std::cout << v_push[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_range (1)");
+	container_type	v_insert(1);
+	v_insert.insert(v_insert.begin(), lemon.begin(), lemon.end());
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_range (2)");
+	v_insert.insert(v_insert.begin(), lemon.begin(), lemon.end());
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_single (1)");
+	std::cout << "returned: " << *(v_insert.insert(v_insert.begin(), 101)) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+	std::cout << "returned: " << *(v_insert.insert(v_insert.begin(), 101)) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> erase_single");
+	std::cout << "returned: " << *(v_insert.erase(v_insert.begin())) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+	utility::printYellow(">> erase_range");
+	std::cout << "returned: " << *(v_insert.erase(v_insert.begin() + 1, v_insert.begin() + 9)) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> swap");
+	container_type one(1,1);
+	container_type two(5,2);
+	one.swap(two);
+	std::cout << one.size() << " | " << one.capacity() << " | " << '\n';
+	for (size_t i = 0; i < one.size(); ++i) {
+		std::cout << one[i] << " ";
+	}
+	std::cout << '\n';
+	std::cout << two.size() << " | " << two.capacity() << " | " << '\n';
+	for (size_t i = 0; i < two.size(); ++i) {
+		std::cout << two[i] << " ";
 	}
 	std::cout << '\n';
 
@@ -129,11 +198,80 @@ void	testSTD() {
 	}
 	std::cout << '\n';
 
-	utility::printYellow(">> insert_fill");
-	v_push.insert(v_push.begin() + 3, 6, 99);
+	utility::printYellow(">> insert_fill (1)");
+	v_push.insert(v_push.begin() + 3, 7, 44);
 	std::cout << v_push.size() << " | " << v_push.capacity() << " | " << '\n';
 	for (size_t i = 0; i < v_push.size(); ++i) {
 		std::cout << v_push[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_fill (2)");
+	v_push.insert(v_push.begin() + 3, 17, 77);
+	std::cout << v_push.size() << " | " << v_push.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_push.size(); ++i) {
+		std::cout << v_push[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_range (1)");
+	container_type	v_insert(1);
+	v_insert.insert(v_insert.begin(), lemon.begin(), lemon.end());
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_range (2)");
+	v_insert.insert(v_insert.begin(), lemon.begin(), lemon.end());
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> insert_single (1)");
+	std::cout << "returned: " << *(v_insert.insert(v_insert.begin(), 101)) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+	std::cout << "returned: " << *(v_insert.insert(v_insert.begin(), 101)) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> erase_single");
+	std::cout << "returned: " << *(v_insert.erase(v_insert.begin())) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+	utility::printYellow(">> erase_range");
+	std::cout << "returned: " << *(v_insert.erase(v_insert.begin() + 1, v_insert.begin() + 9)) << '\n';
+	std::cout << v_insert.size() << " | " << v_insert.capacity() << " | " << '\n';
+	for (size_t i = 0; i < v_insert.size(); ++i) {
+		std::cout << v_insert[i] << " ";
+	}
+	std::cout << '\n';
+
+	utility::printYellow(">> swap");
+	container_type one(1,1);
+	container_type two(5,2);
+	one.swap(two);
+	std::cout << one.size() << " | " << one.capacity() << " | " << '\n';
+	for (size_t i = 0; i < one.size(); ++i) {
+		std::cout << one[i] << " ";
+	}
+	std::cout << '\n';
+	std::cout << two.size() << " | " << two.capacity() << " | " << '\n';
+	for (size_t i = 0; i < two.size(); ++i) {
+		std::cout << two[i] << " ";
 	}
 	std::cout << '\n';
 
