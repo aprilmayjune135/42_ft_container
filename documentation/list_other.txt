@@ -2,6 +2,8 @@
 [v] reverse_iterator 
 [v] enable_if
 [x]	is_integral
-[x] equal/lexicographical compare
+[v] equal/lexicographical compare 
+	[v] default
+	[v] custom
 [x] std::pair
 [x] std::make_pair

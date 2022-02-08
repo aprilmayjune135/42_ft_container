@@ -43,18 +43,17 @@
     [v]	erase
         [v] single element
         [v]	range
-    [x]	swap
+    [v]	swap
     [v]	clear
 
 >> Allocator:
-    [x]	get_allocator
+    [v]	get_allocator
 
 ******************************************
 **		Non-member function overloads	**
 ******************************************
-    [x]	relational operators
-    [x]	swap
-
+    [v]	relational operators
+    [v]	swap
 
 **************************************
 **		Template specializations	**

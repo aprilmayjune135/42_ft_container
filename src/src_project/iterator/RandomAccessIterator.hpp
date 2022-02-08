@@ -34,21 +34,18 @@ class RandomAccessIterator : public BidirectionalIterator<Category, T> {
 	const RandomAccessIterator	operator+(difference_type n) const {
 		return RandomAccessIterator(this->p + n);
 	};
-	friend const RandomAccessIterator	operator+(difference_type n, const RandomAccessIterator& a) {
-		return a + n;
-	};
 	const RandomAccessIterator	operator-(difference_type n) const {
 		return RandomAccessIterator(this->p - n);
 	};
-	friend difference_type	operator-(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) {
-		return lhs.p - rhs.p;
+	difference_type	operator-(const RandomAccessIterator& rhs) const {
+		return this->p - rhs.p;
 	};
 
 	/**** operator - inequality rational ****/
-	friend bool	operator<(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs - rhs) < 0; };
-	friend bool	operator<=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs- rhs) <= 0; };
-	friend bool	operator>(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs - rhs) > 0; };
-	friend bool	operator>=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return (lhs- rhs) >= 0; };
+	friend bool	operator<(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p < rhs.p; };
+	friend bool	operator<=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p <= rhs.p; };
+	friend bool	operator>(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p > rhs.p; };
+	friend bool	operator>=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p >= rhs.p; };
 
 	/**** operator - compound assignment ****/
 	RandomAccessIterator&	operator+=(difference_type n) {
@@ -65,5 +62,11 @@ class RandomAccessIterator : public BidirectionalIterator<Category, T> {
 		return *(this->p + n);
 	}
 };
+
+/**** non-member operator overload ****/
+template <class T, class Category>
+const RandomAccessIterator<T, Category>	operator+(typename RandomAccessIterator<T, Category>::difference_type n, const RandomAccessIterator<T, Category>& a) {
+	return a + n;
+}
 
 } /* end of namespace ft */

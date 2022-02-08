@@ -57,9 +57,8 @@ class ReverseIterator {
 
 	/**** operator - arithmetic ****/
 		const ReverseIterator	operator+(difference_type n) const { return ReverseIterator(base_iterator - n); };
-		friend const ReverseIterator operator+(difference_type n, const ReverseIterator& a) { return a + n; };
 		const ReverseIterator	operator-(difference_type n) const { return ReverseIterator(base_iterator + n); };
-		friend const ReverseIterator operator-(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() - rhs.base(); };
+		const ReverseIterator	operator-(const ReverseIterator& rhs) { return ReverseIterator(base_iterator - rhs.base_iterator); };
 
 	/**** operator - compound assignment ****/
 		ReverseIterator&	operator+=(difference_type n) {
@@ -72,12 +71,18 @@ class ReverseIterator {
 		};
 
 	/**** operator - relational ****/
-		friend bool	operator==(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() == rhs.base(); };
-		friend bool	operator!=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() != rhs.base(); };
-		friend bool	operator<(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() < rhs.base(); };
-		friend bool	operator<=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() <= rhs.base(); };
-		friend bool	operator>(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() > rhs.base(); };
-		friend bool	operator>=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base() >= rhs.base(); };
+		friend bool	operator==(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator == rhs.base_iterator; };
+		friend bool	operator!=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator != rhs.base_iterator; };
+		friend bool	operator<(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator < rhs.base_iterator; };
+		friend bool	operator<=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator <= rhs.base_iterator; };
+		friend bool	operator>(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator > rhs.base_iterator; };
+		friend bool	operator>=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator >= rhs.base_iterator; };
 };
+
+/**** non-member function overload ****/
+template <class Iterator>
+const ReverseIterator<Iterator> operator+(typename ReverseIterator<Iterator>::difference_type n, const ReverseIterator<Iterator>& a) {
+	return a + n;
+}
 
 } /* end of namespace ft */

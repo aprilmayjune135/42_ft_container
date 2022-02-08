@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-template< class T>
+template <class T>
 class Lemon {
 public:
 	T		data;
@@ -13,7 +13,7 @@ private:
 
 };
 
-template< class T>
+template <class T>
 void	Lemon<T>::increaseTwo() {
 	T value = 5;
 	set(value);
@@ -119,17 +119,25 @@ struct foo {
   using foobar = float;
 };
 
-int main() {
-	std::vector<int>	one(5, 1);
-	std::vector<int>	two(11, 2);
-	std::cout << "before:\n";
-	printCapacityInfo(one);
-	printCapacityInfo(two);
-	one.swap(two);
-	std::cout << "after:\n";
-	printCapacityInfo(one);
-	printCapacityInfo(two);
+template <class T>
+class Overy {
+	private:
+		T data;
+	public:
+		Overy(const T& src): data(src) {};
+		void print() {std::cout << data << '\n';};
+		template <class T1>
+		friend bool	operator==(Overy<T1>& o1, Overy<T1>& o2);
+};
 
+template <class T>
+bool	operator==(Overy<T>& o1, Overy<T>& o2) { return o1.data == o2.data;};
+
+
+int main() {
+	Overy<int>	oo1(5);
+	Overy<int>	oo2(15);
+	std::cout << (oo1 == oo2) << '\n';
 
 
 	// std::vector<int>	vector;

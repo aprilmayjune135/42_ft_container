@@ -2,6 +2,7 @@
 #include "utility/print_color.hpp"
 #include "utility/print_vector.hpp"
 #include "container/vector.hpp"
+#include "test/test.hpp"
 #include <vector>
 
 void	testFT() {
@@ -126,7 +127,9 @@ void	testFT() {
 	utility::printYellow(">> swap");
 	container_type one(1,1);
 	container_type two(5,2);
+	swap(one, two);
 	one.swap(two);
+	swap(one, two);
 	std::cout << one.size() << " | " << one.capacity() << " | " << '\n';
 	for (size_t i = 0; i < one.size(); ++i) {
 		std::cout << one[i] << " ";
@@ -137,6 +140,18 @@ void	testFT() {
 		std::cout << two[i] << " ";
 	}
 	std::cout << '\n';
+
+	utility::printYellow(">> operator");
+	container_type a(3,2);
+	container_type b(a);
+	b[2] = 3;
+	std::cout << "a {2, 2, 2} | b {2, 2, 3}" << '\n';
+	std::cout << "== " << (a == b) << '\n';
+	std::cout << "!= " << (a != b) << '\n';
+	std::cout << "< " << (a < b) << '\n';
+	std::cout << "<= " << (a <= b) << '\n';
+	std::cout << "> " << (a > b) << '\n';
+	std::cout << ">= " << (a >= b) << '\n';
 
 
 }
@@ -275,11 +290,28 @@ void	testSTD() {
 	}
 	std::cout << '\n';
 
+
+	utility::printYellow(">> operator");
+	container_type a(3,2);
+	container_type b(a);
+	b[2] = 3;
+	std::cout << "a {2, 2, 2} | b {2, 2, 3}" << '\n';
+	std::cout << "== " << (a == b) << '\n';
+	std::cout << "!= " << (a != b) << '\n';
+	std::cout << "< " << (a < b) << '\n';
+	std::cout << "<= " << (a <= b) << '\n';
+	std::cout << "> " << (a > b) << '\n';
+	std::cout << ">= " << (a >= b) << '\n';
+
+
 }
 
 #ifndef CATCH
 int main() {
-	testFT();
-	testSTD();
+	TestCase	test;
+	test.init();
+
+	// testFT();
+	// testSTD();
 }
 #endif

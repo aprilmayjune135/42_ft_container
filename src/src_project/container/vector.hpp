@@ -1,7 +1,7 @@
 #pragma once
 #include "../iterator/RandomAccessIterator.hpp"
 #include "../iterator/ReverseIterator.hpp"
-#include "../iterator/iterator_traits.hpp"
+#include "../iterator/lexicographic_compare.hpp"
 #include "../utility/print_color.hpp"
 #include <memory>
 #include <cassert>
@@ -90,9 +90,11 @@ class vector {
 		void	clear();
 
 	/**** allocator ****/
+		allocator_type	get_allocator() const;
 
 	/**** non-member function overloads ****/
-		friend	void	swap(vector& x, vector& y);
+		template <class T2, class Alloc2>
+		friend bool	operator==(const vector<T2, Alloc2>& lhs, const vector<T2, Alloc2>& rhs);
 
 	/**** template specialization ****/
 
@@ -369,7 +371,15 @@ typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator position) {
 
 template <class T, class Alloc>
 void	vector<T, Alloc>::swap(vector& x) {
-	swap(*this, x);
+	pointer		temp_data = data;
+	size_type	temp_size = data_size;
+	size_type	temp_capacity = data_capacity;
+	data = x.data;
+	data_size = x.data_size;
+	data_capacity = x.data_capacity;
+	x.data = temp_data;
+	x.data_size = temp_size;
+	x.data_capacity = temp_capacity;
 }
 
 template <class T, class Alloc>
@@ -390,19 +400,57 @@ void	vector<T, Alloc>::clear(){
 }
 
 /*********************************************/ 
+/**					allocator				**/ 
+/*********************************************/
+template <class T, class Alloc>
+typename vector<T, Alloc>::allocator_type	vector<T, Alloc>::get_allocator() const {
+	return allocator;
+}
+
+/*********************************************/ 
 /**		non-member function overload		**/ 
 /*********************************************/
 template <class T, class Alloc>
 void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y) {
-	typename vector<T, Alloc>::pointer		temp_data = x.data;
-	typename vector<T, Alloc>::size_type	temp_size = x.data_size;
-	typename vector<T, Alloc>::size_type	temp_capacity = x.data_capacity;
-	x.data = y.data;
-	x.data_size = y.data_size;
-	x.data_capacity = y.data_capacity;
-	y.data = temp_data;
-	y.data_size = temp_size;
-	y.data_capacity = temp_capacity;
+	x.swap(y);
+}
+
+template <class T, class Alloc>
+bool	operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+	if (lhs.data_size != rhs.data_size) {
+		return false;
+	}
+	for (typename vector<T, Alloc>::size_type i = 0; i < lhs.data_size; ++i) {
+		if (*(lhs.data + i) != *(rhs.data + i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+template <class T, class Alloc>
+bool	operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
+	return !(lhs == rhs);
+}
+
+template <class T, class Alloc>
+bool	operator<(const vector<T, Alloc>&lhs, const vector<T, Alloc>&rhs) {
+	return lexicographic_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+}
+
+template <class T, class Alloc>
+bool	operator<=(const vector<T, Alloc>&lhs, const vector<T, Alloc>&rhs) {
+	return !(rhs < lhs);
+}
+
+template <class T, class Alloc>
+bool	operator>(const vector<T, Alloc>&lhs, const vector<T, Alloc>&rhs) {
+	return (rhs < lhs);
+}
+
+template <class T, class Alloc>
+bool	operator>=(const vector<T, Alloc>&lhs, const vector<T, Alloc>&rhs) {
+	return !(lhs < rhs);
 }
 
 /*********************************************/ 
