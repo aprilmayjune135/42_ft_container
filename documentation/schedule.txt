@@ -37,15 +37,19 @@
 	- vector: swap, non-member overload operator, lexicographic_compare, get_allocator
 	- tester: get_input
 
+2022-02-09 (Wed): tester
+	- TestCase.run(): function pointer array.
+	- make standard
+
 **************************
 **		Next To Do		**
 **************************
-- start planning on test
-- vector<bool>
-- is_integral
+- figure out how to make std.out with namespace std
 
 
 ******************************
 **		General To Do		**
 ******************************
+- vector<bool>
+- is_integral
 - check "friend" use if is valid

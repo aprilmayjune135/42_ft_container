@@ -1,8 +1,9 @@
 ###### EXEC NAME ######
-NAME = a.out
+NAME = ft.out
+NAME_STD = std.out
 NAME_CATCH = catch.out
 NAME_FSANITIZE = fsanitize.out
-EXECS = $(NAME) $(NAME_CATCH) $(NAME_FSANITIZE)
+EXECS = $(NAME) $(NAME_STD) $(NAME_CATCH) $(NAME_FSANITIZE)
 
 CPP = clang++
 
@@ -20,6 +21,13 @@ ifdef CATCH
 	CFLAG += -std=c++17 -DCATCH
 else
 	CFLAG += -std=c++98
+endif
+
+###### STD MODE ######
+ifdef STANDARD
+	NAME = $(NAME_STD)
+	SUBDIR_OBJ = /obj_std
+	SUBDIR_DEP = /dep_std
 endif
 
 ###### FSANITIZE MODE ######
@@ -68,6 +76,9 @@ $(DIR_DEP)/%.d: $(DIR_SRC)/%.cpp
 
 -include $(DEP)
 
+standard:
+	$(MAKE) all STANDARD=1
+
 fsanitize:
 	$(MAKE) all FSANITIZE=1
 
@@ -83,4 +94,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re fsanitize
+.PHONY: all clean fclean re fsanitize standard
