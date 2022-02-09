@@ -1,32 +1,33 @@
 #include "test.hpp"
+#include "../container/map.hpp"
+#include <map>
 
 namespace map {
 void	testConstructor() {
-	std::cout << "This is map constructor!\n";
+	PRINT << "This is map constructor!\n";
 }
 
 void	testIterator() {
-	std::cout << "This is map iterator!\n";
+	PRINT << "This is map iterator!\n";
 }
 
 void	testCapacity() {
 }
 
 void	testElementAccess() {
-	std::cout << "This is map element access!\n";
+	PRINT << "This is map element access!\n";
 }
 
 void	testModifiers() {
-	std::cout << "This is map modifiers!\n";
+	PRINT << "This is map modifiers!\n";
 }
 
 void	testAllocator() {
-	std::cout << "This is map allocator!\n";
+	PRINT << "This is map allocator!\n";
 }
 
 void	testOperator() {
-	std::cout << "This is map operator!\n";
+	PRINT << "This is map operator!\n";
 }
 
 } /* end of namespace map */
-

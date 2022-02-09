@@ -1,6 +1,14 @@
 #pragma once
 #include <string>
-#include <iostream> //TODO: delete
+#include "../utility/Print.hpp"
+
+namespace ft {}
+
+#ifdef STANDARD
+	namespace version = std;
+#else
+	namespace version = ft;
+#endif
 
 class TestCase {
 	public:

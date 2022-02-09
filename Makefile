@@ -23,6 +23,10 @@ else
 	CFLAG += -std=c++98
 endif
 
+ifdef STANDARD
+	CFLAG += -DSTANDARD
+endif
+
 ###### STD MODE ######
 ifdef STANDARD
 	NAME = $(NAME_STD)
@@ -61,7 +65,8 @@ OBJ := $(patsubst $(DIR_SRC)/%.cpp,$(DIR_OBJ)/%.o,$(SRC))
 DEP := $(patsubst $(DIR_SRC)/%.cpp,$(DIR_DEP)/%.d,$(SRC))
 
 ###### compilation ######
-all: $(NAME)
+all:
+	@$(MAKE) $(NAME)
 
 $(NAME): $(OBJ)
 	$(CPP) $(CFLAG) -o $@ $^
@@ -77,13 +82,13 @@ $(DIR_DEP)/%.d: $(DIR_SRC)/%.cpp
 -include $(DEP)
 
 standard:
-	$(MAKE) all STANDARD=1
+	@$(MAKE) all STANDARD=1
 
 fsanitize:
-	$(MAKE) all FSANITIZE=1
+	@$(MAKE) all FSANITIZE=1
 
 catch:
-	$(MAKE) all CATCH=1
+	@$(MAKE) all CATCH=1
 
 ###### clean ######
 clean:

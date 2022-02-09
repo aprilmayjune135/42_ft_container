@@ -68,9 +68,10 @@ static void	testContainer(int container, int category) {
 }
 
 void	TestCase::run() {
-	displayContainer();
-	int container = utility::getInput<int>("Choose container (index): ", checkContainerScope);
-	displayCategory();
-	int category = utility::getInput<int>("Choose test category (index): ", checkCategoryScope);
-	testContainer(container, category);
+	// displayContainer();
+	// int container = utility::getInput<int>("Choose container (index): ", checkContainerScope);
+	// displayCategory();
+	// int category = utility::getInput<int>("Choose test category (index): ", checkCategoryScope);
+	// testContainer(container, category);
+	testContainer(0, 0);
 }

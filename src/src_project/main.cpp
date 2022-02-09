@@ -5,16 +5,6 @@
 #include "test/test.hpp"
 #include <vector>
 
-#ifndef STANDARD
-#define LOG_FILE "ft_log.txt"
-#else
-#define LOG_FILE "std_log.txt"
-#endif
-
-#ifdef STANDARD
-	namespace ft = std;
-#endif
-
 
 void	testFT() {
 	utility::printTitle("ft_container");

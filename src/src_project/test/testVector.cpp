@@ -1,10 +1,12 @@
 #include "test.hpp"
-#include "../utility/Print.hpp"
 #include "../container/vector.hpp"
+#include <vector>
 
 namespace vector {
 void	testConstructor() {
+	version::vector<int> vec(10, 999);
 	PRINT << "This is vector constructor!\n";
+	PRINT << *(vec.begin()) << '\n';
 }
 
 void	testIterator() {
@@ -32,4 +34,3 @@ void	testOperator() {
 }
 
 } /* end of namespace vector */
-
