@@ -1,10 +1,20 @@
 #include <iostream>
 #include "utility/print_color.hpp"
-#include "utility/print_vector.hpp"
 #include "container/vector.hpp"
 #include "test/test.hpp"
 #include <vector>
 
+namespace utility {
+
+template<class Iterator>
+void	printVector(Iterator begin, Iterator end) {
+	for (Iterator it = begin; it != end; ++it) {
+		std::cout << *it << " ";
+	}
+	std::cout << '\n';
+}
+
+} /* end of namespace utility */
 
 void	testFT() {
 	utility::printTitle("ft_container");
@@ -16,7 +26,7 @@ void	testFT() {
 	std::cout << "assign_fill: " << lemon.size() << " | " << lemon.capacity() << " | " << lemon.max_size() << '\n';
 	container_type src = container_type(4, 9);
 	std::cout << "operator=: " << src.size() << " | " << src.capacity() << " | " << src.max_size() << '\n';
-	lemon.assign<container_type::const_iterator>(src.begin(), src.end());
+	lemon.assign(src.begin(), src.end());
 	std::cout << "assign_range: " << lemon.size() << " | " << lemon.capacity() << " | " << lemon.max_size() << '\n';
 	for (size_t i = 0; i < lemon.size(); ++i) {
 		std::cout << lemon[i] << " ";
@@ -167,7 +177,7 @@ void	testSTD() {
 	std::cout << "assign_fill: " << lemon.size() << " | " << lemon.capacity() << " | " << lemon.max_size() << '\n';
 	container_type src = container_type(4, 9);
 	std::cout << "operator=: " << src.size() << " | " << src.capacity() << " | " << src.max_size() << '\n';
-	lemon.assign<container_type::const_iterator>(src.begin(), src.end());
+	lemon.assign(src.begin(), src.end());
 	std::cout << "assign_range: " << lemon.size() << " | " << lemon.capacity() << " | " << lemon.max_size() << '\n';
 	for (size_t i = 0; i < lemon.size(); ++i) {
 		std::cout << lemon[i] << " ";

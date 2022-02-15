@@ -21,10 +21,10 @@ class vector {
 		typedef value_type*				pointer;
 		typedef const value_type*		const_pointer;
 
-		typedef RandomAccessIterator<T>		iterator;
-		typedef const iterator				const_iterator;
-		typedef	ReverseIterator<iterator> 	reverse_iterator;
-		typedef const reverse_iterator		const_reverse_iterator;
+		typedef RandomAccessIterator<T>				iterator;
+		typedef RandomAccessIterator<const T>		const_iterator;
+		typedef	ReverseIterator<iterator> 			reverse_iterator;
+		typedef ReverseIterator<const_iterator>		const_reverse_iterator;
 		typedef typename iterator_traits<iterator>::difference_type			difference_type;
 		typedef std::size_t							size_type;
 	
@@ -153,10 +153,12 @@ data_capacity(0) {
 
 /* copy constructor */
 template <class T, class Alloc>
-vector<T, Alloc>::vector(const vector& src) {
-	if (this != &src) {
-		*this = src;
-	}
+vector<T, Alloc>::vector(const vector& src):
+allocator(src.allocator),
+data(NULL),
+data_size(0),
+data_capacity(0) {
+	*this = src;
 }
 
 /* destructor */
@@ -169,7 +171,7 @@ vector<T, Alloc>::~vector() {
 template <class T, class Alloc>
 vector<T, Alloc>&	vector<T, Alloc>::operator=(const vector& rhs){
 	destructAll();
-	assign<iterator>(rhs.begin(), rhs.end());
+	assign(rhs.begin(), rhs.end());
 	return *this;
 }
 

@@ -1,35 +1,29 @@
 #pragma once
 #include <string>
-#include "../utility/Print.hpp"
 
-namespace ft {}
+enum ContainerType {
+	VECTOR,
+	MAP,
+	STACK,
+	ALL_CONTAINER
+};
 
-#ifdef STANDARD
-	namespace version = std;
-#else
-	namespace version = ft;
-#endif
+enum CategoryType {
+	CONSTRUCTOR,
+	ITERATOR,
+	CAPACITY,
+	ELEMENT_ACCESS,
+	MODIFIERS,
+	ALLOCATOR,
+	OPERATOR,
+	ALL_CATEGORY
+};
+
+std::string	getContainerName(ContainerType container);
+std::string	getCategoryName(CategoryType category);
 
 class TestCase {
 	public:
-		enum ContainerType {
-			VECTOR,
-			MAP,
-			STACK,
-			ALL_CONTAINER
-		};
-
-		enum CategoryType {
-			CONSTRUCTOR,
-			ITERATOR,
-			CAPACITY,
-			ELEMENT_ACCESS,
-			MODIFIERS,
-			ALLOCATOR,
-			OPERATOR,
-			ALL_CATEGORY
-		};
-
 		TestCase() {};
 		~TestCase() {};
 
@@ -67,3 +61,4 @@ namespace stack {
 	void	testAllocator();
 	void	testOperator();
 }
+

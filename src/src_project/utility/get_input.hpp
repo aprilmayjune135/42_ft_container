@@ -4,7 +4,7 @@
 
 namespace utility {
 
-void	ignoreLine() {
+static void	ignoreLine() {
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 

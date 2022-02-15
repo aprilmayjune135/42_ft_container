@@ -41,6 +41,10 @@
 	- TestCase.run(): function pointer array.
 	- make standard + log file + run.sh
 
+2022-02-15 (Tue): tester
+	- tester format improve
+	- vector-tester-constructor (debug copy constructor missing member initiazation with 0)
+
 **************************
 **		Next To Do		**
 **************************
@@ -54,3 +58,4 @@
 - is_integral
 - check "friend" use if is valid
 - catch
+- TODO: to figure out a way to make the selection applicable for both ft.out & std.out

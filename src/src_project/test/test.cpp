@@ -1,7 +1,42 @@
 #include "test.hpp"
 #include "../utility/get_input.hpp"
+#include "../utility/log_formatting.hpp"
 
-static void	displayContainer() {
+std::string	getContainerName(ContainerType container) {
+	switch (container) {
+		case VECTOR:
+			return "vector";
+		case MAP:
+			return "map";
+		case STACK:
+			return "stack";
+		default:
+			return "All containers";
+	}
+}
+
+std::string	getCategoryName(CategoryType category) {
+	switch (category) {
+		case CONSTRUCTOR:
+			return "constructor";
+		case ITERATOR:
+			return "iterator";
+		case CAPACITY:
+			return "capacity";
+		case ELEMENT_ACCESS:
+			return "element_access";
+		case MODIFIERS:
+			return "modifiers";
+		case ALLOCATOR:
+			return "allocator";
+		case OPERATOR:
+			return "operator";
+		default:
+			return "All categories";
+	}
+}
+
+void	displayContainer() {
 	utility::printBlue("Available container type:");
 	utility::printBlue("0. All");
 	utility::printBlue("1. Vector");
@@ -9,7 +44,7 @@ static void	displayContainer() {
 	utility::printBlue("3. Stack");
 }
 
-static void	displayCategory() {
+void	displayCategory() {
 	utility::printBlue("Available test category type:");
 	utility::printBlue("0. All");
 	utility::printBlue("1. Constructor");
@@ -31,11 +66,13 @@ static bool	checkCategoryScope(const int& n) {
 
 static void	testCategory(int category, void	(*func_array[])()) {
 	if (category == 0) {
-		for (int i = 0; i < TestCase::ALL_CATEGORY; ++i) {
+		for (int i = 0; i < ALL_CATEGORY; ++i) {
+			logTitleCategory(getCategoryName(static_cast<CategoryType>(i)));
 			(*func_array[i])();
 		}
 	}
 	else {
+		logTitleCategory(getCategoryName(static_cast<CategoryType>(category - 1)));
 		(*func_array[category - 1])();
 	}
 }
@@ -58,16 +95,19 @@ static void	testStack(int category) {
 static void	testContainer(int container, int category) {
 	static void (*func_array[])(int) = {testVector, testMap, testStack};
 	if (container == 0) {
-		for (int i = 0; i < TestCase::ALL_CONTAINER; ++i) {
+		for (int i = 0; i < ALL_CONTAINER; ++i) {
+			logTitleContainer(getContainerName(static_cast<ContainerType>(i)));
 			(*func_array[i])(category);
 		}
 	}
 	else {
+		logTitleContainer(getContainerName(static_cast<ContainerType>(container - 1)));
 		(*func_array[container - 1])(category);
 	}
 }
 
 void	TestCase::run() {
+	// TODO: to figure out a way to make the selection applicable for both ft.out & std.out
 	// displayContainer();
 	// int container = utility::getInput<int>("Choose container (index): ", checkContainerScope);
 	// displayCategory();

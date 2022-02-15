@@ -1,5 +1,4 @@
 #include "print_color.hpp"
-#include "color.hpp"
 #include <iostream>
 
 namespace utility {

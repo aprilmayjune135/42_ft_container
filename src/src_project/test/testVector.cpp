@@ -1,36 +1,83 @@
 #include "test.hpp"
-#include "../container/vector.hpp"
-#include <vector>
+
+#ifdef STANDARD
+	#include <vector>
+#else
+	#include "../container/vector.hpp"
+#endif
+
+#include "Dummy.hpp"
+#include "../utility/namespace.hpp"
+#include "../utility/Print.hpp"
+#include "../utility/print_container.hpp"
+#include "../utility/log_formatting.hpp"
+
 
 namespace vector {
+typedef	Dummy<int>					t_dummy;
+typedef ft::vector<int> 			t_containter_int;
+typedef ft::vector<std::string>		t_containter_str;
+typedef ft::vector<t_dummy>			t_containter_dummy;
+
 void	testConstructor() {
-	version::vector<int> vec(10, 999);
-	PRINT << "This is vector constructor!\n";
-	PRINT << *(vec.begin()) << '\n';
+	logTitleSection("empty constructor");
+	t_containter_int 	v_empty_int;
+	printVector(v_empty_int);
+	t_containter_str 	v_empty_str;
+	printVector(v_empty_str);
+	t_containter_dummy	v_empty_dummy;
+	printVector(v_empty_dummy);
+	
+	logTitleSection("fill constructor");
+	t_containter_int 	v_fill_int(100, 5);
+	printVector(v_fill_int);
+	t_containter_str 	v_fill_str(50, "hello!");
+	printVector(v_fill_str);
+	t_containter_dummy	v_fill_dummy(20, t_dummy(42));
+	printVector(v_fill_dummy);
+
+	logTitleSection("range constructor");
+	t_containter_int 	v_range_int(v_fill_int.begin(), v_fill_int.end());
+	printVector(v_range_int);
+	t_containter_str 	v_range_str(v_fill_str.begin(), v_fill_str.end());
+	printVector(v_range_str);
+	t_containter_dummy	v_range_dummy(v_fill_dummy.begin(), v_fill_dummy.end());
+	printVector(v_range_dummy);
+
+	logTitleSection("copy constructor");
+	t_containter_int 	v_copy_int(v_range_int);
+	printVector(v_copy_int);
+	t_containter_str 	v_copy_str(v_range_str);
+	printVector(v_copy_str);
+	t_containter_dummy	v_copy_dummy(v_range_dummy);
+	printVector(v_copy_dummy);
+
+	logTitleSection("operator=");
+	v_empty_int = v_range_int;
+	printVector(v_empty_int);
+	v_empty_str = v_range_str;
+	printVector(v_empty_str);
+	v_empty_dummy = v_range_dummy;
+	printVector(v_empty_dummy);
+
 }
 
 void	testIterator() {
-	PRINT << "This is vector iterator!\n";
 }
 
 void	testCapacity() {
-	PRINT << "This is vector capacity!\n";
 }
 
 void	testElementAccess() {
-	PRINT << "This is vector element access!\n";
 }
 
 void	testModifiers() {
-	PRINT << "This is vector modifiers!\n";
 }
 
 void	testAllocator() {
-	PRINT << "This is vector allocator!\n";
 }
 
 void	testOperator() {
-	PRINT << "This is vector operator!\n";
 }
 
 } /* end of namespace vector */
