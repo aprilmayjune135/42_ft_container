@@ -1,5 +1,7 @@
-#setting
+# Abort the script at the first error
+set -e
 
+# Color
 RESET_COLOR='\033[0m'
 BLACK_BOLD='\033[1;30m'
 RED_BOLD='\033[1;31m'
@@ -10,7 +12,7 @@ MAGENTA_BOLD='\033[1;35m'
 CYAN_BOLD='\033[1;36m'
 WHITE_BOLD='\033[1;37m'
 
-rm -rf ./ft_log.txt ./std_log.txt
+rm -rf *.log
 
 if [ "$1" == "fsanitize" ]; then
 	make fsanitize
@@ -28,7 +30,7 @@ else
 	./std.out
 	echo $MAGENTA_BOLD"Output saved on std_log.txt..."$RESET_COLOR
 	echo "\n"$MAGENTA_BOLD"Comparing output..."$RESET_COLOR
-	if diff -q ./ft_log.txt ./std_log.txt > /dev/null
+	if diff -q ./ft.log ./std.log > /dev/null
 	then
 		echo $GREEN_BOLD"The files are equal!"$RESET_COLOR
 	else

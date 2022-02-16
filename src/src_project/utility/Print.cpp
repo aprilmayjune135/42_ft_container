@@ -1,10 +1,12 @@
 #include "Print.hpp"
 #include <iostream>
 
-#ifndef STANDARD
-#define LOG_FILE "ft_log.txt"
+#if defined(STANDARD)
+#define LOG_FILE "std.log"
+#elif defined(FSANITIZE)
+#define LOG_FILE "fsanitize.log"
 #else
-#define LOG_FILE "std_log.txt"
+#define LOG_FILE "ft.log"
 #endif
 
 Print::Print() {

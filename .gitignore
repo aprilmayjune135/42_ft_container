@@ -1,5 +1,4 @@
 **/obj/
 **/dep/
 **/*.out
-ft_log.txt
-std_log.txt
+*.log

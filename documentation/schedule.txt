@@ -45,6 +45,9 @@
 	- tester format improve
 	- vector-tester-constructor (debug copy constructor missing member initiazation with 0)
 
+2022-02-16 (Wed):
+	- improve log file
+
 **************************
 **		Next To Do		**
 **************************

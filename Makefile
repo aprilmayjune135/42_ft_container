@@ -27,6 +27,10 @@ ifdef STANDARD
 	CFLAG += -DSTANDARD
 endif
 
+ifdef FSANITIZE
+	CFLAG += -DFSANITIZE
+endif
+
 ###### STD MODE ######
 ifdef STANDARD
 	NAME = $(NAME_STD)
