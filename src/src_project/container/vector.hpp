@@ -170,7 +170,6 @@ vector<T, Alloc>::~vector() {
 /* operator */
 template <class T, class Alloc>
 vector<T, Alloc>&	vector<T, Alloc>::operator=(const vector& rhs){
-	destructAll();
 	assign(rhs.begin(), rhs.end());
 	return *this;
 }
@@ -223,7 +222,9 @@ void	vector<T, Alloc>::resize(size_type n, value_type val){
 		destroyData(n, data_size - n);
 	}
 	else {
-		reserve(n);
+		if (n > data_capacity) {
+			reallocateCapacity(std::max(n, data_capacity * 2));
+		}
 		constructData(data_size, n - data_size, val);
 	}
 }
@@ -289,12 +290,12 @@ typename vector<T, Alloc>::const_reference	vector<T, Alloc>::front() const {
 
 template <class T, class Alloc>
 typename vector<T, Alloc>::reference	vector<T, Alloc>::back() {
-	return *(data + data_size);
+	return *(data + data_size - 1);
 }
 
 template <class T, class Alloc>
 typename vector<T, Alloc>::const_reference	vector<T, Alloc>::back() const {
-	return *(data + data_size);
+	return *(data + data_size - 1);
 }
 
 /*********************************************/ 

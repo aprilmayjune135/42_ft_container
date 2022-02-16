@@ -47,11 +47,15 @@
 
 2022-02-16 (Wed):
 	- improve log file
+	- improve vector-tester-constructor (build template)
+	- vector test build up
 
 **************************
 **		Next To Do		**
 **************************
+- vector - reverse iterator test
 - vector tester per function
+- vector how to test destructor?
 
 
 ******************************

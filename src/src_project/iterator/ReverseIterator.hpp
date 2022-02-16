@@ -8,6 +8,8 @@ class ReverseIterator {
 	/**** typedef ****/
 	public:
 		typedef Iterator	iterator_type;
+		typedef typename Iterator::const_iterator						const_iterator;
+		typedef ReverseIterator<const_iterator>							const_reverse_iterator;
 		typedef	typename iterator_traits<Iterator>::iterator_category	iterator_category;
 		typedef	typename iterator_traits<Iterator>::value_type			value_type;
 		typedef	typename iterator_traits<Iterator>::difference_type		difference_type;
@@ -26,6 +28,12 @@ class ReverseIterator {
 	
 	/**** base ****/
 		iterator_type	base() const { return base_iterator; };
+	
+
+	/**** operator - implicit conversion to const_iterator ****/
+	operator ReverseIterator<const_iterator>() const {
+		return const_iterator(base_iterator - 1);
+	};
 	
 	/**** operator - dereference ****/
 		reference	operator*() const { 

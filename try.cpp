@@ -135,11 +135,11 @@ bool	operator==(Overy<T>& o1, Overy<T>& o2) { return o1.data == o2.data;};
 
 
 int main() {
-	std::vector<int> vector(10, 9);
-	for (std::vector<int>::const_iterator it = vector.begin(); it != vector.end(); ++it) {
-		std::cout << *(it) << " ";
-	}
-	std::cout << '\n';
+	std::vector<int> v1(20, 9);
+	std::cout << v1.capacity() << '\n';
+	v1.resize(21);
+	std::cout << v1.capacity() << '\n';
+
 
 	// std::vector<int>	vector;
 	// typedef typename std::vector<int>::iterator it;

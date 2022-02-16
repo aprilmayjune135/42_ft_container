@@ -35,5 +35,6 @@ else
 		echo $GREEN_BOLD"The files are equal!"$RESET_COLOR
 	else
 		echo $RED_BOLD"The files are not equal!"$RESET_COLOR
+		diff ./ft.log ./std.log > diff.log
 	fi
 fi

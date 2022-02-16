@@ -5,8 +5,8 @@ namespace ft {
 
 template <class T, class Category>
 class Iterator {
-	/**** typedef ****/
 	public:
+		/**** typedef ****/
 		typedef T         					value_type;
 		typedef std::ptrdiff_t				difference_type;
 		typedef value_type*					pointer;
@@ -14,13 +14,14 @@ class Iterator {
 		typedef value_type&					reference;
 		typedef const value_type&			const_reference;
 		typedef Category  					iterator_category;
+		typedef Iterator<const T, Category>	const_iterator;
 
-	/****	pointer to store the content ****/
 	protected:
+		/****	pointer to store the content ****/
 		pointer	p;
 	
 	public:
-	/**** constructor & destructor ****/
+		/**** constructor & destructor ****/
 		Iterator(): p(NULL) {};
 		Iterator(pointer p_src): p(p_src) {};
 		Iterator(const Iterator& src): p(src.p) {};
@@ -30,7 +31,7 @@ class Iterator {
 			return *this;
 		};
 
-	/**** operator - prefix/postfix ++ ****/
+		/**** operator - prefix/postfix ++ ****/
 		Iterator&			operator++() { 
 			++p;
 			return *this;
