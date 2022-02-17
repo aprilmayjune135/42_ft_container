@@ -8,8 +8,6 @@ class ReverseIterator {
 	/**** typedef ****/
 	public:
 		typedef Iterator	iterator_type;
-		typedef typename Iterator::const_iterator						const_iterator;
-		typedef ReverseIterator<const_iterator>							const_reverse_iterator;
 		typedef	typename iterator_traits<Iterator>::iterator_category	iterator_category;
 		typedef	typename iterator_traits<Iterator>::value_type			value_type;
 		typedef	typename iterator_traits<Iterator>::difference_type		difference_type;
@@ -24,17 +22,11 @@ class ReverseIterator {
 	/**** constructor ****/
 		ReverseIterator(): base_iterator() {};
 		explicit ReverseIterator(iterator_type it): base_iterator(it) {};
-		ReverseIterator(const ReverseIterator& rev_it): base_iterator(rev_it.base_iterator) {};
-		ReverseIterator(const const_reverse_iterator& rev_it): base_iterator(rev_it.base_iterator) {};
-	
+		template <class Iter>
+		ReverseIterator(const ReverseIterator<Iter>& rev_it): base_iterator(rev_it.base()) {};
+
 	/**** base ****/
 		iterator_type	base() const { return base_iterator; };
-	
-
-	// /**** operator - implicit conversion to const_iterator ****/
-	// operator ReverseIterator<const_iterator>() const {
-	// 	return const_iterator(base_iterator - 1);
-	// };
 	
 	/**** operator - dereference ****/
 		reference	operator*() const { 
@@ -79,19 +71,38 @@ class ReverseIterator {
 			return *this;
 		};
 
-	/**** operator - relational ****/
-		friend bool	operator==(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator == rhs.base_iterator; };
-		friend bool	operator!=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator != rhs.base_iterator; };
-		friend bool	operator<(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator < rhs.base_iterator; };
-		friend bool	operator<=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator <= rhs.base_iterator; };
-		friend bool	operator>(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator > rhs.base_iterator; };
-		friend bool	operator>=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator >= rhs.base_iterator; };
+	//TODO: to delete
+	// /**** operator - relational ****/
+	// 	friend bool	operator==(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator == rhs.base_iterator; };
+	// 	friend bool	operator!=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator != rhs.base_iterator; };
+	// 	friend bool	operator<(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator < rhs.base_iterator; };
+	// 	friend bool	operator<=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator <= rhs.base_iterator; };
+	// 	friend bool	operator>(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator > rhs.base_iterator; };
+	// 	friend bool	operator>=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator >= rhs.base_iterator; };
 };
+
 
 /**** non-member function overload ****/
 template <class Iterator>
 const ReverseIterator<Iterator> operator+(typename ReverseIterator<Iterator>::difference_type n, const ReverseIterator<Iterator>& a) {
 	return a + n;
 }
+template <class Iterator1, class Iterator2>
+bool	operator==(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() == rhs.base(); }
+
+template <class Iterator1, class Iterator2>
+bool	operator!=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() != rhs.base(); }
+
+template <class Iterator1, class Iterator2>
+bool	operator<(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() < rhs.base(); }
+
+template <class Iterator1, class Iterator2>
+bool	operator<=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() <= rhs.base(); }
+
+template <class Iterator1, class Iterator2>
+bool	operator>(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() > rhs.base(); }
+
+template <class Iterator1, class Iterator2>
+bool	operator>=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() >= rhs.base(); }
 
 } /* end of namespace ft */

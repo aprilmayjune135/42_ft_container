@@ -4,10 +4,10 @@
 namespace ft{
 
 template <class T, class Category = random_access_iterator_tag>
-class RandomAccessIterator : public BidirectionalIterator<Category, T> {
+class RandomAccessIterator : public BidirectionalIterator<T, Category> {
 	public:
 		/**** typedef ****/
-		typedef BidirectionalIterator<Category, T> 				bidirectional_iterator;
+		typedef BidirectionalIterator<T, Category> 				bidirectional_iterator;
 		typedef typename bidirectional_iterator::value_type		value_type;
 		typedef typename bidirectional_iterator::difference_type	difference_type;
 		typedef typename bidirectional_iterator::pointer			pointer;

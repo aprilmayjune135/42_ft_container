@@ -9,9 +9,9 @@ void	logTitleContainer(const std::string& container) {
 	PRINT << line << '\n';
 }
 
-void	logTitleCategory(const std::string& category) {
+void	logTitleCategory(const std::string& container, const std::string& category) {
 	PRINT << '\n';
-	PRINT << "********** " << category << " **********" << '\n';
+	PRINT << "********** " << container << "_" << category << " **********" << '\n';
 }
 
 void	logTitleSection(const std::string& section) {

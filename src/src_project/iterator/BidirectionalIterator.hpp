@@ -29,13 +29,15 @@ class BidirectionalIterator : public Iterator<Category, T> {
 			this->p = rhs.p;
 			return *this;
 		};
-		friend bool	operator==(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p == rhs.p; };
-		friend bool	operator!=(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p != rhs.p; };
 
 		/**** operator - implicit conversion to const_iterator ****/
 		operator const_iterator() const {
 			return this->p;
 		};
+
+		/**** operator - non-member overload ****/
+		friend bool	operator==(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p == rhs.p; };
+		friend bool	operator!=(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p != rhs.p; };
 
 		/**** operator - dereference ****/
 		reference		operator*() { return *(this->p); };

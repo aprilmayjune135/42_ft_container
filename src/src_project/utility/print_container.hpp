@@ -16,6 +16,14 @@ void	printVectorData(const C& vector) {
 }
 
 template <class C>
+void	printVectorDataReverse(const C& vector) {
+	for (typename C::const_reverse_iterator it = vector.rbegin(); it != vector.rend(); ++it) {
+		PRINT << *it << " ";
+	}
+	PRINT << '\n';
+}
+
+template <class C>
 void	printVector(const C& vector) {
 	printVectorCapacity(vector);
 	printVectorData(vector);

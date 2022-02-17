@@ -24,3 +24,6 @@ class Dummy {
 };
 
 
+typedef	Dummy<int>				dummy_type;
+typedef	Dummy<dummy_type>		dummy_type_2D;
+

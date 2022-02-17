@@ -3,18 +3,18 @@
 
 namespace ft {
 
-template <class T, class Category>
+template <class Category, class T, class Distance = std::ptrdiff_t, class Pointer = T*, class Reference = T&>
 class Iterator {
 	public:
 		/**** typedef ****/
-		typedef T         					value_type;
-		typedef std::ptrdiff_t				difference_type;
-		typedef value_type*					pointer;
-		typedef const value_type*			const_pointer;
-		typedef value_type&					reference;
-		typedef const value_type&			const_reference;
-		typedef Category  					iterator_category;
-		typedef Iterator<const T, Category>	const_iterator;
+		typedef T         				value_type;
+		typedef Distance				difference_type;
+		typedef Pointer					pointer;
+		typedef const pointer			const_pointer;
+		typedef Reference				reference;
+		typedef const reference			const_reference;
+		typedef Category  				iterator_category;
+		typedef Iterator<Category, const T>	const_iterator;
 
 	protected:
 		/****	pointer to store the content ****/
@@ -30,6 +30,12 @@ class Iterator {
 			p = rhs.p;
 			return *this;
 		};
+
+		/**** operator - implicit conversion to const_iterator ****/
+		operator const_iterator() const {
+			return this->p;
+		};
+
 
 		/**** operator - prefix/postfix ++ ****/
 		Iterator&			operator++() { 

@@ -1,7 +1,7 @@
 #include <iostream>
 #include "utility/print_color.hpp"
 #include "container/vector.hpp"
-#include "test/test.hpp"
+#include "test/TestCase.hpp"
 #include <vector>
 
 namespace utility {
@@ -321,8 +321,5 @@ void	testSTD() {
 int main() {
 	TestCase	test;
 	test.run();
-
-	// testFT();
-	// testSTD();
 }
 #endif

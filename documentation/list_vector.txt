@@ -11,10 +11,10 @@
     [t]	operator=
 
 >> Iterators:
-    [v]	begin (regular + const)
-    [v]	end (regular + const)
-    [v]	rbegin (regular + const)
-    [v]	rend (regular + const)
+    [t]	begin (regular + const)
+    [t]	end (regular + const)
+    [t]	rbegin (regular + const)
+    [t]	rend (regular + const)
 
 >> Capacity:
     [t]	size

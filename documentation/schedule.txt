@@ -50,10 +50,13 @@
 	- improve vector-tester-constructor (build template)
 	- vector test build up
 
+2022-02-17 (Thu):
+	- reverse iterator test
+	- rebuild ContainerTest and VectorTest case >> inherited class structure
+
 **************************
 **		Next To Do		**
 **************************
-- vector - reverse iterator test
 - vector tester per function
 - vector how to test destructor?
 
@@ -66,3 +69,4 @@
 - check "friend" use if is valid
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
+- ReverseIterator, operator overload (1 template parameter or 2?)

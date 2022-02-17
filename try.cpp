@@ -134,13 +134,15 @@ template <class T>
 bool	operator==(Overy<T>& o1, Overy<T>& o2) { return o1.data == o2.data;};
 
 
+void	concon(const std::vector<int>& v) {
+	std::vector<int>::iterator it = v.begin();
+	std::cout << *it << '\n';
+
+}
+
 int main() {
-	std::vector<int> v1(20, 9);
-	std::cout << v1.capacity() << '\n';
-	v1.resize(21);
-	std::cout << v1.capacity() << '\n';
-
-
+	std::vector<int> v(10,9);
+	concon(v);
 	// std::vector<int>	vector;
 	// typedef typename std::vector<int>::iterator it;
 	// typedef typename std::vector<int>::reverse_iterator rev_it;
