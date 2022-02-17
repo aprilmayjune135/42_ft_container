@@ -25,15 +25,16 @@ class ReverseIterator {
 		ReverseIterator(): base_iterator() {};
 		explicit ReverseIterator(iterator_type it): base_iterator(it) {};
 		ReverseIterator(const ReverseIterator& rev_it): base_iterator(rev_it.base_iterator) {};
+		ReverseIterator(const const_reverse_iterator& rev_it): base_iterator(rev_it.base_iterator) {};
 	
 	/**** base ****/
 		iterator_type	base() const { return base_iterator; };
 	
 
-	/**** operator - implicit conversion to const_iterator ****/
-	operator ReverseIterator<const_iterator>() const {
-		return const_iterator(base_iterator - 1);
-	};
+	// /**** operator - implicit conversion to const_iterator ****/
+	// operator ReverseIterator<const_iterator>() const {
+	// 	return const_iterator(base_iterator - 1);
+	// };
 	
 	/**** operator - dereference ****/
 		reference	operator*() const { 
