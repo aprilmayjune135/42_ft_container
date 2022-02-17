@@ -31,20 +31,20 @@
     [t]	back
 
 >> Modifiers:
-    [v]	assign
-        [v]	range
-        [v]	fill
-    [v]	push_back
-    [v]	pop_back
-    [v]	insert
-        [v] single element
-        [v]	fill
-        [v]	range
-    [v]	erase
-        [v] single element
-        [v]	range
-    [v]	swap
-    [v]	clear
+    [t]	assign
+        [t]	range
+        [t]	fill
+    [t]	push_back
+    [t]	pop_back
+    [t]	insert
+        [t] single element
+        [t]	fill
+        [t]	range
+    [t]	erase
+        [t] single element
+        [t]	range
+    [t]	swap
+    [t]	clear
 
 >> Allocator:
     [v]	get_allocator
@@ -52,8 +52,8 @@
 ******************************************
 **		Non-member function overloads	**
 ******************************************
-    [v]	relational operators
-    [v]	swap
+    [t]	relational operators
+    [t]	swap
 
 **************************************
 **		Template specializations	**

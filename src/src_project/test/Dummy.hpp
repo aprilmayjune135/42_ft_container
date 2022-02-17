@@ -13,6 +13,22 @@ class Dummy {
 		};
 		~Dummy() {};
 		
+		bool	operator==(const Dummy& src) const {
+			return (data == src.data);
+		}
+
+		bool	operator!=(const Dummy& src) const {
+			return !(data == src.data);
+		}
+
+		bool	operator<(const Dummy& src) const {
+			return (data < src.data);
+		}
+
+		operator Dummy<const T>() const {
+			return data;
+		}
+
 		friend std::ostream&	operator<<(std::ostream& o, const Dummy& dummy) { 
 			o << dummy.data;
 			return o;

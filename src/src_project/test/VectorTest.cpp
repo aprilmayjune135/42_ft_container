@@ -128,7 +128,7 @@ void	testPerTypeCapacity(const Source<T>& src) {
 	logTitleSection(src.type);
 
 	std::size_t	n = src.data.size();
-	std::size_t	array[] = {n / 2, n + 1, n + 2, n * 2, n * 5};
+	std::size_t	array[] = {1, n / 2, n + 1, n + 2, n * 2, n * 5};
 	std::size_t	count = sizeof(array) / sizeof(std::size_t);
 
 	logTitleSubSection("resize");
@@ -166,6 +166,13 @@ void	testPerTypeElementAccess(Source<T> src) {
 	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 
+	logTitleSubSection("front/back");
+	T	temp = src.data.front();
+	src.data.front() = src.data.back();
+	src.data.back() = temp;
+	PRINT << src.data.front() << '\n';
+	PRINT << src.data.back() << '\n';
+
 	logTitleSubSection("operator[]");
 	for (std::size_t i = 0; i < src.data.size() - 1; ++i) {
 		src.data[i] = src.data[i + 1];
@@ -177,13 +184,6 @@ void	testPerTypeElementAccess(Source<T> src) {
 		src.data.at(i) = src.data.at(i + 1);
 	}
 	printVector(src.data);
-
-	logTitleSubSection("front/back");
-	T	temp = src.data.front();
-	src.data.front() = src.data.back();
-	src.data.back() = temp;
-	PRINT << src.data.front();
-	PRINT << src.data.back();
 
 }
 
@@ -197,9 +197,89 @@ void	VectorTest::testElementAccess() {
 /*********************************************/ 
 /**				modifier					**/ 
 /*********************************************/
+template <class T>
+void	testPerTypeModifiers(const Source<T>& src) {
+	typedef ft::vector<T>		t_vector;
+	logTitleSection(src.type);
+
+	std::size_t	n = src.data.size();
+	std::size_t	array[] = {1, n / 2, n + 1, n + 2, n * 2, n * 5};
+	std::size_t	count = sizeof(array) / sizeof(std::size_t);
+
+	logTitleSubSection("assign - fill");
+	t_vector	v_assign;
+	for (std::size_t i = 0; i < count; ++i) {
+		v_assign.assign(i, src.data.front());
+		printVector(v_assign);
+	}
+
+	logTitleSubSection("assign - range");
+	v_assign.assign(src.data.begin(), src.data.end());
+	printVector(v_assign);
+
+	logTitleSubSection("push_back");
+	t_vector	v_push;
+	for (std::size_t i = 0; i < n; ++i) {
+		v_push.push_back(src.data[i]);
+		printVectorCapacity(v_push);
+	}
+	printVector(v_push);
+
+	logTitleSubSection("pop_back");
+	v_push.pop_back();
+	printVector(v_push);
+
+	logTitleSubSection("insert - single");
+	t_vector v_insert;
+	for (std::size_t i = 0; i < n; ++i) {
+		PRINT << *v_insert.insert(v_insert.begin(), src.data[i]) << " ";
+		printVectorCapacity(v_insert);
+	}
+	printVector(v_insert);
+
+	logTitleSubSection("erase - single");
+	for (std::size_t i = 0; i < n; ++i) {
+		PRINT << *v_insert.erase(v_insert.begin()) << " ";
+	}
+	printVector(v_insert);
+
+	logTitleSubSection("insert - fill");
+	for (std::size_t i = 0; i < count; ++i) {
+		v_insert.insert(v_insert.end(), i, src.data.front());
+		printVector(v_insert);
+	}
+
+	logTitleSubSection("clear");
+	v_insert.clear();
+	printVector(v_insert);
+
+	logTitleSubSection("insert - range");
+	v_insert.insert(v_insert.begin(), src.data.begin(), src.data.end());
+	v_insert.insert(v_insert.end(), src.data.begin(), src.data.end());
+	printVector(v_insert);
+
+	logTitleSubSection("erase - range");
+	PRINT << *v_insert.erase(v_insert.begin() + 1, v_insert.end() - 1) << " ";
+	printVector(v_insert);
+
+	logTitleSubSection("swap");
+	t_vector v_empty;
+	v_empty.swap(v_assign);
+	printVector(v_empty);
+	printVector(v_assign);
+
+	logTitleSubSection("swap - non-member overload");
+	swap(v_push, v_insert);
+	printVector(v_push);
+	printVector(v_insert);
+
+}
 
 void	VectorTest::testModifiers() {
-	PRINT << "modifier" << '\n';
+	testPerTypeModifiers(Source<int>(42));
+	testPerTypeModifiers(Source<std::string>(20));
+	testPerTypeModifiers(Source<dummy_type>(30));
+	testPerTypeModifiers(Source<dummy_type_2D>(15));
 }
 
 
@@ -208,15 +288,33 @@ void	VectorTest::testModifiers() {
 /*********************************************/
 
 void	VectorTest::testAllocator() {
-	PRINT << "allocator" << '\n';
+	// TODO
 }
 
 
 /*********************************************/ 
 /**				operator					**/ 
 /*********************************************/
+template <class T>
+void	testPerTypeOperator(const Source<T>& src) {
+	typedef ft::vector<T>		t_vector;
+	logTitleSection(src.type);
+
+	t_vector v = src.data;
+	v.push_back(src.data.front());
+	PRINT <<  (v == src.data) << " ";
+	PRINT <<  (v != src.data) << " ";
+	PRINT <<  (v < src.data) << " ";
+	PRINT <<  (v <= src.data) << " ";
+	PRINT <<  (v > src.data) << " ";
+	PRINT <<  (v >= src.data) << " ";
+	PRINT << '\n';
+}
 
 void	VectorTest::testOperator() {
-	PRINT << "operator" << '\n';
+	testPerTypeOperator(Source<int>(42));
+	testPerTypeOperator(Source<std::string>(20));
+	testPerTypeOperator(Source<dummy_type>(30));
+	testPerTypeOperator(Source<dummy_type_2D>(15));
 }
 

@@ -389,8 +389,11 @@ template <class T, class Alloc>
 typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator first, iterator last) {
 	size_type	pos = static_cast<size_type>(first - begin());
 	size_type	n = static_cast<size_type>(last - first);
-	moveElements(pos + n, pos, data_size - pos - 1);
-	data_size -= n;
+	size_type	size = data_size;
+	for (size_type i = 0; i < n; ++i) {
+		destroyElement(pos + i);
+	}
+	moveElements(pos + n, pos, size - pos - n);
 	return begin() + pos;
 }
 

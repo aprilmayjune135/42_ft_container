@@ -53,19 +53,19 @@
 2022-02-17 (Thu):
 	- reverse iterator test
 	- rebuild ContainerTest and VectorTest case >> inherited class structure
+	- finish vector test
 
 **************************
 **		Next To Do		**
 **************************
-- vector tester per function
 - vector how to test destructor?
+- vector <bool>
+- is_integral
 
 
 ******************************
 **		General To Do		**
 ******************************
-- vector<bool>
-- is_integral
 - check "friend" use if is valid
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
