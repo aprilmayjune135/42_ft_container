@@ -301,6 +301,13 @@ void	testPerTypeOperator(const Source<T>& src) {
 	logTitleSection(src.type);
 
 	t_vector v = src.data;
+	PRINT <<  (v == src.data) << " ";
+	PRINT <<  (v != src.data) << " ";
+	PRINT <<  (v < src.data) << " ";
+	PRINT <<  (v <= src.data) << " ";
+	PRINT <<  (v > src.data) << " ";
+	PRINT <<  (v >= src.data) << " ";
+	PRINT << '\n';
 	v.push_back(src.data.front());
 	PRINT <<  (v == src.data) << " ";
 	PRINT <<  (v != src.data) << " ";

@@ -28,8 +28,8 @@ class vector {
 		typedef typename iterator_traits<iterator>::difference_type			difference_type;
 		typedef std::size_t							size_type;
 	
-	/**** key private member ****/
-	private:
+	/**** key protected member ****/
+	protected:
 		allocator_type	allocator;
 		pointer			data;
 		size_type		data_size;
@@ -42,7 +42,7 @@ class vector {
 		template <class InputIterator>
 		vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(), typename iterator_traits<InputIterator>::iterator_category* dummy = 0);
 		vector(const vector& src);
-		~vector();
+		virtual ~vector();
 		vector&	operator=(const vector& rhs);
 
 	/**** iterator ****/
@@ -91,12 +91,6 @@ class vector {
 
 	/**** allocator ****/
 		allocator_type	get_allocator() const;
-
-	/**** non-member function overloads ****/
-		template <class T2, class Alloc2>
-		friend bool	operator==(const vector<T2, Alloc2>& lhs, const vector<T2, Alloc2>& rhs);
-
-	/**** template specialization ****/
 
 	private:
 		void	constructElement(size_type index, const_reference val);
@@ -423,11 +417,11 @@ void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y) {
 
 template <class T, class Alloc>
 bool	operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs) {
-	if (lhs.data_size != rhs.data_size) {
+	if (lhs.size() != rhs.size()) {
 		return false;
 	}
-	for (typename vector<T, Alloc>::size_type i = 0; i < lhs.data_size; ++i) {
-		if (*(lhs.data + i) != *(rhs.data + i)) {
+	for (typename vector<T, Alloc>::size_type i = 0; i < lhs.size(); ++i) {
+		if (lhs[i] != rhs[i]) {
 			return false;
 		}
 	}

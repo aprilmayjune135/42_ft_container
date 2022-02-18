@@ -45,28 +45,36 @@
 	- tester format improve
 	- vector-tester-constructor (debug copy constructor missing member initiazation with 0)
 
-2022-02-16 (Wed):
+2022-02-16 (Wed): tester-vector
 	- improve log file
 	- improve vector-tester-constructor (build template)
 	- vector test build up
 
-2022-02-17 (Thu):
+2022-02-17 (Thu): tester-vector
 	- reverse iterator test
 	- rebuild ContainerTest and VectorTest case >> inherited class structure
 	- finish vector test
 
+2022-02-18 (Fri):
+	- 
+
 **************************
 **		Next To Do		**
 **************************
-- vector how to test destructor?
-- vector <bool>
 - is_integral
 
 
 ******************************
 **		General To Do		**
 ******************************
-- check "friend" use if is valid
+- vector how to test destructor?
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
 - ReverseIterator, operator overload (1 template parameter or 2?)
+- vector <bool>
+
+******************************
+**		Final check			**
+******************************
+- check "friend" use if is valid
+- function body in .hpp file
