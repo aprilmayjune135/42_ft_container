@@ -57,11 +57,12 @@
 
 2022-02-18 (Fri):
 	- pair && make_pair
-	- 
+	- prepare map
 
 **************************
 **		Next To Do		**
 **************************
+- study Binary Balance Tree, Red-Black Tree
 - is_integral
 
 

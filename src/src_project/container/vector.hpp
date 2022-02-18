@@ -18,13 +18,12 @@ class vector {
 		typedef const value_type&		const_reference;
 		typedef value_type*				pointer;
 		typedef const value_type*		const_pointer;
-
-		typedef RandomAccessIterator<T>				iterator;
-		typedef RandomAccessIterator<const T>		const_iterator;
-		typedef	ReverseIterator<iterator> 			reverse_iterator;
-		typedef ReverseIterator<const_iterator>		const_reverse_iterator;
+		typedef RandomAccessIterator<value_type>				iterator;
+		typedef RandomAccessIterator<const value_type>			const_iterator;
+		typedef	ReverseIterator<iterator> 						reverse_iterator;
+		typedef ReverseIterator<const_iterator>					const_reverse_iterator;
 		typedef typename iterator_traits<iterator>::difference_type			difference_type;
-		typedef std::size_t							size_type;
+		typedef std::size_t				size_type;
 	
 	/**** key protected member ****/
 	protected:
