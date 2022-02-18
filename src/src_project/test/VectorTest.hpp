@@ -9,18 +9,6 @@
 #include "Dummy.hpp"
 #include "../utility/namespace.hpp"
 
-template <class T>
-class Source {
-	public:
-		Source(std::size_t n);
-		~Source() {};
-		std::string 	type;
-		ft::vector<T>	data;
-	private:
-		Source() {};
-
-};
-
 class VectorTest: public ContainerTest {
 	public:
 		typedef ft::vector<int>				t_int;
@@ -38,4 +26,24 @@ class VectorTest: public ContainerTest {
 		void	testModifiers();
 		void	testAllocator();
 		void	testOperator();
+
+		template <class T>
+		void	testPerTypeConstructor(const Source< ft::vector<T> >& src);
+
+		template <class T>
+		void	testPerTypeIterator(Source< ft::vector<T> > src);
+
+		template <class T>
+		void	testPerTypeCapacity(const Source< ft::vector<T> >& src);
+
+		template <class T>
+		void	testPerTypeElementAccess(Source< ft::vector<T> > src);
+
+		template <class T>
+		void	testPerTypeModifiers(const Source< ft::vector<T> >& src);
+
+		template <class T>
+		void	testPerTypeOperator(const Source< ft::vector<T> >& src);
+
+
 };

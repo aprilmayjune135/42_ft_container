@@ -2,18 +2,16 @@
 #include "../iterator/RandomAccessIterator.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../iterator/lexicographic_compare.hpp"
-#include "../utility/print_color.hpp"
 #include <memory>
 #include <cassert>
 #include <algorithm>
-#include <iostream>
 
 namespace ft {
 
 template < class T, class Alloc = std::allocator<T> >
 class vector {
 	public:
-	/**** typedef ****/
+	/**** member types ****/
 		typedef T						value_type;
 		typedef Alloc					allocator_type;
 		typedef value_type&				reference;

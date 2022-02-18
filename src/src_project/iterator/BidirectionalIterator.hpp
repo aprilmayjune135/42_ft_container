@@ -7,7 +7,7 @@ namespace ft{
 template <class T, class Category = bidirectional_iterator_tag>
 class BidirectionalIterator : public Iterator<Category, T> {
 	public:
-		/**** typedef ****/
+	/**** member types ****/
 		typedef	Iterator<Category, T>						base_iterator;
 		typedef typename base_iterator::value_type			value_type;
 		typedef typename base_iterator::difference_type		difference_type;
@@ -18,34 +18,34 @@ class BidirectionalIterator : public Iterator<Category, T> {
 		typedef typename base_iterator::iterator_category	iterator_category;
 		typedef BidirectionalIterator<const T>				const_iterator;
 	
-		/**** constructor & destructor ****/
+	/**** constructor & destructor ****/
 		BidirectionalIterator(): base_iterator() {};
 		BidirectionalIterator(const BidirectionalIterator& src) { *this = src; };
 		BidirectionalIterator(pointer p_src): base_iterator(p_src) {};
 		virtual ~BidirectionalIterator() {};
 
-		/**** operator - equal ****/
+	/**** operator - equal ****/
 		BidirectionalIterator&	operator=(const BidirectionalIterator& rhs) {
 			this->p = rhs.p;
 			return *this;
 		};
 
-		/**** operator - implicit conversion to const_iterator ****/
+	/**** operator - implicit conversion to const_iterator ****/
 		operator const_iterator() const {
 			return this->p;
 		};
 
-		/**** operator - non-member overload ****/
+	/**** operator - non-member overload ****/
 		friend bool	operator==(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p == rhs.p; };
 		friend bool	operator!=(const BidirectionalIterator& lhs, const BidirectionalIterator& rhs) { return lhs.p != rhs.p; };
 
-		/**** operator - dereference ****/
+	/**** operator - dereference ****/
 		reference		operator*() { return *(this->p); };
 		const_reference	operator*() const { return *(this->p); };
 		pointer			operator->() { return this->p; };
 		const_pointer	operator->() const { return this->p; };
 
-		/**** operator - prefix/postfix ++/-- ****/
+	/**** operator - prefix/postfix ++/-- ****/
 		BidirectionalIterator&	operator++() { 
 			++(this->p);
 			return *this;

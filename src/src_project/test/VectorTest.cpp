@@ -8,14 +8,14 @@
 /*********************************************/
 
 template<>
-Source<int>::Source(std::size_t n): type("int") {
+Source<VectorTest::t_int>::Source(std::size_t n): type("int") {
 	for (std::size_t i = 0; i < n; ++i) {
 		data.push_back(i);
 	}
 }
 
 template<>
-Source<std::string>::Source(std::size_t n): type("string") {
+Source<VectorTest::t_str>::Source(std::size_t n): type("string") {
 	static std::string	strings[10] = { "hello", "how", "are", "you", "doing", "today", "?", "I", "feel", "great!" };
 	for (std::size_t i = 0; i < n; ++i) {
 		std::size_t	j = i;
@@ -27,7 +27,7 @@ Source<std::string>::Source(std::size_t n): type("string") {
 }
 
 template<>
-Source<dummy_type>::Source(std::size_t n): type("dummy class") {
+Source<VectorTest::t_dummy>::Source(std::size_t n): type("dummy class") {
 	for (std::size_t i = 0; i < n; ++i) {
 		dummy_type	d(i * 10);
 		data.push_back(d);
@@ -35,7 +35,7 @@ Source<dummy_type>::Source(std::size_t n): type("dummy class") {
 }
 
 template<>
-Source<dummy_type_2D>::Source(std::size_t n): type("2D dummy class") {
+Source<VectorTest::t_dummy_2D>::Source(std::size_t n): type("2D dummy class") {
 	for (std::size_t i = 0; i < n; ++i) {
 		dummy_type	d(i * -3);
 		dummy_type_2D d_2D(d);
@@ -50,7 +50,7 @@ VectorTest::VectorTest(): ContainerTest("vector") {}
 /*********************************************/
 
 template <class T>
-void	testPerTypeConstructor(const Source<T>& src) {
+void	VectorTest::testPerTypeConstructor(const Source< ft::vector<T> >& src) {
 	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 	
@@ -74,17 +74,17 @@ void	testPerTypeConstructor(const Source<T>& src) {
 }
 
 void	VectorTest::testConstructor() {
-	testPerTypeConstructor(Source<int>(42));
-	testPerTypeConstructor(Source<std::string>(20));
-	testPerTypeConstructor(Source<dummy_type>(30));
-	testPerTypeConstructor(Source<dummy_type_2D>(15));
+	testPerTypeConstructor(Source<t_int>(42));
+	testPerTypeConstructor(Source<t_str>(20));
+	testPerTypeConstructor(Source<t_dummy>(30));
+	testPerTypeConstructor(Source<t_dummy_2D>(15));
 }
 
 /*********************************************/ 
 /**				iterator					**/ 
 /*********************************************/
 template <class T>
-void	testPerTypeIterator(Source<T> src) {
+void	VectorTest::testPerTypeIterator(Source< ft::vector<T> > src) {
 	typedef ft::vector<T>	t_vector;
 	logTitleSection(src.type);
 
@@ -113,17 +113,17 @@ void	testPerTypeIterator(Source<T> src) {
 }
 
 void	VectorTest::testIterator() {
-	testPerTypeIterator(Source<int>(42));
-	testPerTypeIterator(Source<std::string>(20));
-	testPerTypeIterator(Source<dummy_type>(30));
-	testPerTypeIterator(Source<dummy_type_2D>(15));
+	testPerTypeIterator(Source<t_int>(42));
+	testPerTypeIterator(Source<t_str>(20));
+	testPerTypeIterator(Source<t_dummy>(30));
+	testPerTypeIterator(Source<t_dummy_2D>(15));
 }
 
 /*********************************************/ 
 /**				capacity					**/ 
 /*********************************************/
 template <class T>
-void	testPerTypeCapacity(const Source<T>& src) {
+void	VectorTest::testPerTypeCapacity(const Source< ft::vector<T> >& src) {
 	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 
@@ -152,17 +152,17 @@ void	testPerTypeCapacity(const Source<T>& src) {
 }
 
 void	VectorTest::testCapacity() {
-	testPerTypeCapacity(Source<int>(42));
-	testPerTypeCapacity(Source<std::string>(20));
-	testPerTypeCapacity(Source<dummy_type>(30));
-	testPerTypeCapacity(Source<dummy_type_2D>(15));
+	testPerTypeCapacity(Source<t_int>(42));
+	testPerTypeCapacity(Source<t_str>(20));
+	testPerTypeCapacity(Source<t_dummy>(30));
+	testPerTypeCapacity(Source<t_dummy_2D>(15));
 }
 
 /*********************************************/ 
 /**				element access				**/ 
 /*********************************************/
 template <class T>
-void	testPerTypeElementAccess(Source<T> src) {
+void	VectorTest::testPerTypeElementAccess(Source< ft::vector<T> > src) {
 	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 
@@ -188,17 +188,17 @@ void	testPerTypeElementAccess(Source<T> src) {
 }
 
 void	VectorTest::testElementAccess() {
-	testPerTypeElementAccess(Source<int>(42));
-	testPerTypeElementAccess(Source<std::string>(20));
-	testPerTypeElementAccess(Source<dummy_type>(30));
-	testPerTypeElementAccess(Source<dummy_type_2D>(15));
+	testPerTypeElementAccess(Source<t_int>(42));
+	testPerTypeElementAccess(Source<t_str>(20));
+	testPerTypeElementAccess(Source<t_dummy>(30));
+	testPerTypeElementAccess(Source<t_dummy_2D>(15));
 }
 
 /*********************************************/ 
 /**				modifier					**/ 
 /*********************************************/
 template <class T>
-void	testPerTypeModifiers(const Source<T>& src) {
+void	VectorTest::testPerTypeModifiers(const Source< ft::vector<T> >& src) {
 	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 
@@ -276,10 +276,10 @@ void	testPerTypeModifiers(const Source<T>& src) {
 }
 
 void	VectorTest::testModifiers() {
-	testPerTypeModifiers(Source<int>(42));
-	testPerTypeModifiers(Source<std::string>(20));
-	testPerTypeModifiers(Source<dummy_type>(30));
-	testPerTypeModifiers(Source<dummy_type_2D>(15));
+	testPerTypeModifiers(Source<t_int>(42));
+	testPerTypeModifiers(Source<t_str>(20));
+	testPerTypeModifiers(Source<t_dummy>(30));
+	testPerTypeModifiers(Source<t_dummy_2D>(15));
 }
 
 
@@ -296,18 +296,11 @@ void	VectorTest::testAllocator() {
 /**				operator					**/ 
 /*********************************************/
 template <class T>
-void	testPerTypeOperator(const Source<T>& src) {
+void	VectorTest::testPerTypeOperator(const Source< ft::vector<T> >& src) {
 	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 
 	t_vector v = src.data;
-	PRINT <<  (v == src.data) << " ";
-	PRINT <<  (v != src.data) << " ";
-	PRINT <<  (v < src.data) << " ";
-	PRINT <<  (v <= src.data) << " ";
-	PRINT <<  (v > src.data) << " ";
-	PRINT <<  (v >= src.data) << " ";
-	PRINT << '\n';
 	v.push_back(src.data.front());
 	PRINT <<  (v == src.data) << " ";
 	PRINT <<  (v != src.data) << " ";
@@ -319,9 +312,9 @@ void	testPerTypeOperator(const Source<T>& src) {
 }
 
 void	VectorTest::testOperator() {
-	testPerTypeOperator(Source<int>(42));
-	testPerTypeOperator(Source<std::string>(20));
-	testPerTypeOperator(Source<dummy_type>(30));
-	testPerTypeOperator(Source<dummy_type_2D>(15));
+	testPerTypeOperator(Source<t_int>(42));
+	testPerTypeOperator(Source<t_str>(20));
+	testPerTypeOperator(Source<t_dummy>(30));
+	testPerTypeOperator(Source<t_dummy_2D>(15));
 }
 

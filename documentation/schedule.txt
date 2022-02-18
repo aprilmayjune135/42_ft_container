@@ -56,6 +56,7 @@
 	- finish vector test
 
 2022-02-18 (Fri):
+	- pair && make_pair
 	- 
 
 **************************

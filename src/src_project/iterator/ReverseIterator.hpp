@@ -5,8 +5,8 @@ namespace ft {
 
 template <class Iterator>
 class ReverseIterator {
-	/**** typedef ****/
 	public:
+	/**** member types ****/
 		typedef Iterator	iterator_type;
 		typedef	typename iterator_traits<Iterator>::iterator_category	iterator_category;
 		typedef	typename iterator_traits<Iterator>::value_type			value_type;
@@ -14,7 +14,6 @@ class ReverseIterator {
 		typedef	typename iterator_traits<Iterator>::pointer				pointer;
 		typedef	typename iterator_traits<Iterator>::reference			reference;
 
-	/**** typedef ****/
 	private:
 		iterator_type	base_iterator;
 	

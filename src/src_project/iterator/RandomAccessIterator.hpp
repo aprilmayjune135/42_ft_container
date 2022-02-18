@@ -6,7 +6,7 @@ namespace ft{
 template <class T, class Category = random_access_iterator_tag>
 class RandomAccessIterator : public BidirectionalIterator<T, Category> {
 	public:
-		/**** typedef ****/
+	/**** member types ****/
 		typedef BidirectionalIterator<T, Category> 				bidirectional_iterator;
 		typedef typename bidirectional_iterator::value_type		value_type;
 		typedef typename bidirectional_iterator::difference_type	difference_type;
@@ -18,24 +18,24 @@ class RandomAccessIterator : public BidirectionalIterator<T, Category> {
 		typedef RandomAccessIterator<const T>						const_iterator;
 		typedef	std::size_t	size_type;
 
-		/**** constructor & destructor ****/
+	/**** constructor & destructor ****/
 		RandomAccessIterator(): bidirectional_iterator() {};
 		RandomAccessIterator(pointer p_src): bidirectional_iterator(p_src) {};
 		RandomAccessIterator(const RandomAccessIterator& src) { *this = src; };
 		virtual ~RandomAccessIterator() {};
 
-		/**** operator - equal ****/
+	/**** operator - equal ****/
 		RandomAccessIterator&	operator=(const RandomAccessIterator& rhs) {
 			this->p = rhs.p;
 			return *this;
 		};
 
-		/**** operator - implicit conversion to const_iterator ****/
+	/**** operator - implicit conversion to const_iterator ****/
 		operator const_iterator() const {
 			return this->p;
 		};
 
-		/**** operator - arithmetic ****/
+	/**** operator - arithmetic ****/
 		const RandomAccessIterator	operator+(difference_type n) const {
 			return RandomAccessIterator(this->p + n);
 		};
@@ -46,13 +46,13 @@ class RandomAccessIterator : public BidirectionalIterator<T, Category> {
 			return this->p - rhs.p;
 		};
 
-		/**** operator - inequality rational ****/
+	/**** operator - inequality rational ****/
 		friend bool	operator<(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p < rhs.p; };
 		friend bool	operator<=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p <= rhs.p; };
 		friend bool	operator>(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p > rhs.p; };
 		friend bool	operator>=(const RandomAccessIterator& lhs, const RandomAccessIterator& rhs) { return lhs.p >= rhs.p; };
 
-		/**** operator - compound assignment ****/
+	/**** operator - compound assignment ****/
 		RandomAccessIterator&	operator+=(difference_type n) {
 			this->p += n;
 			return *this;
@@ -62,7 +62,7 @@ class RandomAccessIterator : public BidirectionalIterator<T, Category> {
 			return *this;
 		};
 
-		/**** operator - offset dereference ****/
+	/**** operator - offset dereference ****/
 		value_type&	operator[](difference_type n) const {
 			return *(this->p + n);
 		}

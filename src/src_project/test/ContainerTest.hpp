@@ -20,3 +20,15 @@ class ContainerTest {
 		ContainerTest() {};
 
 };
+
+template <class V>
+class Source {
+	public:
+		Source(std::size_t n);
+		~Source() {};
+		std::string 	type;
+		V				data;
+	private:
+		Source() {};
+
+};
