@@ -55,9 +55,18 @@
 	- rebuild ContainerTest and VectorTest case >> inherited class structure
 	- finish vector test
 
-2022-02-18 (Fri):
+2022-02-18 (Fri): map
 	- pair && make_pair
 	- prepare map
+
+2022-02-21 (Mon): map - AVL
+	- AVL learn and try
+
+2022-02-22 (Tue): map
+	- AVL implement to map 
+		https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+	- insert, capacity
+	
 
 **************************
 **		Next To Do		**
@@ -69,11 +78,12 @@
 ******************************
 **		General To Do		**
 ******************************
-- vector how to test destructor?
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
 - ReverseIterator, operator overload (1 template parameter or 2?)
 - vector <bool>
+- exception implement in vector
+
 
 ******************************
 **		Final check			**

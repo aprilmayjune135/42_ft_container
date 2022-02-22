@@ -14,6 +14,17 @@ MapTest::MapTest(): ContainerTest("map") {}
 /*********************************************/
 
 void	MapTest::testConstructor() {
+	t_int	map;
+	for (int i = 20; i > 0; --i) {
+		t_pair	pair(i, 'a' + i);
+		map.insert(pair);
+	}	
+	#ifndef STANDARD
+	map.print();
+	#endif
+	t_pair	pair1(3, 'a');
+	t_pair	pair2(2, 'a');
+	PRINT << map.value_comp()(pair1, pair2) << '\n';
 }
 
 /*********************************************/ 

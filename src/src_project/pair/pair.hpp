@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream> // TODO: to delete
 
 namespace ft {
 
@@ -12,7 +13,7 @@ struct pair {
 		second_type	second;
 
 		pair(): first(), second() {};
-		pair(const pair& pr) { *this = pr; };
+		pair(const pair& pr): first(pr.first), second(pr.second) {};
 		pair(const first_type& a, const second_type&b): first(a), second(b) {};
 
 		pair&	operator=(const pair&pr) {
@@ -22,6 +23,13 @@ struct pair {
 			}
 			return *this;
 		};
+
+		// TODO: to delete
+		friend std::ostream&	operator<<(std::ostream& o, const pair& pair) { 
+			o << pair.first << "(" << pair.second << ")";
+			return o;
+		};
+
 
 };
 

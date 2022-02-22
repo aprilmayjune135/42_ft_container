@@ -3,10 +3,10 @@
 ******************************
 >> Basic:
         (constructor)
-    [x] (1) empty container constructor (default constructor)
+    [v] (1) empty container constructor (default constructor)
     [x] (2) range constructor
-    [x] (3) copy constructor
-    [x]	(destructor)
+    [v] (3) copy constructor
+    [v]	(destructor)
     [x]	operator=
 
 >> Iterators:
@@ -16,46 +16,28 @@
     [x]	rend (regular + const)
 
 >> Capacity:
-    [x]	size
-    [x]	max_size
-    [x]	resize
-    [x]	capacity
-    [x]	empty
-    [x]	reserve
+    [v]	size
+    [v]	max_size
+    [v]	empty
 
 >> Element access:
     [x]	operator[]
-    [x]	at
-    [x]	front
-    [x]	back
 
 >> Modifiers:
-    [x]	assign
-        [x]	range
-        [x]	fill
-    [x]	push_back
-    [x]	pop_back
     [x]	insert
         [x] single element
-        [x]	fill
+        [x]	hint
         [x]	range
     [x]	erase
-        [x] single element
-        [x]	range
+        [x] 1
+        [x]	2
+        [x] 3
     [x]	swap
-    [x]	clear
+    [v]	clear
+
+>> Observer:
+    [v] key_comp
+    [v] value_comp
 
 >> Allocator:
     [x]	get_allocator
-
-******************************************
-**		Non-member function overloads	**
-******************************************
-    [x]	relational operators
-    [x]	swap
-
-**************************************
-**		Template specializations	**
-**************************************
->>	vector<bool>
-

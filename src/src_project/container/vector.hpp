@@ -108,7 +108,7 @@ class vector {
 		template <class InputIterator>
 		void	insertWithNewCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy = 0);
 
-};
+};  /* end of class vector */
 
 /*****************************************************/ 
 /**			constructor	& destructor & operator		**/ 

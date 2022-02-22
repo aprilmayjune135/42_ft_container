@@ -187,16 +187,13 @@ class Tree {
 };
 
 int main() {
-	Tree<int>	tree;
-	tree.insert(5);
-	tree.insert(4);
-	tree.insert(1);
-	tree.insert(2);
-	tree.insert(3);
-	tree.insert(6);
-	tree.insert(-1);
-	tree.insert(-2);
-	tree.print();
-	std::cout << "Height is: " << tree.getHeight() << '\n';
-	std::cout << "Balance is: " << tree.getBalance() << '\n';
+	for (int j = 10; j > 0; --j) {
+		Tree<int>	tree;
+		for (int i = j; i > 0; --i) {
+			tree.insert(i);
+		}
+		tree.print();
+	}
+	// std::cout << "Height is: " << tree.getHeight() << '\n';
+	// std::cout << "Balance is: " << tree.getBalance() << '\n';
 }
