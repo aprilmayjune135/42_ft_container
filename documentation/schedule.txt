@@ -66,7 +66,9 @@
 	- AVL implement to map 
 		https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
 	- insert, capacity
-	
+
+2022-02-23 (Wed): AVL tree
+	- implement tree.increment() for iterator++()
 
 **************************
 **		Next To Do		**

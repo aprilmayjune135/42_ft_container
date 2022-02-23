@@ -36,18 +36,6 @@ class Iterator {
 			return this->p;
 		};
 
-
-	/**** operator - prefix/postfix ++ ****/
-		Iterator&			operator++() { 
-			++p;
-			return *this;
-		};
-		const Iterator	operator++(int) {
-			const Iterator	old(*this);
-			++p;
-			return old;
-		};
-
 };
 
 } /* end of namespace ft */

@@ -60,25 +60,7 @@ Node<T>*	leftRotate(Node<T>* node) {
 }
 
 template <class T>
-Node<T>*	getLeftMost(Node<T>* root) {
-	Node<T>* temp = root;
-	while (temp && temp->height > 1) {
-		temp = temp->left;
-	}
-	return temp;
-}
-
-template <class T>
-Node<T>*	getRightMost(Node<T>* root) {
-	Node<T>* temp = root;
-	while (temp && temp->height > 1) {
-		temp = temp->right;
-	}
-	return temp;
-}
-
-template <class T>
-Node<T>*	balance(Node<T>* node, Node<T>* new_node) {
+Node<T>*	balanceNode(Node<T>* node, Node<T>* new_node) {
 	int balance_factor = getBalance(node);
 	if (balance_factor > BALANCE_MAX && new_node->value < node->left->value) {
 		return rightRotate(node);
@@ -101,7 +83,7 @@ Node<T>*	balance(Node<T>* node, Node<T>* new_node) {
 
 /* do nothing if node already exists */
 template <class T>
-Node<T>*	insert(Node<T>* node, Node<T>* new_node) {
+Node<T>*	insertNode(Node<T>* node, Node<T>* new_node) {
 	if (!node) {
 		return new_node;
 	}
@@ -109,16 +91,16 @@ Node<T>*	insert(Node<T>* node, Node<T>* new_node) {
 		return node;
 	}
 	if (new_node->value < node->value) {
-		node->left = insert(node->left, new_node);
+		node->left = insertNode(node->left, new_node);
 	}
 	else if (new_node->value > node->value) {
-		node->right = insert(node->right, new_node);
+		node->right = insertNode(node->right, new_node);
 	}
 	else {
 		return node; // do nothing if node is already exist;
 	}
 	updateHeight(node);
-	return balance(node, new_node);
+	return balanceNode(node, new_node);
 }
 
 //TODO: to delete?

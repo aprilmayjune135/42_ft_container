@@ -1,7 +1,7 @@
 #pragma once
 #include "../pair/pair.hpp"
 #include "../algorithm/NodeAVL.hpp"
-#include "../iterator/BidirectionalIterator.hpp"
+
 #include "../iterator/ReverseIterator.hpp"
 #include "../iterator/lexicographic_compare.hpp"
 #include "../utility/print_tree.hpp" //TODO: to delete
@@ -14,11 +14,10 @@ namespace algorithm = AVL;
 
 template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator< pair<const Key, T> > >
 class map {
-	public:
-
 	/*****************************************************/ 
 	/**					member types					**/ 
 	/*****************************************************/
+	public:
 		typedef Key										key_type;
 		typedef T										mapped_type;
 		typedef pair<const key_type, mapped_type>		value_type;
@@ -71,25 +70,6 @@ class map {
 		void	print() const {
 			utility::printNode(root, NULL, false);
 		};
-	
-	private:
-		node_type*	createNode(const value_type& val) {
-			node_type	node_value(val);
-			node_type*	new_node = node_allocator.allocate(1);
-			node_allocator.construct(new_node, node_value);
-			data_size++;
-			return new_node;
-		};
-
-		void		deleteNode(node_type* node) {
-			if (node) {
-				deleteNode(node->left);
-				deleteNode(node->right);
-				node_allocator.destroy(node);
-				node_allocator.deallocate(node, 1);
-				data_size--;
-			}
-		}
 
 
 	public:
@@ -125,9 +105,7 @@ class map {
 
 
 		/**** detructor ****/
-		~map() {
-			deleteNode(root);
-		};
+		~map() {};
 
 		/**** operator = ****/
 		map&	operator=(const map& rhs) {
