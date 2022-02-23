@@ -21,10 +21,12 @@ void	MapTest::testConstructor() {
 	}	
 	#ifndef STANDARD
 	map.print();
+	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
+		PRINT << *it << ' ';
+	}
+	PRINT << '\n';
 	#endif
-	t_pair	pair1(3, 'a');
-	t_pair	pair2(2, 'a');
-	PRINT << map.value_comp()(pair1, pair2) << '\n';
+
 }
 
 /*********************************************/ 

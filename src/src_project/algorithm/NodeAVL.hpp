@@ -60,6 +60,24 @@ Node<T>*	leftRotate(Node<T>* node) {
 }
 
 template <class T>
+Node<T>*	getLeftMost(Node<T>* root) {
+	Node<T>* temp = root;
+	while (temp && temp->height > 1) {
+		temp = temp->left;
+	}
+	return temp;
+}
+
+template <class T>
+Node<T>*	getRightMost(Node<T>* root) {
+	Node<T>* temp = root;
+	while (temp && temp->height > 1) {
+		temp = temp->right;
+	}
+	return temp;
+}
+
+template <class T>
 Node<T>*	balance(Node<T>* node, Node<T>* new_node) {
 	int balance_factor = getBalance(node);
 	if (balance_factor > BALANCE_MAX && new_node->value < node->left->value) {

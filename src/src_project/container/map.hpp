@@ -140,6 +140,41 @@ class map {
 	/*****************************************************/ 
 	/**						iterator					**/ 
 	/*****************************************************/
+		iterator	begin() {
+			node_type*	temp = algorithm::getLeftMost<value_type>(root);
+			return iterator(&(temp->value));
+		};
+
+		const_iterator	begin() const {
+			node_type*	temp = algorithm::getLeftMost<value_type>(root);
+			return const_iterator(&(temp->value));
+		};
+
+		iterator	end() {
+			node_type*	temp = algorithm::getRightMost<value_type>(root);
+			return iterator(&(temp->value));
+		};
+
+		const_iterator	end() const {
+			node_type*	temp = algorithm::getRightMost<value_type>(root);
+			return const_iterator(&(temp->value));
+		};
+
+		reverse_iterator	rbegin() {
+
+		};
+
+		const_reverse_iterator	rbegin() const {
+
+		};
+
+		reverse_iterator	rend() {
+
+		};
+
+		const_reverse_iterator	rend() const {
+
+		};
 
 
 	/*****************************************************/ 
@@ -163,7 +198,7 @@ class map {
 		pair<iterator, bool>	insert(const value_type& val) {
 			algorithm::Node<value_type>*	new_node = createNode(val);
 			root = algorithm::insert<value_type>(root, new_node);
-			return make_pair<iterator, bool>(NULL, true);
+			return make_pair<iterator, bool>(NULL, true); // TODO:: to add iterator
 		};
 
 		/**** clear ****/
