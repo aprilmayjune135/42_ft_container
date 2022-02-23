@@ -1,28 +1,31 @@
 #pragma once
 #include "NodeAVL.hpp"
-#include <memory>
+#include "iterator_traits.hpp"
 #include "../pair/pair.hpp"
+
+#include <memory>
 #define BALANCE_MIN -1
 #define BALANCE_MAX 1
 
 namespace AVL {
 
-template <class T, class Compare, class Alloc >
+template <class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 class Tree {
 	/*****************************************************/ 
 	/**					member types					**/ 
 	/*****************************************************/
 	public:
-		typedef Tree<T, Alloc>		tree_type;
+		typedef Tree<T, Compare, Alloc>		tree_type;
 		typedef	T					value_type;
 		typedef Node<value_type>	node_type;
-		typedef node_type*			pointer;
-		typedef const node_type*	const_pointer;
-		typedef node_type&			reference;
-		typedef const ndoe_type&	const_reference;
+		typedef node_type*			node_pointer;
+		typedef const node_type*	const_node_pointer;
+		typedef node_type&			node_reference;
+		typedef const ndoe_type&	const_node_reference;
 		typedef std::size_t			size_type;
 		typedef Compare				compare_type;
-		typedef Alloc				allocator_type;
+		typedef Alloc				value_allocator_type;
+		typedef typename Alloc::template rebind<node_type>::other allocator_type;
 
 	/*****************************************************/ 
 	/**					key members						**/ 
@@ -60,12 +63,35 @@ class Tree {
 	/**			constructor	& destructor & operator		**/ 
 	/*****************************************************/
 	public:
-		Tree(): root(NULL) {};
-		Tree(pointer p): allocator(), root(p) {};
-		Tree(const tree_type& src){ *this = src };
+		/**** empty constructor ****/
+		explicit Tree(const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
+			value_compare(comp),
+			allocator(alloc),
+			root(NULL),
+			tree_size(0) {};
+
+		/**** range constructor ****/
+		template <class InputIterator>
+		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type():
+			value_compare(comp),
+			allocator(alloc) {
+				// TODO
+		};
+
+
+		/**** copy constructor ****/
+		Tree(const tree_type& src):
+			value_compare(src.comp),
+			allocator(src.alloc),
+			root(NULL),
+			tree_size(0) {
+				*this = src;
+		};
+		
 		~Tree() {
 			deleteNode(root);
 		};
+
 		tree_type&	operator=(const tree_type& rhs) {
 			//TODO:
 		};
@@ -73,7 +99,11 @@ class Tree {
 	/*****************************************************/ 
 	/**					member function					**/ 
 	/*****************************************************/
+		bool	empty() const { return tree_size == 0; };
+		
 		size_type	size() const { return tree_size; };
+
+		size_type	max_size() const { 	return allocator.max_size(); };
 
 		pair<pointer, bool>	insert(const value_type& value) {
 			if (false) {

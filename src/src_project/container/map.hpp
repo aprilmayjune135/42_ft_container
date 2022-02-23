@@ -1,7 +1,6 @@
 #pragma once
 #include "../pair/pair.hpp"
-#include "../algorithm/NodeAVL.hpp"
-
+#include "../algorithm/TreeAVL.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../iterator/lexicographic_compare.hpp"
 #include "../utility/print_tree.hpp" //TODO: to delete
@@ -34,7 +33,6 @@ class map {
 		typedef typename iterator_traits<iterator>::difference_type	difference_type;
 		typedef std::size_t								size_type;
 		typedef algorithm::Node<value_type>				node_type;
-		typedef typename Alloc::template rebind<node_type>::other node_allocator_type;
 
 		class value_compare {
 			friend class map;
@@ -50,17 +48,16 @@ class map {
 				};
 		};
 
+		typedef algorithm::Tree<value_type, value_compare, node_allocator_type> tree_type;
 
 
 	/*****************************************************/ 
 	/**					key members						**/ 
 	/*****************************************************/
 	private:
-		key_compare						compare;
-		allocator_type					allocator;
-		node_allocator_type				node_allocator;
-		algorithm::Node<value_type>*	root;
-		size_type						data_size;
+		key_compare				compare;
+		allocator_type			allocator;
+		tree_type				tree;
 	
 	/*****************************************************/ 
 	/**				private member function				**/ 
@@ -68,7 +65,7 @@ class map {
 	public:
 	// TODO: todelete
 		void	print() const {
-			utility::printNode(root, NULL, false);
+			utility::printNode(tree, NULL, false);
 		};
 
 
@@ -80,29 +77,22 @@ class map {
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 			compare(comp),
 			allocator(alloc),
-			root(NULL),
-			data_size(0) {};
+			tree(value_comp()) {}; // TODO: what about alloc?
 
 		/**** range constructor ****/
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 			compare(comp),
 			allocator(alloc),
-			root(NULL),
-			data_size(0) {
-				// TODO
-		};
-
+			tree(first, last, value_comp()) {};  // TODO: what about alloc?
 
 		/**** copy constructor ****/
 		map(const map& src):
 			compare(src.compare),
 			allocator(src.allocator),
-			root(NULL),
-			data_size(0) {
+			tree() {  // TODO: what about comp and alloc?
 				*this = src;
 		};
-
 
 		/**** detructor ****/
 		~map() {};
@@ -119,50 +109,46 @@ class map {
 	/**						iterator					**/ 
 	/*****************************************************/
 		iterator	begin() {
-			node_type*	temp = algorithm::getLeftMost<value_type>(root);
-			return iterator(&(temp->value));
+			return iterator(&(tree.minimum()->value));
 		};
 
 		const_iterator	begin() const {
-			node_type*	temp = algorithm::getLeftMost<value_type>(root);
-			return const_iterator(&(temp->value));
+			return const_iterator(&(tree.minimum()->value));
 		};
 
 		iterator	end() {
-			node_type*	temp = algorithm::getRightMost<value_type>(root);
-			return iterator(&(temp->value));
+			return iterator(tree.maximum() + 1);
 		};
 
 		const_iterator	end() const {
-			node_type*	temp = algorithm::getRightMost<value_type>(root);
-			return const_iterator(&(temp->value));
+			return const_iterator(tree.maximum() + 1);
 		};
 
 		reverse_iterator	rbegin() {
-
+			return reverse_iterator(end());
 		};
 
 		const_reverse_iterator	rbegin() const {
-
+			return const_reverse_iterator(end());
 		};
 
 		reverse_iterator	rend() {
-
+			return reverse_iterator(begin());
 		};
 
 		const_reverse_iterator	rend() const {
-
+			return const_reverse_iterator(begin());
 		};
 
 
 	/*****************************************************/ 
 	/**						capacity					**/ 
 	/*****************************************************/
-		bool	empty() const { return data_size == 0; };
+		bool	empty() const { return tree.empty(); };
 
-		size_type	size() const { return data_size; };
+		size_type	size() const { return  tree.size(); };
 
-		size_type	max_size() const { 	return allocator.max_size(); }; //TODO: node_allocator???
+		size_type	max_size() const { 	return tree.max_size(); };
 
 	/*****************************************************/ 
 	/**					element access					**/ 
@@ -175,12 +161,12 @@ class map {
 		/**** insert ****/
 		pair<iterator, bool>	insert(const value_type& val) {
 			algorithm::Node<value_type>*	new_node = createNode(val);
-			root = algorithm::insert<value_type>(root, new_node);
+			tree = algorithm::insert<value_type>(tree, new_node);
 			return make_pair<iterator, bool>(NULL, true); // TODO:: to add iterator
 		};
 
 		/**** clear ****/
-		void clear() { deleteNode(root); };
+		void clear() { tree.clear(); };
 	
 
 	/*****************************************************/ 

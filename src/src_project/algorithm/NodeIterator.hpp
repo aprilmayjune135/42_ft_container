@@ -1,30 +1,30 @@
 #pragma once
-#include "iterator_traits.hpp"
-#include "BidrectionalIterator.hpp"
-#include "../algorithm/NodeAVL.hpp"
+#include "../iterator/iterator_traits.hpp"
+#include "NodeAVL.hpp"
 
-namespace ft{
+namespace ATL{
 
-template <class T, class Category = bidirectional_iterator_tag>
-class NodeIterator : public BidirectionalIterator<Category, T> {
+template <class T>
+class NodeIterator {
 	public:
 	/**** member types ****/
-		typedef T											pair_type;
-		typedef Node<T>										node_type;
-		typedef	BidirectionalIterator<node_type, Category>	base_iterator;
-		typedef typename base_iterator::difference_type		difference_type;
-		typedef typename base_iterator::pointer				pointer;
-		typedef typename base_iterator::const_pointer		const_pointer;
-		typedef typename base_iterator::reference			reference;
-		typedef typename base_iterator::const_reference		const_reference;
-		typedef typename base_iterator::iterator_category	iterator_category;
-		typedef NodeIterator<const T>						const_iterator;
+		typedef std::ptrdiff_t				difference_type;
+		typedef T							value_type
+		typedef T*							pointer;
+		typedef T&							reference;
+		typedef bidirectional_iterator_tag	iterator_category;
+		typedef NodeIterator<const T>		const_iterator;
+		typedef Node<T>*					base_pointer;
 	
+	private:
+		base_pointer	p;
+
+	public:
 	/**** constructor & destructor ****/
-		NodeIterator(): base_iterator() {};
+		NodeIterator(): p(NULL) {};
 		NodeIterator(const NodeIterator& src) { *this = src; };
-		NodeIterator(pointer p_src): base_iterator(p_src) {};
-		virtual ~NodeIterator() {};
+		NodeIterator(base_pointer p_src): p(p_src) {};
+		~NodeIterator() {};
 
 	/**** operator - equal ****/
 		NodeIterator&	operator=(const NodeIterator& rhs) {
@@ -69,4 +69,4 @@ class NodeIterator : public BidirectionalIterator<Category, T> {
 
 };
 
-} /* end of namespace ft */
+} /* end of namespace ATL */

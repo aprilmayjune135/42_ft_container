@@ -73,6 +73,7 @@
 		"utility": "cpp",
 		"variant": "cpp",
 		"vector": "cpp",
-		"filesystem": "cpp"
+		"filesystem": "cpp",
+		"memory_resource": "cpp"
 	}
 }

@@ -68,12 +68,20 @@
 	- insert, capacity
 
 2022-02-23 (Wed): AVL tree
-	- implement tree.increment() for iterator++()
+	- implement tree.increment() for iterator++() -> unseccessful
+	https://gcc.gnu.org/onlinedocs/gcc-4.6.3/libstdc++/api/a01067_source.html
+	
 
 **************************
 **		Next To Do		**
 **************************
-- study Binary Balance Tree, Red-Black Tree
+https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
+	- in node, implement parent
+	- in node, change rotate
+	- in tree, change increment/decrement
+	- in iterator, implement ++()
+	- in map, implement Iterator
+
 - is_integral
 
 
