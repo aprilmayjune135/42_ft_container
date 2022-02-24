@@ -13,13 +13,14 @@ template <class T>
 struct Node {
 	Node<T>*	left;
 	Node<T>*	right;
+	Node<T>*	parent;
 	T			value;
 	int			height;
-	Node(const T& src): left(NULL), right(NULL), value(src), height(1) {};
+	Node(const T& src): left(NULL), right(NULL), parent(NULL), value(src), height(1) {};
 };
 
 template <class T>
-int	height(Node<T>*	node) {
+int	height(Node<T>* node) {
 	if (!node) {
 		return 0;
 	}
@@ -27,7 +28,7 @@ int	height(Node<T>*	node) {
 }
 
 template <class T>
-int	getBalance(Node<T>*	node) {
+int	getBalance(Node<T>* node) {
 	return height(node->left) - height(node->right);
 }
 
@@ -37,47 +38,88 @@ void	updateHeight(Node<T>* node) {
 }
 
 template <class T>
-Node<T>*	rightRotate(Node<T>* node) {
-	Node<T>* x = node;
-	Node<T>* y = node->left;
+Node<T>* 	minimumNode(Node<T>*  node) {
+	while (node && node->height > 1) {
+		node = node->left;
+	}
+	return node;
+}
+
+template <class T>
+const Node<T>* 	minimumNode(const Node<T>*  node) {
+	while (node && node->height > 1) {
+		node = node->left;
+	}
+	return node;
+}
+
+template <class T>
+Node<T>* 	maximumNode(Node<T>*  node) {
+	while (node && node->height > 1) {
+		node = node->right;
+	}
+	return node;
+}
+
+template <class T>
+const Node<T>* 	maximumNode(const Node<T>*  node) {
+	while (node && node->height > 1) {
+		node = node->right;
+	}
+	return node;
+}
+
+template <class T>
+Node<T>*	rightRotate(Node<T>* x) {
+	Node<T>* y = x->left;
+	y->parent = x->parent;
 	x->left = y->right;
+	if (x->left) {
+		x->left->parent = x;
+	}
 	y->right = x;
+	x->parent = y;
 	updateHeight(x);
 	updateHeight(y);
 	return y;
 }
 
 template <class T>
-Node<T>*	leftRotate(Node<T>* node) {
-	Node<T>* x = node;
-	Node<T>* y = node->right;
+Node<T>*	leftRotate(Node<T>* x) {
+	Node<T>* y = x->right;
+	y->parent = x->parent;
 	x->right = y->left;
+	if (x->right) {
+		x->right->parent = x;
+	}
 	y->left = x;
+	x->parent = y;
 	updateHeight(x);
 	updateHeight(y);
 	return y;
 }
 
 template <class T>
-Node<T>*	balanceNode(Node<T>* node, Node<T>* new_node) {
+Node<T>*	balanceNode(Node<T>* node,Node<T>* new_node) {
 	int balance_factor = getBalance(node);
-	if (balance_factor > BALANCE_MAX && new_node->value < node->left->value) {
+	if (balance_factor > BALANCE_MAX && new_node->value < node->left->value) { // TODO: to add value_compare
 		return rightRotate(node);
 	}
-	else if (balance_factor < BALANCE_MIN && new_node->value > node->right->value) {
+	else if (balance_factor < BALANCE_MIN && node->right->value < new_node->value) { // TODO: to add value_compare
 		return leftRotate(node);
 	}
-	else if (balance_factor > BALANCE_MAX && new_node->value > node->left->value) {
+	else if (balance_factor > BALANCE_MAX && node->left->value < new_node->value ) { // TODO: to add value_compare
 		node->left = leftRotate(node->left);
 		return rightRotate(node);
 	}
-	else if (balance_factor < BALANCE_MIN && new_node->value < node->right->value) {
+	else if (balance_factor < BALANCE_MIN && new_node->value < node->right->value) { // TODO: to add value_compare
 		node->right = rightRotate(node->right);
 		return leftRotate(node);
 	}
 	else {
 		return node;
 	}
+
 }
 
 /* do nothing if node already exists */
@@ -89,11 +131,13 @@ Node<T>*	insertNode(Node<T>* node, Node<T>* new_node) {
 	if (!new_node) {
 		return node;
 	}
-	if (new_node->value < node->value) {
+	if (new_node->value < node->value) { // TODO: to add value_compare
 		node->left = insertNode(node->left, new_node);
+		node->left->parent = node; //TODO: to evaluate efficiency: check if node->left->parent == NULL first?
 	}
-	else if (new_node->value > node->value) {
+	else if (node->value < new_node->value) { 
 		node->right = insertNode(node->right, new_node);
+		node->right->parent = node;
 	}
 	else {
 		return node; // do nothing if node is already exist;
@@ -102,16 +146,61 @@ Node<T>*	insertNode(Node<T>* node, Node<T>* new_node) {
 	return balanceNode(node, new_node);
 }
 
-//TODO: to delete?
 template <class T>
-Node<T>*	treeSearch(Node<T>* node, const T& value) {
-	if (!node || value == node->value) {
+Node<T>*	incrementNode(Node<T>* node) {
+	if (!node) {
+		return NULL;
+	}
+	if (node->right) {
+		node = node->right;
+		while (node->left) {
+			node = node->left;
+		}
 		return node;
 	}
-	if (value < node->value) {
-		return treeSearch(node->left, value);
+	else {
+		Node<T>* temp = node->parent;
+		while (temp && node == temp->right) {
+			node = temp;
+			temp = temp->parent;
+		}
+		return temp;
 	}
-	return treeSearch(node->right, value);
 }
+
+
+template <class T>
+Node<T>*	decrementNode(Node<T>* node) {
+	if (!node) {
+		return NULL;
+	}
+	if (node->left) {
+		node = node->left;
+		while (node->right) {
+			node = node->right;
+		}
+		return node;
+	}
+	else {
+		Node<T>* temp = node->parent;
+		while (temp && node == temp->left) {
+			node = temp;
+			temp = temp->parent;
+		}
+		return temp;
+	}
+}
+
+//TODO: to delete?
+// template <class T>
+// Node<T>*	treeSearch(Node<T>* node, const T& value) {
+// 	if (!node || value == node->value) {
+// 		return node;
+// 	}
+// 	if (value < node->value) {
+// 		return treeSearch(node->left, value);
+// 	}
+// 	return treeSearch(node->right, value);
+// }
 
 } /* end of namespace AVL */

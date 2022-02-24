@@ -26,13 +26,7 @@ class map {
 		typedef const value_type&						const_reference;
 		typedef value_type*								pointer;
 		typedef const value_type*						const_pointer;
-		typedef BidirectionalIterator<value_type>		iterator;
-		typedef BidirectionalIterator<const value_type>	const_iterator;
-		typedef ReverseIterator<iterator>				reverse_iterator;
-		typedef ReverseIterator<const_iterator>			const_reverse_iterator;
-		typedef typename iterator_traits<iterator>::difference_type	difference_type;
 		typedef std::size_t								size_type;
-		typedef algorithm::Node<value_type>				node_type;
 
 		class value_compare {
 			friend class map;
@@ -48,7 +42,14 @@ class map {
 				};
 		};
 
-		typedef algorithm::Tree<value_type, value_compare, node_allocator_type> tree_type;
+		typedef algorithm::Node<value_type>				node_type;
+		typedef algorithm::Tree<value_type, value_compare, allocator_type> tree_type;
+		
+		typedef	typename tree_type::iterator				iterator;
+		typedef	typename tree_type::const_iterator			const_iterator;
+		typedef	typename tree_type::reverse_iterator		reverse_iterator;
+		typedef	typename tree_type::const_reverse_iterator	const_reverse_iterator;
+		typedef typename iterator_traits<iterator>::difference_type	difference_type;
 
 
 	/*****************************************************/ 
@@ -65,9 +66,8 @@ class map {
 	public:
 	// TODO: todelete
 		void	print() const {
-			utility::printNode(tree, NULL, false);
+			utility::printNode(tree.getRoot(), NULL, false);
 		};
-
 
 	public:
 	/*****************************************************/ 
@@ -108,38 +108,14 @@ class map {
 	/*****************************************************/ 
 	/**						iterator					**/ 
 	/*****************************************************/
-		iterator	begin() {
-			return iterator(&(tree.minimum()->value));
-		};
-
-		const_iterator	begin() const {
-			return const_iterator(&(tree.minimum()->value));
-		};
-
-		iterator	end() {
-			return iterator(tree.maximum() + 1);
-		};
-
-		const_iterator	end() const {
-			return const_iterator(tree.maximum() + 1);
-		};
-
-		reverse_iterator	rbegin() {
-			return reverse_iterator(end());
-		};
-
-		const_reverse_iterator	rbegin() const {
-			return const_reverse_iterator(end());
-		};
-
-		reverse_iterator	rend() {
-			return reverse_iterator(begin());
-		};
-
-		const_reverse_iterator	rend() const {
-			return const_reverse_iterator(begin());
-		};
-
+		iterator				begin() { return tree.begin(); };
+		const_iterator			begin() const { return tree.begin(); };
+		iterator				end() { return tree.end(); };
+		const_iterator			end() const { return tree.end(); };
+		reverse_iterator		rbegin() { return tree.rbegin(); };
+		const_reverse_iterator	rbegin() const { return tree.rbegin(); };
+		reverse_iterator		rend() { return tree.rend(); };
+		const_reverse_iterator	rend() const { return tree.rend(); };
 
 	/*****************************************************/ 
 	/**						capacity					**/ 
@@ -160,9 +136,7 @@ class map {
 	/*****************************************************/
 		/**** insert ****/
 		pair<iterator, bool>	insert(const value_type& val) {
-			algorithm::Node<value_type>*	new_node = createNode(val);
-			tree = algorithm::insert<value_type>(tree, new_node);
-			return make_pair<iterator, bool>(NULL, true); // TODO:: to add iterator
+			return tree.insert(val);
 		};
 
 		/**** clear ****/

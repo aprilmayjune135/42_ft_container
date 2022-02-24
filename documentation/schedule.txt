@@ -71,16 +71,18 @@
 	- implement tree.increment() for iterator++() -> unseccessful
 	https://gcc.gnu.org/onlinedocs/gcc-4.6.3/libstdc++/api/a01067_source.html
 	
+2022-02-24 (Thu): AVL tree
+	- fix AVL tree - iterator
+		- in node, implement parent
+		- in node, change rotate
+		- in tree, change increment/decrement
+		- in iterator, implement ++()
+		- in tree, implement Iterator
 
 **************************
 **		Next To Do		**
 **************************
 https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
-	- in node, implement parent
-	- in node, change rotate
-	- in tree, change increment/decrement
-	- in iterator, implement ++()
-	- in map, implement Iterator
 
 - is_integral
 

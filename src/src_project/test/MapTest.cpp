@@ -21,6 +21,7 @@ void	MapTest::testConstructor() {
 	}	
 	#ifndef STANDARD
 	map.print();
+	PRINT << "size: " << map.size() << '\n';
 	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
 		PRINT << *it << ' ';
 	}

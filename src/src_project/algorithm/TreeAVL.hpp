@@ -1,30 +1,30 @@
 #pragma once
-#include "NodeAVL.hpp"
-#include "iterator_traits.hpp"
+#include "NodeIterator.hpp"
+#include "../iterator/ReverseIterator.hpp"
 #include "../pair/pair.hpp"
 
 #include <memory>
-#define BALANCE_MIN -1
-#define BALANCE_MAX 1
 
 namespace AVL {
 
 template <class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
 class Tree {
+
 	/*****************************************************/ 
 	/**					member types					**/ 
 	/*****************************************************/
 	public:
-		typedef Tree<T, Compare, Alloc>		tree_type;
-		typedef	T					value_type;
-		typedef Node<value_type>	node_type;
-		typedef node_type*			node_pointer;
-		typedef const node_type*	const_node_pointer;
-		typedef node_type&			node_reference;
-		typedef const ndoe_type&	const_node_reference;
-		typedef std::size_t			size_type;
-		typedef Compare				compare_type;
-		typedef Alloc				value_allocator_type;
+		typedef Tree<T, Compare, Alloc>				tree_type;
+		typedef	T									value_type;
+		typedef Node<value_type>					node_type;
+		typedef node_type*							pointer;
+		typedef NodeIterator<value_type>			iterator;
+		typedef typename iterator::const_iterator	const_iterator;
+		typedef ft::ReverseIterator<iterator>		reverse_iterator;
+		typedef ft::ReverseIterator<const_iterator>	const_reverse_iterator;
+		typedef std::size_t							size_type;
+		typedef Compare								compare_type;
+		typedef Alloc								value_allocator_type;
 		typedef typename Alloc::template rebind<node_type>::other allocator_type;
 
 	/*****************************************************/ 
@@ -32,7 +32,7 @@ class Tree {
 	/*****************************************************/
 	private:
 		compare_type	value_compare;
-		allocaotor_type	allocator;
+		allocator_type	allocator;
 		pointer			root;
 		size_type		tree_size;
 
@@ -40,15 +40,15 @@ class Tree {
 	/**				private member function				**/ 
 	/*****************************************************/
 	private:
-		node_type*	createNode(const value_type& val) {
-			node_type*	new_node = allocator.allocate(1);
+		pointer	createNode(const value_type& val) {
+			pointer	new_node = allocator.allocate(1);
 			node_type	node_value(val);
 			allocator.construct(new_node, node_value);
 			tree_size++;
 			return new_node;
 		};
 
-		void	deleteNode(node_type* node) {
+		void	deleteNode(pointer node) {
 			if (node) {
 				deleteNode(node->left);
 				deleteNode(node->right);
@@ -72,7 +72,7 @@ class Tree {
 
 		/**** range constructor ****/
 		template <class InputIterator>
-		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type():
+		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
 			value_compare(comp),
 			allocator(alloc) {
 				// TODO
@@ -96,6 +96,44 @@ class Tree {
 			//TODO:
 		};
 
+		//TODO: to evaluate
+		const pointer	getRoot() const { return root; };
+
+	/*****************************************************/ 
+	/**						iterator					**/ 
+	/*****************************************************/
+		iterator	begin() {
+			return iterator(minimumNode(root));
+		};
+
+		const_iterator	begin() const {
+			return const_iterator(minimumNode(root));
+		};
+
+		iterator	end() {
+			return iterator(NULL);
+		};
+
+		const_iterator	end() const {
+			return const_iterator(NULL);
+		};
+
+		reverse_iterator	rbegin() {
+			return reverse_iterator(end());
+		};
+
+		const_reverse_iterator	rbegin() const {
+			return const_reverse_iterator(end());
+		};
+
+		reverse_iterator	rend() {
+			return reverse_iterator(begin());
+		};
+
+		const_reverse_iterator	rend() const {
+			return const_reverse_iterator(begin());
+		};
+
 	/*****************************************************/ 
 	/**					member function					**/ 
 	/*****************************************************/
@@ -105,115 +143,19 @@ class Tree {
 
 		size_type	max_size() const { 	return allocator.max_size(); };
 
-		pair<pointer, bool>	insert(const value_type& value) {
+		ft::pair<iterator, bool>	insert(const value_type& value) {
 			if (false) {
 				// TODO: to add if pair key already exist; return current node
-				return make_pair(NULL, false);
+				return make_pair(iterator(NULL), false);
 			}
 			else {
 				pointer	new_node = createNode(value);
 				root = insertNode(root, new_node);
-				return make_pair(new_node, true);
+				return make_pair(iterator(new_node), true);
 			}
 		};
 
 		void clear() { deleteNode(root); };
-
-		pointer	increment(pointer node) {
-			if (!node) {
-				return NULL;
-			}
-			if (node->right) {
-				node = node->right;
-				while (node) {
-					node = node->left;
-				}
-				return node;
-			}
-			else {
-				pointer temp = root;
-				while (temp != node) {
-					if (value_compare()(node->value, temp->value) {
-						if (temp->left == node) {
-							return temp;
-						}
-						if (maximum(temp->left) == node) {
-							return temp;
-						}
-						temp = temp->left;
-					}
-					else {
-						temp = temp->right;
-					}
-				}
-				return node + 1;
-			}
-		};
-
-		pointer	decrement(pointer node) {
-			if (!node) {
-				return NULL;
-			}
-			if (node->left) {
-				node = node->left;
-				while (node) {
-					node = node->right;
-				}
-				return node;
-			}
-			else {
-				pointer temp = root;
-				while (temp != node) {
-					if (value_compare()(temp->value, node->value) {
-						if (temp->right == node) {
-							return temp;
-						}
-						if (minimum(temp->right) == node) {
-							return temp;
-						}
-						temp = temp->right;
-					}
-					else {
-						temp = temp->left;
-					}
-				}
-				return node - 1;
-			}
-		};
-
-
-	/*****************************************************/ 
-	/**						min & max					**/ 
-	/*****************************************************/
-		pointer	minimum(pointer root) {
-			while (root && root->height > 1) {
-				root = root->left;
-			}
-			return root;
-		}
-
-		const_pointer	minimum(const_pointer root) {
-			while (root && root->height > 1) {
-				root = root->left;
-			}
-			return root;
-		}
-
-		pointer	maximum(pointer root) {
-			while (root && root->height > 1) {
-				root = root->right;
-			}
-			return root;
-		}
-
-		const_pointer	maximum(const_pointer root) {
-			while (root && root->height > 1) {
-				root = root->right;
-			}
-			return root;
-		}
-
-
 };
 
 } /* end of namespace AVL */

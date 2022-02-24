@@ -1,0 +1,64 @@
+<Tree>
+
+// pointer	increment(pointer node) {
+// 	if (!node) {
+// 		return NULL;
+// 	}
+// 	if (node->right) {
+// 		node = node->right;
+// 		while (node) {
+// 			node = node->left;
+// 		}
+// 		return node;
+// 	}
+// 	else {
+// 		pointer temp = root;
+// 		while (temp != node) {
+// 			if (value_compare()(node->value, temp->value) {
+// 				if (temp->left == node) {
+// 					return temp;
+// 				}
+// 				if (maximum(temp->left) == node) {
+// 					return temp;
+// 				}
+// 				temp = temp->left;
+// 			}
+// 			else {
+// 				temp = temp->right;
+// 			}
+// 		}
+// 		return node + 1;
+// 	}
+// };
+
+// pointer	decrement(pointer node) {
+// 	if (!node) {
+// 		return NULL;
+// 	}
+// 	if (node->left) {
+// 		node = node->left;
+// 		while (node) {
+// 			node = node->right;
+// 		}
+// 		return node;
+// 	}
+// 	else {
+// 		pointer temp = root;
+// 		while (temp != node) {
+// 			if (value_compare()(temp->value, node->value) {
+// 				if (temp->right == node) {
+// 					return temp;
+// 				}
+// 				if (minimum(temp->right) == node) {
+// 					return temp;
+// 				}
+// 				temp = temp->right;
+// 			}
+// 			else {
+// 				temp = temp->left;
+// 			}
+// 		}
+// 		return node - 1;
+// 	}
+// };
+

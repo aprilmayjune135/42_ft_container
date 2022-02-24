@@ -2,17 +2,19 @@
 #include "../iterator/iterator_traits.hpp"
 #include "NodeAVL.hpp"
 
-namespace ATL{
+namespace AVL{
 
 template <class T>
 class NodeIterator {
 	public:
 	/**** member types ****/
 		typedef std::ptrdiff_t				difference_type;
-		typedef T							value_type
+		typedef T							value_type;
 		typedef T*							pointer;
 		typedef T&							reference;
-		typedef bidirectional_iterator_tag	iterator_category;
+		typedef const T*					const_pointer;
+		typedef const T&					const_reference;
+		typedef ft::bidirectional_iterator_tag	iterator_category;
 		typedef NodeIterator<const T>		const_iterator;
 		typedef Node<T>*					base_pointer;
 	
@@ -42,28 +44,28 @@ class NodeIterator {
 		friend bool	operator!=(const NodeIterator& lhs, const NodeIterator& rhs) { return lhs.p != rhs.p; };
 
 	/**** operator - dereference ****/
-		reference		operator*() { return *(this->p->value); };
-		const_reference	operator*() const { return *(this->p->value); };
-		pointer			operator->() { return this->p->value; };
-		const_pointer	operator->() const { return this->p->value; };
+		reference		operator*() { return this->p->value; };
+		const_reference	operator*() const { return this->p->value; };
+		pointer			operator->() { return &(this->p->value); };
+		const_pointer	operator->() const { return &(this->p->value); };
 
 	/**** operator - prefix/postfix ++/-- ****/
 		NodeIterator&	operator++() { 
-			++(this->p); // TODO: chante to tree.increment
+			this->p = incrementNode(this->p);
 			return *this;
 		};
 		const NodeIterator	operator++(int) {  // return const is to prevent behavior like ++++;
 			const NodeIterator	old(*this);
-			++(this->p); // TODO: chante to tree.increment
+			this->p = incrementNode(this->p);			
 			return old;
 		};
 		NodeIterator&	operator--() { 
-			--(this->p); // TODO: chante to tree.decrement
+			this->p = decrementNode(this->p);
 			return *this;
 		};
 		const NodeIterator	operator--(int) {
 			const NodeIterator	old(*this);
-			--(this->p); // TODO: chante to tree.decrement
+			this->p = decrementNode(this->p);
 			return old;
 		};
 
