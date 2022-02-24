@@ -2,15 +2,17 @@
 
 namespace AVL {
 
-bool	isSentinel(NodeBase* node) {
-	return node->height == 0;
-}
-
 int height(NodeBase* node) {
+	if (!node) {
+		return 0;
+	}
 	return node->height;
 }
 
 int	getBalance(NodeBase* node) {
+	if (!node) {
+		return 0;
+	}
 	return height(node->left) - height(node->right);
 }
 
@@ -19,28 +21,28 @@ void	updateHeight(NodeBase* node) {
 }
 
 NodeBase* 	minimumNode(NodeBase*  node) {
-	while (node->height > 1) {
+	while (node && node->height > 1) {
 		node = node->left;
 	}
 	return node;
 }
 
 const NodeBase* 	minimumNode(const NodeBase*  node) {
-	while (node->height > 1) {
+	while (node && node->height > 1) {
 		node = node->left;
 	}
 	return node;
 }
 
 NodeBase* 	maximumNode(NodeBase*  node) {
-	while (node->height > 1) {
+	while (node && node->height > 1) {
 		node = node->right;
 	}
 	return node;
 }
 
 const NodeBase* 	maximumNode(const NodeBase*  node) {
-	while (node->height > 1) {
+	while (node && node->height > 1) {
 		node = node->right;
 	}
 	return node;
@@ -50,7 +52,7 @@ NodeBase*	rightRotate(NodeBase* x) {
 	NodeBase* y = x->left;
 	y->parent = x->parent;
 	x->left = y->right;
-	if (!isSentinel(x->left)) {
+	if (x->left) {
 		x->left->parent = x;
 	}
 	y->right = x;
@@ -64,7 +66,7 @@ NodeBase*	leftRotate(NodeBase* x) {
 	NodeBase* y = x->right;
 	y->parent = x->parent;
 	x->right = y->left;
-	if (!isSentinel(x->right)) {
+	if (x->right) {
 		x->right->parent = x;
 	}
 	y->left = x;
@@ -75,16 +77,16 @@ NodeBase*	leftRotate(NodeBase* x) {
 }
 
 NodeBase*	incrementNode(NodeBase* node) {
-	if (!isSentinel(node->right)) {
+	if (node->right) {
 		node = node->right;
-		while (!isSentinel(node->left)) {
+		while (node->left) {
 			node = node->left;
 		}
 		return node;
 	}
 	else {
 		NodeBase* temp = node->parent;
-		while (node == temp->right) {
+		while (temp && node == temp->right) {
 			node = temp;
 			temp = temp->parent;
 		}
@@ -93,16 +95,16 @@ NodeBase*	incrementNode(NodeBase* node) {
 }
 
 NodeBase*	decrementNode(NodeBase* node) {
-	if (!isSentinel(node->left)) {
+	if (node->left) {
 		node = node->left;
-		while (!isSentinel(node->right)) {
+		while (node->right) {
 			node = node->right;
 		}
 		return node;
 	}
 	else {
 		NodeBase* temp = node->parent;
-		while (node == temp->left) {
+		while (temp && node == temp->left) {
 			node = temp;
 			temp = temp->parent;
 		}

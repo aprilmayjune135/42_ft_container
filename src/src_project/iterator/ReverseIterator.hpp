@@ -29,7 +29,8 @@ class ReverseIterator {
 	
 	/**** operator - dereference ****/
 		reference	operator*() const { 
-			iterator_type	temp = base_iterator - 1;
+			iterator_type	temp = base_iterator;
+			--temp;
 			return *temp;
 		};
 		pointer		operator->() const { return &(operator*()); };

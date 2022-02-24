@@ -24,7 +24,6 @@ struct Node: public NodeBase {
 	Node(NodeBase* x, const T& src): NodeBase(x, 1), value(src) {};
 };
 
-bool	isSentinel(NodeBase* node);
 int	height(NodeBase* node); 
 int	getBalance(NodeBase* node);
 void	updateHeight(NodeBase* node);
@@ -62,8 +61,11 @@ NodeBase*	balanceNode(NodeBase* node, NodeBase* new_node) {
 /* do nothing if node already exists */
 template <class T>
 NodeBase*	insertNode(NodeBase* node, NodeBase* new_node) {
-	if (isSentinel(node)) {
+	if (!node) {
 		return new_node;
+	}
+	if (!new_node) {
+		exit(5);
 	}
 	if (static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node)->value) { // TODO: to add value_compare
 		node->left = insertNode<T>(node->left, new_node);
@@ -83,7 +85,7 @@ NodeBase*	insertNode(NodeBase* node, NodeBase* new_node) {
 //TODO: to delete?
 // template <class T>
 // Node<T>*	treeSearch(Node<T>* node, const T& value) {
-// 	if (isSentinel(node) || value == node->value) {
+// 	if (!node || value == node->value) {
 // 		return node;
 // 	}
 // 	if (value < node->value) {
