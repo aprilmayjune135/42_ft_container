@@ -9,186 +9,77 @@
 
 namespace AVL {
 
-template <class T>
-struct Node {
-	Node<T>*	left;
-	Node<T>*	right;
-	Node<T>*	parent;
-	T			value;
+struct NodeBase {
+	NodeBase*	left;
+	NodeBase*	right;
+	NodeBase*	parent;
 	int			height;
-	Node(const T& src): left(NULL), right(NULL), parent(NULL), value(src), height(1) {};
+	NodeBase(NodeBase* x, int h): left(x), right(x), parent(x), height(h) {};
+	virtual ~NodeBase() {};
 };
 
 template <class T>
-int	height(Node<T>* node) {
-	if (!node) {
-		return 0;
-	}
-	return node->height;
-}
+struct Node: public NodeBase {
+	T			value;
+	Node(NodeBase* x, const T& src): NodeBase(x, 1), value(src) {};
+};
+
+int	height(NodeBase* node); 
+int	getBalance(NodeBase* node);
+void	updateHeight(NodeBase* node);
+NodeBase* 	minimumNode(NodeBase*  node);
+const NodeBase* 	minimumNode(const NodeBase*  node);
+NodeBase* 	maximumNode(NodeBase*  node);
+const NodeBase* 	maximumNode(const NodeBase*  node);
+NodeBase*	rightRotate(NodeBase* x);
+NodeBase*	leftRotate(NodeBase* x);
+NodeBase*	incrementNode(NodeBase* node);
+NodeBase*	decrementNode(NodeBase* node);
 
 template <class T>
-int	getBalance(Node<T>* node) {
-	return height(node->left) - height(node->right);
-}
-
-template <class T>
-void	updateHeight(Node<T>* node) {
-	node->height = std::max(height(node->left), height(node->right)) + 1;
-}
-
-template <class T>
-Node<T>* 	minimumNode(Node<T>*  node) {
-	while (node && node->height > 1) {
-		node = node->left;
-	}
-	return node;
-}
-
-template <class T>
-const Node<T>* 	minimumNode(const Node<T>*  node) {
-	while (node && node->height > 1) {
-		node = node->left;
-	}
-	return node;
-}
-
-template <class T>
-Node<T>* 	maximumNode(Node<T>*  node) {
-	while (node && node->height > 1) {
-		node = node->right;
-	}
-	return node;
-}
-
-template <class T>
-const Node<T>* 	maximumNode(const Node<T>*  node) {
-	while (node && node->height > 1) {
-		node = node->right;
-	}
-	return node;
-}
-
-template <class T>
-Node<T>*	rightRotate(Node<T>* x) {
-	Node<T>* y = x->left;
-	y->parent = x->parent;
-	x->left = y->right;
-	if (x->left) {
-		x->left->parent = x;
-	}
-	y->right = x;
-	x->parent = y;
-	updateHeight(x);
-	updateHeight(y);
-	return y;
-}
-
-template <class T>
-Node<T>*	leftRotate(Node<T>* x) {
-	Node<T>* y = x->right;
-	y->parent = x->parent;
-	x->right = y->left;
-	if (x->right) {
-		x->right->parent = x;
-	}
-	y->left = x;
-	x->parent = y;
-	updateHeight(x);
-	updateHeight(y);
-	return y;
-}
-
-template <class T>
-Node<T>*	balanceNode(Node<T>* node,Node<T>* new_node) {
+NodeBase*	balanceNode(NodeBase* node, NodeBase* new_node) {
 	int balance_factor = getBalance(node);
-	if (balance_factor > BALANCE_MAX && new_node->value < node->left->value) { // TODO: to add value_compare
+	if (balance_factor > BALANCE_MAX && static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node->left)->value) { // TODO: to add value_compare
 		return rightRotate(node);
 	}
-	else if (balance_factor < BALANCE_MIN && node->right->value < new_node->value) { // TODO: to add value_compare
+	else if (balance_factor < BALANCE_MIN && static_cast< Node<T>* >(node->right)->value < static_cast< Node<T>* >(new_node)->value) { // TODO: to add value_compare
 		return leftRotate(node);
 	}
-	else if (balance_factor > BALANCE_MAX && node->left->value < new_node->value ) { // TODO: to add value_compare
+	else if (balance_factor > BALANCE_MAX && static_cast< Node<T>* >(node->left)->value < static_cast< Node<T>* >(new_node)->value ) { // TODO: to add value_compare
 		node->left = leftRotate(node->left);
 		return rightRotate(node);
 	}
-	else if (balance_factor < BALANCE_MIN && new_node->value < node->right->value) { // TODO: to add value_compare
+	else if (balance_factor < BALANCE_MIN && static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node->right)->value) { // TODO: to add value_compare
 		node->right = rightRotate(node->right);
 		return leftRotate(node);
 	}
 	else {
 		return node;
 	}
-
 }
 
 /* do nothing if node already exists */
 template <class T>
-Node<T>*	insertNode(Node<T>* node, Node<T>* new_node) {
+NodeBase*	insertNode(NodeBase* node, NodeBase* new_node) {
 	if (!node) {
 		return new_node;
 	}
 	if (!new_node) {
-		return node;
+		exit(5);
 	}
-	if (new_node->value < node->value) { // TODO: to add value_compare
-		node->left = insertNode(node->left, new_node);
+	if (static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node)->value) { // TODO: to add value_compare
+		node->left = insertNode<T>(node->left, new_node);
 		node->left->parent = node; //TODO: to evaluate efficiency: check if node->left->parent == NULL first?
 	}
-	else if (node->value < new_node->value) { 
-		node->right = insertNode(node->right, new_node);
+	else if (static_cast< Node<T>* >(node)->value < static_cast< Node<T>* >(new_node)->value) { // TODO: to add value_compare
+		node->right = insertNode<T>(node->right, new_node);
 		node->right->parent = node;
 	}
 	else {
 		return node; // do nothing if node is already exist;
 	}
 	updateHeight(node);
-	return balanceNode(node, new_node);
-}
-
-template <class T>
-Node<T>*	incrementNode(Node<T>* node) {
-	if (!node) {
-		return NULL;
-	}
-	if (node->right) {
-		node = node->right;
-		while (node->left) {
-			node = node->left;
-		}
-		return node;
-	}
-	else {
-		Node<T>* temp = node->parent;
-		while (temp && node == temp->right) {
-			node = temp;
-			temp = temp->parent;
-		}
-		return temp;
-	}
-}
-
-
-template <class T>
-Node<T>*	decrementNode(Node<T>* node) {
-	if (!node) {
-		return NULL;
-	}
-	if (node->left) {
-		node = node->left;
-		while (node->right) {
-			node = node->right;
-		}
-		return node;
-	}
-	else {
-		Node<T>* temp = node->parent;
-		while (temp && node == temp->left) {
-			node = temp;
-			temp = temp->parent;
-		}
-		return temp;
-	}
+	return balanceNode<T>(node, new_node);
 }
 
 //TODO: to delete?

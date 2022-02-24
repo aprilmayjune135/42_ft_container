@@ -16,7 +16,8 @@ class NodeIterator {
 		typedef const T&					const_reference;
 		typedef ft::bidirectional_iterator_tag	iterator_category;
 		typedef NodeIterator<const T>		const_iterator;
-		typedef Node<T>*					base_pointer;
+		typedef NodeBase*					base_pointer;
+		typedef Node<T>*					node_pointer;
 	
 	private:
 		base_pointer	p;
@@ -44,10 +45,10 @@ class NodeIterator {
 		friend bool	operator!=(const NodeIterator& lhs, const NodeIterator& rhs) { return lhs.p != rhs.p; };
 
 	/**** operator - dereference ****/
-		reference		operator*() { return this->p->value; };
-		const_reference	operator*() const { return this->p->value; };
-		pointer			operator->() { return &(this->p->value); };
-		const_pointer	operator->() const { return &(this->p->value); };
+		reference		operator*() { return ((static_cast<node_pointer>(this->p))->value); };
+		const_reference	operator*() const { return ((static_cast<node_pointer>(this->p))->value); };
+		pointer			operator->() { return &((static_cast<node_pointer>(this->p))->value); };
+		const_pointer	operator->() const { return &((static_cast<node_pointer>(this->p))->value); };
 
 	/**** operator - prefix/postfix ++/-- ****/
 		NodeIterator&	operator++() { 

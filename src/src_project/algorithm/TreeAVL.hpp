@@ -2,6 +2,7 @@
 #include "NodeIterator.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../pair/pair.hpp"
+#include "../utility/print_tree.hpp" //TODO: to delete
 
 #include <memory>
 
@@ -18,6 +19,7 @@ class Tree {
 		typedef	T									value_type;
 		typedef Node<value_type>					node_type;
 		typedef node_type*							pointer;
+		typedef NodeBase*							base_pointer;
 		typedef NodeIterator<value_type>			iterator;
 		typedef typename iterator::const_iterator	const_iterator;
 		typedef ft::ReverseIterator<iterator>		reverse_iterator;
@@ -33,31 +35,34 @@ class Tree {
 	private:
 		compare_type	value_compare;
 		allocator_type	allocator;
-		pointer			root;
+		base_pointer	root;
 		size_type		tree_size;
 
 	/*****************************************************/ 
 	/**				private member function				**/ 
 	/*****************************************************/
 	private:
-		pointer	createNode(const value_type& val) {
+		base_pointer	createNode(const value_type& val) {
 			pointer	new_node = allocator.allocate(1);
-			node_type	node_value(val);
+			node_type	node_value(NULL, val);
 			allocator.construct(new_node, node_value);
 			tree_size++;
 			return new_node;
 		};
 
-		void	deleteNode(pointer node) {
+		void	deleteNode(base_pointer node) {
 			if (node) {
 				deleteNode(node->left);
 				deleteNode(node->right);
-				allocator.destroy(node);
-				allocator.deallocate(node, 1);
+				allocator.destroy(static_cast<pointer>(node));
+				allocator.deallocate(static_cast<pointer>(node), 1);
 				tree_size--;
 			}
 		};
-
+	public: //TODO: to delete
+		void	print() const {
+			utility::printNode<T>(root, NULL, false);
+		};
 
 	/*****************************************************/ 
 	/**			constructor	& destructor & operator		**/ 
@@ -74,7 +79,9 @@ class Tree {
 		template <class InputIterator>
 		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
 			value_compare(comp),
-			allocator(alloc) {
+			allocator(alloc),
+			root(NULL),
+			tree_size (0) {
 				// TODO
 		};
 
@@ -97,7 +104,7 @@ class Tree {
 		};
 
 		//TODO: to evaluate
-		const pointer	getRoot() const { return root; };
+		const pointer	getRoot() const { return static_cast<pointer>(root); };
 
 	/*****************************************************/ 
 	/**						iterator					**/ 
@@ -149,8 +156,8 @@ class Tree {
 				return make_pair(iterator(NULL), false);
 			}
 			else {
-				pointer	new_node = createNode(value);
-				root = insertNode(root, new_node);
+				base_pointer	new_node = createNode(value);
+				root = insertNode<T>(root, new_node);
 				return make_pair(iterator(new_node), true);
 			}
 		};
