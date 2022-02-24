@@ -26,6 +26,22 @@ void	MapTest::testConstructor() {
 		PRINT << *it << ' ';
 	}
 	PRINT << '\n';
+	t_int::iterator it = map.end();
+	for (int i = 0; i < 10; ++i) {
+		--it;
+		PRINT << *it << ' ';
+	}
+	PRINT << '\n';
+	for (t_int::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
+		PRINT << *it << ' ';
+	}
+	PRINT << '\n';
+	t_int::reverse_iterator rit = map.rend();
+	for (int i = 0; i < 10; ++i) {
+		--rit;
+		PRINT << *rit << ' ';
+	}
+	PRINT << '\n';
 	#endif
 
 }

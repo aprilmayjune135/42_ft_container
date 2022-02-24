@@ -14,16 +14,17 @@ struct NodeBase {
 	NodeBase*	right;
 	NodeBase*	parent;
 	int			height;
-	NodeBase(NodeBase* x, int h): left(x), right(x), parent(x), height(h) {};
+	NodeBase(NodeBase* x, NodeBase* y, int h): left(x), right(x), parent(y), height(h) {};
 	virtual ~NodeBase() {};
 };
 
 template <class T>
 struct Node: public NodeBase {
 	T			value;
-	Node(NodeBase* x, const T& src): NodeBase(x, 1), value(src) {};
+	Node(NodeBase* x, NodeBase* y, const T& src): NodeBase(x, y, 1), value(src) {};
 };
 
+bool	isSentinel(NodeBase* node);
 int	height(NodeBase* node); 
 int	getBalance(NodeBase* node);
 void	updateHeight(NodeBase* node);
