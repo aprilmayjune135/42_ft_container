@@ -9,6 +9,10 @@
 
 namespace AVL {
 
+struct NodeBase {
+
+};
+
 template <class T>
 struct Node {
 	Node<T>*	left;
