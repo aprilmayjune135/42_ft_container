@@ -3,7 +3,6 @@
 #include "../algorithm/TreeAVL.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../iterator/lexicographic_compare.hpp"
-#include "../utility/print_tree.hpp" //TODO: to delete
 #include <memory>
 #include <iostream>
 
@@ -65,9 +64,7 @@ class map {
 	/*****************************************************/
 	public:
 	// TODO: todelete
-		void	print() const {
-			utility::printNode(tree.getRoot(), NULL, false);
-		};
+		void	print() const { tree.print(); };
 
 	public:
 	/*****************************************************/ 

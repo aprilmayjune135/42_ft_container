@@ -17,13 +17,13 @@ struct Trunk {
 void	showTrunk(Trunk* p);
 
 template <class T>
-void	printNode(AVL::Node<T>* root, Trunk* prev, bool isLeft) {
-	if (!root) {
+void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
+	if (AVL::isSentinel(root)) {
 		return ;
 	}
 	std::string prev_str = "    ";
 	Trunk* trunk = new Trunk(prev, prev_str);
-	printNode(root->right, trunk, true);
+	printNode<T>(root->right, trunk, true);
 	if (!prev) {
 		trunk->str = "———";
 	}
@@ -37,13 +37,13 @@ void	printNode(AVL::Node<T>* root, Trunk* prev, bool isLeft) {
 	}
 
 	showTrunk(trunk);
-	PRINT << " " << root->value << '\n';
+	PRINT << " " << static_cast< AVL::Node<T>* >(root)->value << '\n';
 
 	if (prev) {
 		prev->str = prev_str;
 	}
 	trunk->str = "    |";
-	printNode(root->left, trunk, false);
+	printNode<T>(root->left, trunk, false);
 }
 
 } /* end of namespace utility */
