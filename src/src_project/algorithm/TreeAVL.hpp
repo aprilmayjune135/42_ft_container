@@ -35,6 +35,7 @@ class Tree {
 	private:
 		compare_type	value_compare;
 		allocator_type	allocator;
+		NodeBase		sentinel;
 		base_pointer	root;
 		size_type		tree_size;
 
@@ -44,7 +45,7 @@ class Tree {
 	private:
 		base_pointer	createNode(const value_type& val) {
 			pointer	new_node = allocator.allocate(1);
-			node_type	node_value(NULL, val);
+			node_type	node_value(NULL, &sentinel, val);
 			allocator.construct(new_node, node_value);
 			tree_size++;
 			return new_node;
@@ -72,6 +73,7 @@ class Tree {
 		explicit Tree(const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
 			value_compare(comp),
 			allocator(alloc),
+			sentinel(&sentinel, &sentinel, 0),
 			root(NULL),
 			tree_size(0) {};
 
@@ -80,6 +82,7 @@ class Tree {
 		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
 			value_compare(comp),
 			allocator(alloc),
+			sentinel(&sentinel, &sentinel, 0),
 			root(NULL),
 			tree_size (0) {
 				// TODO
@@ -90,6 +93,7 @@ class Tree {
 		Tree(const tree_type& src):
 			value_compare(src.comp),
 			allocator(src.alloc),
+			sentinel(&sentinel, &sentinel, 0),
 			root(NULL),
 			tree_size(0) {
 				*this = src;
@@ -118,11 +122,11 @@ class Tree {
 		};
 
 		iterator	end() {
-			return iterator(NULL);
+			return iterator(&sentinel);
 		};
 
 		const_iterator	end() const {
-			return const_iterator(NULL);
+			return const_iterator(&sentinel);
 		};
 
 		reverse_iterator	rbegin() {
@@ -158,6 +162,7 @@ class Tree {
 			else {
 				base_pointer	new_node = createNode(value);
 				root = insertNode<T>(root, new_node);
+				sentinel.parent = maximumNode(root); //TODO: to think of efficiency
 				return make_pair(iterator(new_node), true);
 			}
 		};

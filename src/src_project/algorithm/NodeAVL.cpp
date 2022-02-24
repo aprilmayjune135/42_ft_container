@@ -2,6 +2,10 @@
 
 namespace AVL {
 
+bool	isSentinel(NodeBase* node) {
+	return node->height == 0;
+}
+
 int height(NodeBase* node) {
 	if (!node) {
 		return 0;
@@ -77,7 +81,7 @@ NodeBase*	leftRotate(NodeBase* x) {
 }
 
 NodeBase*	incrementNode(NodeBase* node) {
-	if (node->right) {
+	if (!isSentinel(node) && node->right) {
 		node = node->right;
 		while (node->left) {
 			node = node->left;
@@ -86,7 +90,7 @@ NodeBase*	incrementNode(NodeBase* node) {
 	}
 	else {
 		NodeBase* temp = node->parent;
-		while (temp && node == temp->right) {
+		while (node == temp->right) {
 			node = temp;
 			temp = temp->parent;
 		}
@@ -95,7 +99,7 @@ NodeBase*	incrementNode(NodeBase* node) {
 }
 
 NodeBase*	decrementNode(NodeBase* node) {
-	if (node->left) {
+	if (!isSentinel(node) && node->left) {
 		node = node->left;
 		while (node->right) {
 			node = node->right;
@@ -104,7 +108,7 @@ NodeBase*	decrementNode(NodeBase* node) {
 	}
 	else {
 		NodeBase* temp = node->parent;
-		while (temp && node == temp->left) {
+		while (node == temp->left) {
 			node = temp;
 			temp = temp->parent;
 		}

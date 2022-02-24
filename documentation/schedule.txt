@@ -73,7 +73,6 @@
 	
 2022-02-24 (Thu): AVL tree
 https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
-
 	- fix AVL tree - iterator
 		- in node, implement parent
 		- in node, change rotate
@@ -82,17 +81,18 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 		https://gcc.gnu.org/onlinedocs/libstdc++/libstdc++-html-USERS-3.4/tree_8cc-source.html
 		https://stackoverflow.com/questions/17150544/what-is-the-definition-of-rb-tree-increment-in-bits-stl-tree-h
 		- in tree, implement Iterator
+	- --end(): add senitel
 
 **************************
 **		Next To Do		**
 **************************
-- to check if there's any possibility for NULL (seg fault) for Node pointer
-- is_integral
+- map: erase
 
 
 ******************************
 **		General To Do		**
 ******************************
+- is_integral
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
 - ReverseIterator, operator overload (1 template parameter or 2?)
