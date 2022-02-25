@@ -3,7 +3,11 @@
 namespace AVL {
 
 bool	isSentinel(NodeBase* node) {
-	return node->height == 0;
+	return node && node->height == 0;
+}
+
+bool	isEdge(NodeBase* node) {
+	return !node || isSentinel(node);
 }
 
 int height(NodeBase* node) {
@@ -56,7 +60,7 @@ NodeBase*	rightRotate(NodeBase* x) {
 	NodeBase* y = x->left;
 	y->parent = x->parent;
 	x->left = y->right;
-	if (x->left) {
+	if (!isEdge(x->left)) {
 		x->left->parent = x;
 	}
 	y->right = x;
@@ -70,7 +74,7 @@ NodeBase*	leftRotate(NodeBase* x) {
 	NodeBase* y = x->right;
 	y->parent = x->parent;
 	x->right = y->left;
-	if (x->right) {
+	if (!isEdge(x->right)) {
 		x->right->parent = x;
 	}
 	y->left = x;
@@ -80,10 +84,14 @@ NodeBase*	leftRotate(NodeBase* x) {
 	return y;
 }
 
+//TODO:: to EVALUATE
 NodeBase*	incrementNode(NodeBase* node) {
-	if (!isSentinel(node) && node->right) {
+	if (!node) {
+		return NULL;
+	}
+	if (!isEdge(node) && node->right) {
 		node = node->right;
-		while (node->left) {
+		while (!isEdge(node->left)) {
 			node = node->left;
 		}
 		return node;
@@ -98,10 +106,14 @@ NodeBase*	incrementNode(NodeBase* node) {
 	}
 }
 
+//TODO:: to EVALUATE
 NodeBase*	decrementNode(NodeBase* node) {
-	if (!isSentinel(node) && node->left) {
+	if (!node) {
+		return NULL;
+	}
+	if (!isEdge(node) && node->left) {
 		node = node->left;
-		while (node->right) {
+		while (!isEdge(node->right)) {
 			node = node->right;
 		}
 		return node;

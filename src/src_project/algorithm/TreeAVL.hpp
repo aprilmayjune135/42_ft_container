@@ -33,7 +33,7 @@ class Tree {
 	/**					key members						**/ 
 	/*****************************************************/
 	private:
-		compare_type	value_compare;
+		compare_type	value_comp;
 		allocator_type	allocator;
 		NodeBase		sentinel;
 		base_pointer	root;
@@ -52,7 +52,7 @@ class Tree {
 		};
 
 		void	deleteNode(base_pointer node) {
-			if (node) {
+			if (!isEdge(node)) {
 				deleteNode(node->left);
 				deleteNode(node->right);
 				allocator.destroy(static_cast<pointer>(node));
@@ -60,9 +60,39 @@ class Tree {
 				tree_size--;
 			}
 		};
+
+		base_pointer	insertNode(base_pointer node, base_pointer new_node) {
+			if (!node) {
+				return new_node;
+			}
+			if (isSentinel(node)) {
+				sentinel.parent = new_node;
+				new_node->right = &sentinel;
+				new_node->parent = &sentinel;
+				return new_node;
+			}
+			if (static_cast< pointer >(new_node)->value < static_cast< pointer >(node)->value) { // TODO: fix value_comp()
+				node->left = insertNode(node->left, new_node);
+				node->left->parent = node; //TODO: to evaluate efficiency: check if node->left->parent == NULL first?
+			}
+			else if (static_cast< pointer >(node)->value < static_cast< pointer >(new_node)->value) {  // TODO: fix value_comp()
+				if (node->right == &sentinel) {
+					new_node->right = &sentinel;
+					sentinel.parent = new_node;
+					node->right = NULL;
+				}
+				node->right = insertNode(node->right, new_node);
+				node->right->parent = node;
+			}
+			else {
+				return node; // do nothing if node is already exist;
+			}
+			updateHeight(node);
+			return balanceNode<value_type>(node, new_node);
+		}
 	public: //TODO: to delete
 		void	print() const {
-			utility::printNode<T>(root, NULL, false);
+			utility::printNode<value_type>(root, NULL, false);
 		};
 
 	/*****************************************************/ 
@@ -71,19 +101,19 @@ class Tree {
 	public:
 		/**** empty constructor ****/
 		explicit Tree(const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
-			value_compare(comp),
+			value_comp(comp),
 			allocator(alloc),
 			sentinel(&sentinel, &sentinel, 0),
-			root(NULL),
+			root(&sentinel),
 			tree_size(0) {};
 
 		/**** range constructor ****/
 		template <class InputIterator>
 		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
-			value_compare(comp),
+			value_comp(comp),
 			allocator(alloc),
 			sentinel(&sentinel, &sentinel, 0),
-			root(NULL),
+			root(&sentinel),
 			tree_size (0) {
 				// TODO
 		};
@@ -91,10 +121,10 @@ class Tree {
 
 		/**** copy constructor ****/
 		Tree(const tree_type& src):
-			value_compare(src.comp),
+			value_comp(src.comp),
 			allocator(src.alloc),
 			sentinel(&sentinel, &sentinel, 0),
-			root(NULL),
+			root(&sentinel),
 			tree_size(0) {
 				*this = src;
 		};
@@ -161,8 +191,8 @@ class Tree {
 			}
 			else {
 				base_pointer	new_node = createNode(value);
-				root = insertNode<T>(root, new_node);
-				sentinel.parent = maximumNode(root); //TODO: to think of efficiency
+				// TODO: check (!new_node)
+				root = insertNode(root, new_node);
 				return make_pair(iterator(new_node), true);
 			}
 		};

@@ -18,7 +18,7 @@ void	showTrunk(Trunk* p);
 
 template <class T>
 void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
-	if (!root) {
+	if (!root || isSentinel(root)) {
 		return ;
 	}
 	std::string prev_str = "    ";
@@ -37,8 +37,14 @@ void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
 	}
 
 	showTrunk(trunk);
-	PRINT << " " << static_cast< AVL::Node<T>* >(root)->value << '\n';
-
+	PRINT << " " << static_cast< AVL::Node<T>* >(root)->value;
+	// if (isSentinel(root->right)) {
+	// 	PRINT << '$';
+	// }
+	// if (isSentinel(root->parent)) {
+	// 	PRINT << '*';
+	// }
+	PRINT << '\n';
 	if (prev) {
 		prev->str = prev_str;
 	}
