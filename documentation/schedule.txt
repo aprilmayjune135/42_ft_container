@@ -83,6 +83,9 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 		- in tree, implement Iterator
 	- --end(): add senitel
 
+2022-02-25 (Fri):
+	- improve AVL tree insert (sentinel management)
+
 **************************
 **		Next To Do		**
 **************************

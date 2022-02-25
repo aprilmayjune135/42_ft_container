@@ -22,26 +22,50 @@ void	MapTest::testConstructor() {
 	#ifndef STANDARD
 	map.print();
 	PRINT << "size: " << map.size() << '\n';
+	PRINT << "From begin ++\n";
+	t_int::iterator itb = map.begin();
+	for (int i = 0; i < 10; ++i) {
+		++itb;
+		PRINT << *itb << ' ';
+	}
+	PRINT << '\n';
+
+	PRINT << "From end --\n";
+	t_int::iterator ite = map.end();
+	for (int i = 0; i < 10; ++i) {
+		--ite;
+		PRINT << *ite << ' ';
+	}
+	PRINT << '\n';
+
+	PRINT << "From begin ++ to end\n";
 	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
 		PRINT << *it << ' ';
 	}
 	PRINT << '\n';
-	t_int::iterator it = map.end();
-	for (int i = 0; i < 10; ++i) {
-		--it;
-		PRINT << *it << ' ';
-	}
-	PRINT << '\n';
+
+	PRINT << "From rbegin ++ to rend\n";
 	for (t_int::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
 		PRINT << *it << ' ';
 	}
 	PRINT << '\n';
-	t_int::reverse_iterator rit = map.rend();
+
+	PRINT << "From rbegin ++\n";
+	t_int::reverse_iterator rbit = map.rbegin();
 	for (int i = 0; i < 10; ++i) {
-		--rit;
-		PRINT << *rit << ' ';
+		++rbit;
+		PRINT << *rbit << ' ';
 	}
 	PRINT << '\n';
+
+	PRINT << "From rend --\n";
+	t_int::reverse_iterator reit = map.rend();
+	for (int i = 0; i < 10; ++i) {
+		--reit;
+		PRINT << *reit << ' ';
+	}
+	PRINT << '\n';
+
 	#endif
 
 }

@@ -24,6 +24,7 @@ struct Node: public NodeBase {
 	Node(NodeBase* x, NodeBase* y, const T& src): NodeBase(x, y, 1), value(src) {};
 };
 
+bool	isEdge(NodeBase* node);
 bool	isSentinel(NodeBase* node);
 int	height(NodeBase* node); 
 int	getBalance(NodeBase* node);
@@ -66,7 +67,7 @@ NodeBase*	insertNode(NodeBase* node, NodeBase* new_node) {
 		return new_node;
 	}
 	if (!new_node) {
-		exit(5);
+		return node;
 	}
 	if (static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node)->value) { // TODO: to add value_compare
 		node->left = insertNode<T>(node->left, new_node);
