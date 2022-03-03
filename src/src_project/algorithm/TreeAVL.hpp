@@ -61,6 +61,14 @@ class Tree {
 			}
 		};
 
+		int	updateTreeHeight(base_pointer node) {
+			if (!node) {
+				return 0;
+			}
+			node->height = std::max(updateTreeHeight(node->left), updateTreeHeight(node->right)) + 1;
+			return node->height;
+		};
+
 		base_pointer	insertNode(base_pointer node, base_pointer new_node) {
 			if (!node) {
 				return new_node;
@@ -68,7 +76,6 @@ class Tree {
 			if (isSentinel(node)) {
 				sentinel.parent = new_node;
 				new_node->right = &sentinel;
-				new_node->parent = &sentinel;
 				return new_node;
 			}
 			if (static_cast< pointer >(new_node)->value < static_cast< pointer >(node)->value) { // TODO: fix value_comp()
@@ -90,10 +97,6 @@ class Tree {
 			updateHeight(node);
 			return balanceNode<value_type>(node, new_node);
 		}
-	public: //TODO: to delete
-		void	print() const {
-			utility::printNode<value_type>(root, NULL, false);
-		};
 
 	/*****************************************************/ 
 	/**			constructor	& destructor & operator		**/ 
@@ -198,6 +201,15 @@ class Tree {
 		};
 
 		void clear() { deleteNode(root); };
-};
+
+	/*****************************************************/ 
+	/**					public utility					**/ 
+	/*****************************************************/
+	public:
+		void	print() const {
+			utility::printNode<value_type>(root, NULL, false);
+		};
+
+}; /* end of class TreeAVL */
 
 } /* end of namespace AVL */

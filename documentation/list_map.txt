@@ -41,3 +41,16 @@
 
 >> Allocator:
     [x]	get_allocator
+
+
+    		- parent:	last
+sentinel 	- left:		sentinel
+    		- right:	sentinel
+
+    		- parent:	sentinel
+first	 	- left:		0/x
+    		- right:	0/x
+
+    		- parent:	x
+last	 	- left:		0
+    		- right:	sentinel

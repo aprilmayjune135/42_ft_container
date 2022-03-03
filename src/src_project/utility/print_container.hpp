@@ -28,3 +28,8 @@ void	printVector(const C& vector) {
 	printVectorCapacity(vector);
 	printVectorData(vector);
 }
+
+template <class T>
+void	printPair(const T& pair) {
+	PRINT << pair.first << "(" << pair.second << ") ";
+}

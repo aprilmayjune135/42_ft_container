@@ -86,9 +86,17 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 2022-02-25 (Fri):
 	- improve AVL tree insert (sentinel management)
 
+2022-03-03 (Thu):
+	- consolidate map test between std and ft.
+
+
+
 **************************
 **		Next To Do		**
 **************************
+- solve segment fault of current test
+- update height for the entire tree in insertNode() in TreeAVL.hpp
+
 - map: erase
 
 

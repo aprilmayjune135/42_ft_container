@@ -60,30 +60,6 @@ NodeBase*	balanceNode(NodeBase* node, NodeBase* new_node) {
 	}
 }
 
-/* do nothing if node already exists */
-template <class T>
-NodeBase*	insertNode(NodeBase* node, NodeBase* new_node) {
-	if (!node) {
-		return new_node;
-	}
-	if (!new_node) {
-		return node;
-	}
-	if (static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node)->value) { // TODO: to add value_compare
-		node->left = insertNode<T>(node->left, new_node);
-		node->left->parent = node; //TODO: to evaluate efficiency: check if node->left->parent == NULL first?
-	}
-	else if (static_cast< Node<T>* >(node)->value < static_cast< Node<T>* >(new_node)->value) { // TODO: to add value_compare
-		node->right = insertNode<T>(node->right, new_node);
-		node->right->parent = node;
-	}
-	else {
-		return node; // do nothing if node is already exist;
-	}
-	updateHeight(node);
-	return balanceNode<T>(node, new_node);
-}
-
 //TODO: to delete?
 // template <class T>
 // Node<T>*	treeSearch(Node<T>* node, const T& value) {
