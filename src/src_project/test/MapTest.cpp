@@ -59,31 +59,16 @@ void	MapTest::testConstructor() {
 	// #ifndef STANDARD
 	// map.print();
 	// #endif
-
-	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
-		printPair(*it);
-	}
-	PRINT << '\n';
-
-	for (t_int::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
-		printPair(*it);
-	}
-	PRINT << '\n';
+	printMap(map);
 
 	t_int	map2(map);
+	printMap(map2);
 	t_int	map3;
 	map2 = map3;
+	printMap(map2);
 	t_int	map4(map);
 	map2 = map4;
-	if (!map2.empty()) {
-		for (t_int::iterator it = map2.begin(); it != map2.end(); ++it) {
-			printPair(*it);
-		}
-	}
-	else {
-		PRINT << "EMPTY!!! XD";
-	}
-	PRINT << '\n';
+	printMap(map2);
 
 	// t_pair_int	pair1(11, 'a');
 	// t_pair_int	pair2(0, 'a');
@@ -185,9 +170,10 @@ void	MapTest::testPerTypeCapacity(const Source< ft::map<Key, T> >& src) {
 	//TODO: to final check:
 	//Note: skip max_size() because allocator is based on node type.
 	
-	// logTitleSubSection("find");
-	// Key	k = src.data.begin()->first;
-	// printPair(*src.data.find(k)); // TODO: to figure out compilation error
+	logTitleSubSection("find");
+	Key	k = src.data.begin()->first;
+	typename t_map::const_iterator it = src.data.find(k);
+	printPair(*it);
 }
 
 
@@ -227,30 +213,17 @@ void	MapTest::testPerTypeModifiers(Source< ft::map<Key, T> > src) {
 
 	logTitleSubSection("erase - iterator");
 	src.data.erase(src.data.begin());
-	// TODO: to replace as print map;
-	for (iterator it = src.data.begin(); it != src.data.end(); ++it) {
-		printPair(*it);
-	}
-	PRINT << '\n';
-
+	printMap(src.data);
 
 	logTitleSubSection("erase - key");
 	PRINT << src.data.erase(src.data.begin()->first) << '\n';
-	// TODO: to replace as print map;
-	for (iterator it = src.data.begin(); it != src.data.end(); ++it) {
-		printPair(*it);
-	}
-	PRINT << '\n';
+	printMap(src.data);
 
 	logTitleSubSection("erase - range");
 	iterator begin = src.data.begin();
 	iterator end = src.data.end();
 	src.data.erase(++begin, --end);
-	// TODO: to replace as print map;
-	for (iterator it = src.data.begin(); it != src.data.end(); ++it) {
-		printPair(*it);
-	}
-	PRINT << '\n';
+	printMap(src.data);
 
 }
 

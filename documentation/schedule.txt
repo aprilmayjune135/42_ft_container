@@ -98,12 +98,17 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- move balanceNode() into AVLTree
 	- copy constructor & operator =
 	- deleteNode(), erase
+	- debug tree.end() const_cast => solved for printMap()
 
 **************************
 **		Next To Do		**
 **************************
-- figure out compilation error for map test find () about const_iterator
-	>> might it be solved by map copy constructor???
+	- insert-hint
+	- swap
+	- operator[]
+	- test all map
+	- implement RBT
+
 
 ******************************
 **		General To Do		**

@@ -158,6 +158,11 @@ class map {
 			return tree.insert(val);
 		};
 
+		template <class InputIterator>
+		void	insert(InputIterator first, InputIterator last) {
+			tree.insert(first, last);
+		};
+
 		/**** erase ****/
 		void	erase(iterator position) {
 			tree.erase(position);

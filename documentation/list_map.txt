@@ -4,10 +4,10 @@
 >> Basic:
         (constructor)
     [v] (1) empty container constructor (default constructor)
-    [x] (2) range constructor
+    [v] (2) range constructor
     [v] (3) copy constructor
     [v]	(destructor)
-    [x]	operator=
+    [v]	operator=
 
 >> Iterators:
     [v]	begin (regular + const)
@@ -27,11 +27,11 @@
     [x]	insert
         [v] single element
         [x]	hint
-        [x]	range
-    [x]	erase
-        [x] 1
-        [x]	2
-        [x] 3
+        [v]	range
+    [v]	erase
+        [v] 1
+        [v]	2
+        [v] 3
     [x]	swap
     [v]	clear
 

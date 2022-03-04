@@ -280,7 +280,7 @@ class Tree {
 		};
 
 		const_iterator	end() const {
-			return const_iterator(&sentinel);
+			return const_iterator(const_cast<base_pointer>(&sentinel));
 		};
 
 		reverse_iterator	rbegin() {
@@ -345,6 +345,7 @@ class Tree {
 		void	print() const {
 			utility::printNode<value_type>(root, NULL, false);
 		};
+
 
 }; /* end of class TreeAVL */
 
