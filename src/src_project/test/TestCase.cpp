@@ -106,5 +106,5 @@ void	TestCase::run() {
 	// int category = utility::getInput<int>("Choose test category (index): ", checkCategoryScope);
 	// testContainer(container, category);
 
-	testContainer(2, 1);
+	testContainer(2, 0);
 }

@@ -56,16 +56,24 @@ void	MapTest::testConstructor() {
 		t_pair_int	pair(i, 'a' + i % 26);
 		map.insert(pair);
 	}
-	#ifndef STANDARD
-	map.print();
-	#endif
+	// #ifndef STANDARD
+	// map.print();
+	// #endif
 
-	for (int i = 40; i < 50; ++i) {
-		map.erase(i);
-	}
-	#ifndef STANDARD
-	map.print();
-	#endif
+	t_int::iterator begin = map.begin();
+	t_int::iterator end = map.end();
+	++begin;
+	--end;
+
+	printPair(*begin);
+	printPair(*end);
+	PRINT << '\n';
+
+	map.erase(begin, end);
+
+	// #ifndef STANDARD
+	// map.print();
+	// #endif
 
 	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
 		printPair(*it);
@@ -224,22 +232,62 @@ void	MapTest::testElementAccess() {
 /**				modifier					**/ 
 /*********************************************/
 
+template<class Key, class T>
+void	MapTest::testPerTypeModifiers(Source< ft::map<Key, T> > src) {
+	typedef	ft::map<Key, T>	t_map;
+	typedef	typename t_map::iterator iterator;
+	logTitleSection(src.type);
+
+	logTitleSubSection("erase - iterator");
+	src.data.erase(src.data.begin());
+	// TODO: to replace as print map;
+	for (iterator it = src.data.begin(); it != src.data.end(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+
+
+	logTitleSubSection("erase - key");
+	PRINT << src.data.erase(src.data.begin()->first) << '\n';
+	// TODO: to replace as print map;
+	for (iterator it = src.data.begin(); it != src.data.end(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+
+	logTitleSubSection("erase - range");
+	iterator begin = src.data.begin();
+	iterator end = src.data.end();
+	src.data.erase(++begin, --end);
+	// TODO: to replace as print map;
+	for (iterator it = src.data.begin(); it != src.data.end(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+
+}
+
 void	MapTest::testModifiers() {
-	typedef ft::map<int, char, std::greater<int> > map_type;
-	typedef ft::pair<const int, char>		pair_type;
-	map_type	map;
-	for (std::size_t i = 0; i < 10; ++i) {
-		pair_type	pair(i, 'a' + i % 26);
-		map.insert(pair);
-	}
-	for (map_type::iterator it = map.begin(); it != map.end(); ++it) {
-		printPair(*it);
-	}
-	std::cout << '\n';
-	for (map_type::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
-		printPair(*it);
-	}
-	std::cout << '\n';
+	testPerTypeModifiers(Source<t_int>(42));
+	testPerTypeModifiers(Source<t_str>(30));
+	testPerTypeModifiers(Source<t_dummy>(100));
+	testPerTypeModifiers(Source<t_dummy_2D>(200));
+	// typedef ft::map<int, char, std::greater<int> > map_type;
+	// typedef ft::pair<const int, char>		pair_type;
+	// map_type	map;
+	// for (std::size_t i = 0; i < 10; ++i) {
+	// 	pair_type	pair(i, 'a' + i % 26);
+	// 	map.insert(pair);
+	// }
+	// for (map_type::iterator it = map.begin(); it != map.end(); ++it) {
+	// 	printPair(*it);
+	// }
+	// PRINT << '\n';
+	// for (map_type::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
+	// 	printPair(*it);
+	// }
+	// PRINT << '\n';
+
 }
 
 

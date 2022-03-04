@@ -45,4 +45,7 @@ class MapTest: public ContainerTest {
 		template<class Key, class T>
 		void	testPerTypeElementAccess(Source< ft::map<Key, T> > src);
 
+		template<class Key, class T>
+		void	testPerTypeModifiers(Source< ft::map<Key, T> > src);
+
 };

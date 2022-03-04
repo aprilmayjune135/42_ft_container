@@ -169,8 +169,10 @@ class map {
 
 		void	erase(iterator first, iterator last) {
 			while (first != last) {
+				iterator temp = first;
+				++temp;
 				tree.erase(first);
-				++first;
+				first = temp;
 			}
 		}
 
