@@ -335,6 +335,7 @@ class Tree {
 		void clear() {
 			clearTree(root);
 			sentinel.parent = &sentinel;
+			root = &sentinel;
 		};
 
 	/*****************************************************/ 

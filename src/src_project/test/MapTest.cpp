@@ -60,21 +60,6 @@ void	MapTest::testConstructor() {
 	// map.print();
 	// #endif
 
-	t_int::iterator begin = map.begin();
-	t_int::iterator end = map.end();
-	++begin;
-	--end;
-
-	printPair(*begin);
-	printPair(*end);
-	PRINT << '\n';
-
-	map.erase(begin, end);
-
-	// #ifndef STANDARD
-	// map.print();
-	// #endif
-
 	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
 		printPair(*it);
 	}
@@ -85,18 +70,20 @@ void	MapTest::testConstructor() {
 	}
 	PRINT << '\n';
 
-	// t_int	map2(map);
-	// t_int map3;
-	// map2 = map3;
-	// if (!map2.empty()) {
-	// 	for (t_int::iterator it = map2.begin(); it != map2.end(); ++it) {
-	// 		printPair(*it);
-	// 	}
-	// }
-	// else {
-	// 	PRINT << "EMPTY!!! XD";
-	// }
-	// PRINT << '\n';
+	t_int	map2(map);
+	t_int	map3;
+	map2 = map3;
+	t_int	map4(map);
+	map2 = map4;
+	if (!map2.empty()) {
+		for (t_int::iterator it = map2.begin(); it != map2.end(); ++it) {
+			printPair(*it);
+		}
+	}
+	else {
+		PRINT << "EMPTY!!! XD";
+	}
+	PRINT << '\n';
 
 	// t_pair_int	pair1(11, 'a');
 	// t_pair_int	pair2(0, 'a');

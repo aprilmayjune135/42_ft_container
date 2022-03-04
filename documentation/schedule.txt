@@ -102,11 +102,8 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 **************************
 **		Next To Do		**
 **************************
-- operator = after copy constructor has seg fault
 - figure out compilation error for map test find () about const_iterator
 	>> might it be solved by map copy constructor???
-- map: erase
-
 
 ******************************
 **		General To Do		**
