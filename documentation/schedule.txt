@@ -93,12 +93,19 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- find()
 
 2022-03-04 (Fri): map
-	-
+	- get_allocator()
+	- sort out compare in AVLTree
+	- move balanceNode() into AVLTree
+	- copy constructor & operator =
+	- deleteNode(), erase
 
 **************************
 **		Next To Do		**
 **************************
-- figure out compilation error for map test find ()
+- deleteNode(): when node->height > 1, how to delete??? 
+- operator = after copy constructor has seg fault
+- figure out compilation error for map test find () about const_iterator
+	>> might it be solved by map copy constructor???
 - map: erase
 
 
@@ -110,7 +117,7 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
 - ReverseIterator, operator overload (1 template parameter or 2?)
 - vector <bool>
-- exception implement in vector
+- exception implement in vector, map
 
 
 ******************************

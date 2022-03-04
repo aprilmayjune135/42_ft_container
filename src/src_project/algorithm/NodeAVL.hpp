@@ -4,9 +4,6 @@
 #include <algorithm>
 #include <memory>
 
-#define BALANCE_MIN -1
-#define BALANCE_MAX 1
-
 namespace AVL {
 
 struct NodeBase {
@@ -22,12 +19,16 @@ template <class T>
 struct Node: public NodeBase {
 	T			value;
 	Node(NodeBase* x, NodeBase* y, const T& src): NodeBase(x, y, 1), value(src) {};
+	~Node() {};
 };
 
 bool	isEdge(NodeBase* node);
 bool	isSentinel(NodeBase* node);
+bool	notLeaf(NodeBase* node);
 int	height(NodeBase* node); 
 int	getBalance(NodeBase* node);
+bool	isLeftHeavy(int balance_factor);
+bool	isRightHeavy(int balance_factor);
 void	updateHeight(NodeBase* node);
 NodeBase* 	minimumNode(NodeBase*  node);
 const NodeBase* 	minimumNode(const NodeBase*  node);
@@ -37,28 +38,6 @@ NodeBase*	rightRotate(NodeBase* x);
 NodeBase*	leftRotate(NodeBase* x);
 NodeBase*	incrementNode(NodeBase* node);
 NodeBase*	decrementNode(NodeBase* node);
-
-template <class T>
-NodeBase*	balanceNode(NodeBase* node, NodeBase* new_node) {
-	int balance_factor = getBalance(node);
-	if (balance_factor > BALANCE_MAX && static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node->left)->value) { // TODO: to add value_compare
-		return rightRotate(node);
-	}
-	else if (balance_factor < BALANCE_MIN && static_cast< Node<T>* >(node->right)->value < static_cast< Node<T>* >(new_node)->value) { // TODO: to add value_compare
-		return leftRotate(node);
-	}
-	else if (balance_factor > BALANCE_MAX && static_cast< Node<T>* >(node->left)->value < static_cast< Node<T>* >(new_node)->value ) { // TODO: to add value_compare
-		node->left = leftRotate(node->left);
-		return rightRotate(node);
-	}
-	else if (balance_factor < BALANCE_MIN && static_cast< Node<T>* >(new_node)->value < static_cast< Node<T>* >(node->right)->value) { // TODO: to add value_compare
-		node->right = rightRotate(node->right);
-		return leftRotate(node);
-	}
-	else {
-		return node;
-	}
-}
 
 //TODO: to delete?
 // template <class T>

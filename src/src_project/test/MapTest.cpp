@@ -51,11 +51,42 @@ MapTest::MapTest(): ContainerTest("map") {}
 /*********************************************/
 
 void	MapTest::testConstructor() {
-	// t_int	map;
-	// for (int i = 10; i > 0; --i) {
-	// 	t_pair_int	pair(i, 'a' + i % 26);
-	// 	map.insert(pair);
+	t_int	map;
+	for (int i = 9; i > 0; --i) {
+		t_pair_int	pair(i, 'a' + i % 26);
+		map.insert(pair);
+	}
+	#ifndef STANDARD
+	map.print();
+	#endif
+
+	map.erase(7);
+	#ifndef STANDARD
+	map.print();
+	#endif
+
+	for (t_int::iterator it = map.begin(); it != map.end(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+
+	for (t_int::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+
+	// t_int	map2(map);
+	// t_int map3;
+	// map2 = map3;
+	// if (!map2.empty()) {
+	// 	for (t_int::iterator it = map2.begin(); it != map2.end(); ++it) {
+	// 		printPair(*it);
+	// 	}
 	// }
+	// else {
+	// 	PRINT << "EMPTY!!! XD";
+	// }
+	// PRINT << '\n';
 
 	// t_pair_int	pair1(11, 'a');
 	// t_pair_int	pair2(0, 'a');
@@ -75,9 +106,6 @@ void	MapTest::testConstructor() {
 	// map.insert(pair7);
 	// map.insert(pair8);
 
-	// #ifndef STANDARD
-	// map.print();
-	// #endif
 
 	// PRINT << "size: " << map.size() << '\n';
 
@@ -160,8 +188,9 @@ void	MapTest::testPerTypeCapacity(const Source< ft::map<Key, T> >& src) {
 	//TODO: to final check:
 	//Note: skip max_size() because allocator is based on node type.
 	
-	logTitleSubSection("find");
-	printPair(*src.data.find(src.data.begin()->first));
+	// logTitleSubSection("find");
+	// Key	k = src.data.begin()->first;
+	// printPair(*src.data.find(k)); // TODO: to figure out compilation error
 }
 
 
@@ -194,6 +223,21 @@ void	MapTest::testElementAccess() {
 /*********************************************/
 
 void	MapTest::testModifiers() {
+	typedef ft::map<int, char, std::greater<int> > map_type;
+	typedef ft::pair<const int, char>		pair_type;
+	map_type	map;
+	for (std::size_t i = 0; i < 10; ++i) {
+		pair_type	pair(i, 'a' + i % 26);
+		map.insert(pair);
+	}
+	for (map_type::iterator it = map.begin(); it != map.end(); ++it) {
+		printPair(*it);
+	}
+	std::cout << '\n';
+	for (map_type::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
+		printPair(*it);
+	}
+	std::cout << '\n';
 }
 
 

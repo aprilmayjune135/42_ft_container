@@ -1,4 +1,7 @@
 #include "NodeAVL.hpp"
+#define BALANCE_MIN -1
+#define BALANCE_MAX 1
+
 
 namespace AVL {
 
@@ -8,6 +11,18 @@ bool	isSentinel(NodeBase* node) {
 
 bool	isEdge(NodeBase* node) {
 	return !node || isSentinel(node);
+}
+
+bool	notLeaf(NodeBase* node) {
+	return node && node->height > 1;
+}
+
+bool	isLeftHeavy(int balance_factor){
+	return balance_factor > BALANCE_MAX;
+}
+
+bool	isRightHeavy(int balance_factor){
+	return balance_factor < BALANCE_MIN;
 }
 
 int height(NodeBase* node) {
@@ -29,28 +44,14 @@ void	updateHeight(NodeBase* node) {
 }
 
 NodeBase* 	minimumNode(NodeBase*  node) {
-	while (node && node->height > 1 && node->left) {
-		node = node->left;
-	}
-	return node;
-}
-
-const NodeBase* 	minimumNode(const NodeBase*  node) {
-	while (node && node->height > 1 && node->left) {
+	while (notLeaf(node) && node->left) {
 		node = node->left;
 	}
 	return node;
 }
 
 NodeBase* 	maximumNode(NodeBase*  node) {
-	while (node && node->height > 1 && !isEdge(node->right)) {
-		node = node->right;
-	}
-	return node;
-}
-
-const NodeBase* 	maximumNode(const NodeBase*  node) {
-	while (node && node->height > 1 && !isEdge(node->right)) {
+	while (notLeaf(node) && !isEdge(node->right)) {
 		node = node->right;
 	}
 	return node;

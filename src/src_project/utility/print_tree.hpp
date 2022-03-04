@@ -39,13 +39,13 @@ void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
 	showTrunk(trunk);
 	PRINT << " ";
 	printPair(static_cast< AVL::Node<T>* >(root)->value);
-	PRINT << static_cast< AVL::Node<T>* >(root)->height;
-	// if (isSentinel(root->right)) {
-	// 	PRINT << '$';
-	// }
-	// if (isSentinel(root->parent)) {
-	// 	PRINT << '*';
-	// }
+	// PRINT << static_cast< AVL::Node<T>* >(root)->height;
+	if (isSentinel(root->right)) {
+		PRINT << '$';
+	}
+	if (isSentinel(root->parent)) {
+		PRINT << '*';
+	}
 	PRINT << '\n';
 	if (prev) {
 		prev->str = prev_str;

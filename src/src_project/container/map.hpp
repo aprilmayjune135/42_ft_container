@@ -5,6 +5,7 @@
 #include "../iterator/lexicographic_compare.hpp"
 #include <memory>
 #include <iostream>
+#include <functional>
 
 namespace ft {
 
@@ -27,13 +28,13 @@ class map {
 		typedef const value_type*						const_pointer;
 		typedef std::size_t								size_type;
 
-		class value_compare {
+		class value_compare: public std::binary_function<value_type, value_type, bool> {
 			friend class map;
 			protected:
 				Compare	comp;
 				value_compare(Compare c): comp(c) {};
 			public:
-				typedef bool result_type;
+				typedef bool 		result_type;
 				typedef value_type	first_argument_type;
 				typedef value_type	second_argument_type;
 				bool operator() (const value_type& x, const value_type& y) const {
@@ -93,29 +94,27 @@ class map {
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 			compare(comp),
 			allocator(alloc),
-			tree(value_comp()) {}; // TODO: what about alloc?
+			tree(value_comp(), allocator) {};
 
 		/**** range constructor ****/
 		template <class InputIterator>
 		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 			compare(comp),
 			allocator(alloc),
-			tree(first, last, value_comp()) {};  // TODO: what about alloc?
+			tree(first, last, value_comp(), allocator) {};	
 
 		/**** copy constructor ****/
 		map(const map& src):
 			compare(src.compare),
 			allocator(src.allocator),
-			tree(src.value_comp()) {  // TODO: what about comp and alloc?
-				*this = src;
-		};
+			tree(value_comp(), allocator) { *this = src; };
 
 		/**** detructor ****/
 		~map() {};
 
 		/**** operator = ****/
 		map&	operator=(const map& rhs) {
-			//TODO
+			tree = rhs.tree;
 			return *this;
 		};
 
@@ -159,6 +158,22 @@ class map {
 			return tree.insert(val);
 		};
 
+		/**** erase ****/
+		void	erase(iterator position) {
+			tree.erase(position);
+		}
+
+		size_type	erase(const key_type& k) {
+			return tree.erase(find(k));
+		}
+
+		void	erase(iterator first, iterator last) {
+			while (first != last) {
+				tree.erase(first);
+				++first;
+			}
+		}
+
 		/**** clear ****/
 		void clear() { tree.clear(); };
 	
@@ -194,7 +209,7 @@ class map {
 	/*****************************************************/ 
 	/**						allocator					**/ 
 	/*****************************************************/
-
+		allocator_type	get_allocator() const { return allocator; };
 
 }; /* end of class map */
 

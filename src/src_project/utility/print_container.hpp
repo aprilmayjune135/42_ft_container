@@ -33,3 +33,30 @@ template <class T>
 void	printPair(const T& pair) {
 	PRINT << pair.first << "(" << pair.second << ") ";
 }
+
+template <class C>
+void	printMapSize(const C& map) {
+	PRINT << "size " << map.size() << '\n';
+}
+
+template <class C>
+void	printMapData(const C& map) {
+	for (typename C::const_iterator it = map.begin(); it != map.end(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+}
+
+template <class C>
+void	prinMaprDataReverse(const C& map) {
+	for (typename C::const_reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
+		printPair(*it);
+	}
+	PRINT << '\n';
+}
+
+template <class C>
+void	printMap(const C& map) {
+	printMapSize(map);
+	printMapData(map);
+}

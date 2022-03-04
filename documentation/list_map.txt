@@ -40,7 +40,7 @@
     [v] value_comp
 
 >> Allocator:
-    [x]	get_allocator
+    [v]	get_allocator
 
 
     		- parent:	last
