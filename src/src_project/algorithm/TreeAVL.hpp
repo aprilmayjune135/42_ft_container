@@ -5,6 +5,7 @@
 #include "../utility/print_tree.hpp" //TODO: to delete
 
 #include <memory>
+#include <algorithm>
 
 namespace AVL {
 
@@ -135,6 +136,40 @@ class Tree {
 			}
 		}
 
+		void	swapNode(base_pointer x, base_pointer y) {
+			// swap parent
+			if (x->parent->left == x) {
+				x->parent->left = y;
+			}
+			else if (x->parent->right == x) {
+				x->parent->right = y;
+			}
+			if (y->parent->left == y) {
+				y->parent->left = x;
+			}
+			else if (y->parent->right == y) {
+				y->parent->right = x;
+			}
+			std::swap(x->parent, y->parent);
+
+			// swap left
+			x->left->parent = y;
+			if (y->left) {
+				y->left->parent = x;
+			}			
+			std::swap(x->left, y->left);
+
+			// swap right
+			x->right->parent = y;
+			if (y->right) {
+				y->right->parent = x;
+			}		
+			std::swap(x->right, y->right);
+
+			// swap height
+			std::swap(x->height, y->height);
+		}
+
 		base_pointer	deleteNode(base_pointer node, const value_type& val) {
 			if (isEdge(node)) {
 				return node;
@@ -146,6 +181,7 @@ class Tree {
 				node->right = deleteNode(node->right, val);
 			}
 			else {
+				// scenario 1: leaf node
 				if (node->height == 1) {
 					if (isSentinel(node->right)) {
 						sentinel.parent = node->parent;
@@ -154,6 +190,7 @@ class Tree {
 					removeNode(static_cast<pointer>(node));
 					return temp;
 				}
+				// scenario 2: has 1 child node
 				else if (isEdge(node->left) || isEdge(node->right)) {
 					base_pointer	temp = node->left ? node->left : node->right;
 					if (isSentinel(node->right)) {
@@ -164,10 +201,12 @@ class Tree {
 					removeNode(static_cast<pointer>(node));
 					return temp;
 				}
+				// scenario 2: has 2 child nodes
 				else {
 					base_pointer	temp = incrementNode(node);
-					*static_cast<pointer>(node) = *static_cast<pointer>(node);
-					return node;
+					swapNode(node, temp);
+					temp->right = deleteNode(temp->right, static_cast<pointer>(node)->value);
+					node = temp;
 				}
 			}
 			updateHeight(node);
@@ -212,18 +251,8 @@ class Tree {
 			root(&sentinel),
 			tree_size (0) { insert<InputIterator>(first, last); };
 
-		/**** copy constructor ****/ //TODO: is this needed?
-		// Tree(const tree_type& src):
-		// 	compare(src.comp),
-		// 	allocator(src.alloc),
-		// 	sentinel(&sentinel, &sentinel, 0),
-		// 	root(&sentinel),
-		// 	tree_size(0) {
-		// 		*this = src;
-		// };
-		
 		~Tree() {
-			clearTree(root);
+			clear();
 		};
 
 		tree_type&	operator=(const tree_type& rhs) {

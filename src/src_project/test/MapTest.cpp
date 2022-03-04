@@ -52,7 +52,7 @@ MapTest::MapTest(): ContainerTest("map") {}
 
 void	MapTest::testConstructor() {
 	t_int	map;
-	for (int i = 9; i > 0; --i) {
+	for (int i = 100; i > 0; --i) {
 		t_pair_int	pair(i, 'a' + i % 26);
 		map.insert(pair);
 	}
@@ -60,7 +60,9 @@ void	MapTest::testConstructor() {
 	map.print();
 	#endif
 
-	map.erase(7);
+	for (int i = 40; i < 50; ++i) {
+		map.erase(i);
+	}
 	#ifndef STANDARD
 	map.print();
 	#endif
