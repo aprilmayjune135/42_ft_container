@@ -24,13 +24,6 @@ struct pair {
 			return *this;
 		};
 
-		// TODO: to delete
-		friend std::ostream&	operator<<(std::ostream& o, const pair& pair) { 
-			o << pair.first << "(" << pair.second << ")";
-			return o;
-		};
-
-
 };
 
 template <class T1, class T2>

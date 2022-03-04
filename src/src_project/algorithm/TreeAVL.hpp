@@ -61,14 +61,6 @@ class Tree {
 			}
 		};
 
-		int	updateTreeHeight(base_pointer node) {
-			if (!node) {
-				return 0;
-			}
-			node->height = std::max(updateTreeHeight(node->left), updateTreeHeight(node->right)) + 1;
-			return node->height;
-		};
-
 		base_pointer	insertNode(base_pointer node, base_pointer new_node) {
 			if (!node) {
 				return new_node;
@@ -141,7 +133,7 @@ class Tree {
 		};
 
 		//TODO: to evaluate
-		const pointer	getRoot() const { return static_cast<pointer>(root); };
+		base_pointer	getRoot() const { return root; };
 
 	/*****************************************************/ 
 	/**						iterator					**/ 
@@ -188,16 +180,16 @@ class Tree {
 		size_type	max_size() const { 	return allocator.max_size(); };
 
 		ft::pair<iterator, bool>	insert(const value_type& value) {
-			if (false) {
-				// TODO: to add if pair key already exist; return current node
-				return make_pair(iterator(NULL), false);
-			}
-			else {
+			// if (false) {
+			// 	// TODO: to add if pair key already exist; return current node
+			// 	return make_pair(iterator(NULL), false);
+			// }
+			// else {
 				base_pointer	new_node = createNode(value);
 				// TODO: check (!new_node)
 				root = insertNode(root, new_node);
-				return make_pair(iterator(new_node), true);
-			}
+				return ft::make_pair<iterator, bool>(iterator(new_node), true);
+			// }
 		};
 
 		void clear() { deleteNode(root); };

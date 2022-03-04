@@ -19,9 +19,7 @@ Source<VectorTest::t_str>::Source(std::size_t n): type("string") {
 	static std::string	strings[10] = { "hello", "how", "are", "you", "doing", "today", "?", "I", "feel", "great!" };
 	for (std::size_t i = 0; i < n; ++i) {
 		std::size_t	j = i;
-		while (j > 9) {
-			j -= 10;
-		}
+		j = j % 10;
 		data.push_back(strings[j]);
 	}
 }
@@ -93,6 +91,13 @@ void	VectorTest::testPerTypeIterator(Source< ft::vector<T> > src) {
 		PRINT << *it << " ";
 	}
 	PRINT << '\n';
+	logTitleSubSection("iterator - from end --");
+	typename t_vector::iterator ite = src.data.end();
+	for (std::size_t i = 0; i < src.data.size(); ++i) {
+		--ite;
+		PRINT << *ite << " ";
+	}
+	PRINT << '\n';
 	logTitleSubSection("const iterator");
 	for (typename t_vector::const_iterator it = src.data.begin(); it != src.data.end(); ++it) {
 		PRINT << *it << " ";
@@ -101,6 +106,13 @@ void	VectorTest::testPerTypeIterator(Source< ft::vector<T> > src) {
 	logTitleSubSection("reverse iterator");
 	for (typename t_vector::reverse_iterator it = src.data.rbegin(); it != src.data.rend(); ++it) {
 		PRINT << *it << " ";
+	}
+	PRINT << '\n';
+	logTitleSubSection("reverse iterator - from rend --");
+	typename t_vector::reverse_iterator rite = src.data.rend();
+	for (std::size_t i = 0; i < src.data.size(); ++i) {
+		--rite;
+		PRINT << *rite << " ";
 	}
 	PRINT << '\n';
 	logTitleSubSection("const reverse iterator");

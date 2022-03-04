@@ -29,28 +29,28 @@ void	updateHeight(NodeBase* node) {
 }
 
 NodeBase* 	minimumNode(NodeBase*  node) {
-	while (node && node->height > 1) {
+	while (node && node->height > 1 && node->left) {
 		node = node->left;
 	}
 	return node;
 }
 
 const NodeBase* 	minimumNode(const NodeBase*  node) {
-	while (node && node->height > 1) {
+	while (node && node->height > 1 && node->left) {
 		node = node->left;
 	}
 	return node;
 }
 
 NodeBase* 	maximumNode(NodeBase*  node) {
-	while (node && node->height > 1) {
+	while (node && node->height > 1 && !isEdge(node->right)) {
 		node = node->right;
 	}
 	return node;
 }
 
 const NodeBase* 	maximumNode(const NodeBase*  node) {
-	while (node && node->height > 1) {
+	while (node && node->height > 1 && !isEdge(node->right)) {
 		node = node->right;
 	}
 	return node;
@@ -127,6 +127,5 @@ NodeBase*	decrementNode(NodeBase* node) {
 		return temp;
 	}
 }
-
 
 } /* end of namespace AVL */

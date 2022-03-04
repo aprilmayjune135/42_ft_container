@@ -1,6 +1,6 @@
 #pragma once
 #include "../algorithm/NodeAVL.hpp"
-#include "Print.hpp"
+#include "print_container.hpp"
 #include <string>
 #include <iostream>
 
@@ -37,7 +37,9 @@ void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
 	}
 
 	showTrunk(trunk);
-	PRINT << " " << static_cast< AVL::Node<T>* >(root)->value;
+	PRINT << " ";
+	printPair(static_cast< AVL::Node<T>* >(root)->value);
+	PRINT << static_cast< AVL::Node<T>* >(root)->height;
 	// if (isSentinel(root->right)) {
 	// 	PRINT << '$';
 	// }

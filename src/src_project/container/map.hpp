@@ -50,6 +50,10 @@ class map {
 		typedef	typename tree_type::const_reverse_iterator	const_reverse_iterator;
 		typedef typename iterator_traits<iterator>::difference_type	difference_type;
 
+	private:
+		typedef	typename tree_type::pointer					node_pointer;
+		typedef	typename tree_type::base_pointer			node_base_pointer;
+
 
 	/*****************************************************/ 
 	/**					key members						**/ 
@@ -62,6 +66,21 @@ class map {
 	/*****************************************************/ 
 	/**				private member function				**/ 
 	/*****************************************************/
+	node_base_pointer	findNode(node_base_pointer node, const key_type& k) const {
+		if (isEdge(node)) {
+			return node;
+		}
+		if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+			return findNode(node->left, k);
+		}
+		else if (compare( static_cast<node_pointer>(node)->value.first, k)) {
+			return findNode(node->right, k);
+		}
+		else {
+			return node;
+		}
+	};
+
 	public:
 	// TODO: todelete
 		void	print() const { tree.print(); };
@@ -87,7 +106,7 @@ class map {
 		map(const map& src):
 			compare(src.compare),
 			allocator(src.allocator),
-			tree() {  // TODO: what about comp and alloc?
+			tree(src.value_comp()) {  // TODO: what about comp and alloc?
 				*this = src;
 		};
 
@@ -133,6 +152,10 @@ class map {
 	/*****************************************************/
 		/**** insert ****/
 		pair<iterator, bool>	insert(const value_type& val) {
+			iterator it = find(val.first);
+			if (it != end()) {
+				return ft::make_pair<iterator, bool>(it, false); 
+			}
 			return tree.insert(val);
 		};
 
@@ -146,6 +169,27 @@ class map {
 		key_compare		key_comp() const { return compare; };
 
 		value_compare	value_comp() const { return value_compare(compare); };
+
+	/*****************************************************/ 
+	/**						operation					**/ 
+	/*****************************************************/
+		/**** find ****/
+		iterator	find(const key_type& k) {
+			node_base_pointer	node = findNode(tree.getRoot(), k);
+			if (isEdge(node)) {
+				return tree.end();
+			}
+			return iterator(node);
+		};
+
+		const_iterator	find(const key_type& k) const {
+			node_base_pointer	node = findNode(tree.getRoot(), k);
+			if (isEdge(node)) {
+				return tree.end();
+			}
+			return const_iterator(node);
+		};
+
 
 	/*****************************************************/ 
 	/**						allocator					**/ 

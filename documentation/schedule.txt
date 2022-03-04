@@ -83,20 +83,22 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 		- in tree, implement Iterator
 	- --end(): add senitel
 
-2022-02-25 (Fri):
+2022-02-25 (Fri): AVL tree
 	- improve AVL tree insert (sentinel management)
 
-2022-03-03 (Thu):
+2022-03-03 (Thu): map
 	- consolidate map test between std and ft.
+	- correct minimumiNode() and maximumNode()
+	- build test iterator/capacity
+	- find()
 
-
+2022-03-04 (Fri): map
+	-
 
 **************************
 **		Next To Do		**
 **************************
-- solve segment fault of current test
-- update height for the entire tree in insertNode() in TreeAVL.hpp
-
+- figure out compilation error for map test find ()
 - map: erase
 
 
@@ -114,5 +116,11 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 ******************************
 **		Final check			**
 ******************************
+- map.max_size()
 - check "friend" use if is valid
 - function body in .hpp file
+
+
+ft	2305843009213693951
+ft	384307168202282325
+std	461168601842738790
