@@ -151,16 +151,16 @@ class map {
 	/*****************************************************/
 		/**** insert ****/
 		pair<iterator, bool>	insert(const value_type& val) {
-			iterator it = find(val.first);
-			if (it != end()) {
-				return ft::make_pair<iterator, bool>(it, false); 
-			}
 			return tree.insert(val);
 		};
 
+		iterator	insert(iterator position, const value_type& val) {
+			return tree.insert(position, val);
+		}
+
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last) {
-			tree.insert(first, last);
+			return tree.insert(first, last);
 		};
 
 		/**** erase ****/
@@ -182,7 +182,12 @@ class map {
 		}
 
 		/**** clear ****/
-		void clear() { tree.clear(); };
+		void	swap(map& x) {
+			tree.swap(x.tree);
+		};
+
+		/**** clear ****/
+		void	clear() { tree.clear(); };
 	
 
 	/*****************************************************/ 

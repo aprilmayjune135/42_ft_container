@@ -32,7 +32,7 @@
         [v] 1
         [v]	2
         [v] 3
-    [x]	swap
+    [v]	swap
     [v]	clear
 
 >> Observer:

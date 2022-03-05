@@ -100,11 +100,14 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- deleteNode(), erase
 	- debug tree.end() const_cast => solved for printMap()
 
+2022-03-05 (Sat): map
+	- vector: InputIterator replace operator+/- to ++first
+	- map: swap (+test)
+
 **************************
 **		Next To Do		**
 **************************
 	- insert-hint
-	- swap
 	- operator[]
 	- test all map
 	- implement RBT

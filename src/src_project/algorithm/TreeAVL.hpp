@@ -81,14 +81,29 @@ class Tree {
 				return node;
 			}
 		};
-	
-		base_pointer	insertNode(base_pointer node, pointer new_node) {
-			if (!node) {
-				return new_node;
+
+		base_pointer	findNode(base_pointer node, const value_type& val) const {
+			if (isEdge(node)) {
+				return node;
 			}
-			if (isSentinel(node)) {
-				sentinel.parent = new_node;
-				new_node->right = &sentinel;
+			if (compare(val, static_cast<pointer>(node)->value)) {
+				return findNode(node->left, val);
+			}
+			else if (compare( static_cast<pointer>(node)->value, val)) {
+				return findNode(node->right, val);
+			}
+			else {
+				return node;
+			}
+		};	
+	
+		/* assume new_node is not an existing value */
+		base_pointer	insertNode(base_pointer node, pointer new_node) {
+			if (isEdge(node)) {
+				if (isSentinel(node)) {
+					sentinel.parent = new_node;
+					new_node->right = &sentinel;
+				}
 				return new_node;
 			}
 			if (compare(new_node->value, static_cast< pointer >(node)->value)) {
@@ -308,11 +323,30 @@ class Tree {
 
 		size_type	max_size() const { 	return allocator.max_size(); };
 
-		ft::pair<iterator, bool>	insert(const value_type& value) {
-			pointer	new_node = createNode(value);
-			root = insertNode(root, new_node);
-			return ft::make_pair<iterator, bool>(iterator(new_node), true);
+		ft::pair<iterator, bool>	insert(const value_type& val) {
+			iterator	it = find(val);
+			if (it != end()) {
+				return ft::make_pair<iterator, bool>(it, false);
+			}
+			else {
+				pointer	new_node = createNode(val);
+				root = insertNode(root, new_node);
+				return ft::make_pair<iterator, bool>(iterator(new_node), true);
+			}			
 		};
+
+		//TODO: to implement for position (lower/upper bound???)
+		iterator	insert(iterator position, const value_type& val) {
+			iterator	it = find(val);
+			if (it != end()) {
+				return it;
+			}
+			else {
+				pointer	new_node = createNode(val);
+				root = insertNode(root, new_node);
+				return iterator(new_node);
+			}
+		}
 
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last) {
@@ -332,11 +366,57 @@ class Tree {
 			}
 		};
 
-		void clear() {
+		void	swapPointer(base_pointer& x1, base_pointer& x2, base_pointer s1, base_pointer s2) {
+			if (x1 == s1) {
+				if (x2 == s2) {
+					return ;
+				}
+				else {
+					x1 = x2;
+					x2 = s2;
+				}
+			}
+			else {
+				if (x2 == s2) {
+					x2 = x1;
+					x1 = s1;
+				}
+				else {
+					std::swap(x1, x2);
+				}
+			}
+		}
+
+		void	swap(tree_type& x) {
+			swapPointer(root->parent, x.root->parent, &sentinel, &(x.sentinel));
+			swapPointer(root, x.root, &sentinel, &(x.sentinel));
+			swapPointer(sentinel.parent, x.sentinel.parent, &sentinel, &(x.sentinel));
+			swapPointer(sentinel.parent->right, x.sentinel.parent->right, &sentinel, &(x.sentinel));
+			
+			std::swap(tree_size, x.tree_size);
+		}
+
+		void	clear() {
 			clearTree(root);
 			sentinel.parent = &sentinel;
 			root = &sentinel;
 		};
+
+		iterator	find(const value_type& val) {
+			base_pointer	node = findNode(root, val);
+			if (isEdge(node)) {
+				return end();
+			}
+			return iterator(node);
+		}
+
+		const_iterator	find(const value_type& val) const {
+			base_pointer	node = findNode(root, val);
+			if (isEdge(node)) {
+				return end();
+			}
+			return const_iterator(node);
+		}
 
 	/*****************************************************/ 
 	/**					public utility					**/ 

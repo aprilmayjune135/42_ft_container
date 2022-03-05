@@ -2,6 +2,7 @@
 #include "../iterator/RandomAccessIterator.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../iterator/lexicographic_compare.hpp"
+#include "../utility/utility.hpp"
 #include <memory>
 #include <cassert>
 #include <algorithm>
@@ -301,10 +302,11 @@ void	vector<T, Alloc>::assign(size_type n, const_reference val) {
 template <class T, class Alloc>
 template <class InputIterator>
 void	vector<T, Alloc>::assign(InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
-	size_type n = static_cast<size_type>(last - first);
+	size_type n = iteratorDistance(first, last);
 	prepareAssign(n);
 	for (size_type i = 0; i < n; ++i) {
-		constructElement(i, *(first + i));
+		constructElement(i, *first);
+		++first;
 	}	
 }
 
@@ -345,7 +347,7 @@ void	vector<T, Alloc>::insert(iterator position, size_type n, const_reference va
 template <class T, class Alloc>
 template <class InputIterator>
 void	vector<T, Alloc>::insert(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
-	size_type n = static_cast<size_type>(last - first);
+	size_type n = iteratorDistance(first, last);
 	if (data_size + n <= data_capacity) {
 		insertWithCurrentCapacity<InputIterator>(position, first, last, dummy);
 	}
@@ -596,18 +598,19 @@ void	vector<T, Alloc>::insertWithNewCapacity(iterator position, size_type n, con
 template <class T, class Alloc>
 template <class InputIterator>
 void	vector<T, Alloc>::insertWithCurrentCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
-	size_type	n = static_cast<size_type>(last - first);
+	size_type	n = iteratorDistance(first, last);
 	size_type	pos_insert = static_cast<size_type>(position - begin());
 	moveElements(pos_insert, pos_insert + n, data_size - pos_insert);
 	for (size_type i = 0; i < n; ++i) {
-		constructElement(pos_insert + i, *(first + i));
+		constructElement(pos_insert + i, *first);
+		++first;
 	}
 }
 
 template <class T, class Alloc>
 template <class InputIterator>
 void	vector<T, Alloc>::insertWithNewCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
-	size_type	n = static_cast<size_type>(last - first);
+	size_type	n = iteratorDistance(first, last);
 	size_type	new_capacity = data_capacity + std::max(n, data_capacity);
 	pointer	new_data = allocator.allocate(new_capacity);
 	size_type	new_size = data_size + n;
@@ -619,7 +622,8 @@ void	vector<T, Alloc>::insertWithNewCapacity(iterator position, InputIterator fi
 		allocator.construct(new_data + i, *(data + i));
 	}
 	for (size_type i = pos_insert; i < pos_insert_end; ++i) {
-		allocator.construct(new_data + i, *(first + i - pos_insert));
+		allocator.construct(new_data + i, *first);
+		++first;
 	}
 	for (size_type i = pos_insert_end; i < new_size; ++i) {
 		allocator.construct(new_data + i, *(data + i - n));

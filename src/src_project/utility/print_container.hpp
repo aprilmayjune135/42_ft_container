@@ -48,7 +48,7 @@ void	printMapData(const C& map) {
 }
 
 template <class C>
-void	prinMaprDataReverse(const C& map) {
+void	printMapDataReverse(const C& map) {
 	for (typename C::const_reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
 		printPair(*it);
 	}
@@ -59,4 +59,5 @@ template <class C>
 void	printMap(const C& map) {
 	printMapSize(map);
 	printMapData(map);
+	printMapDataReverse(map);
 }

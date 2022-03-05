@@ -43,9 +43,9 @@ class MapTest: public ContainerTest {
 		void	testPerTypeCapacity(const Source< ft::map<Key, T> >& src);
 
 		template<class Key, class T>
-		void	testPerTypeElementAccess(Source< ft::map<Key, T> > src);
+		void	testPerTypeElementAccess(const Source< ft::map<Key, T> >& src);
 
 		template<class Key, class T>
-		void	testPerTypeModifiers(Source< ft::map<Key, T> > src);
+		void	testPerTypeModifiers(const Source< ft::map<Key, T> >& src);
 
 };
