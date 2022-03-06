@@ -104,11 +104,15 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- vector: InputIterator replace operator+/- to ++first
 	- map: swap (+test)
 
+2022-03-06 (Sun): map
+	- operator[] (+test)
+	- lower/upper bound
+
 **************************
 **		Next To Do		**
 **************************
 	- insert-hint
-	- operator[]
+	- equal range
 	- test all map
 	- implement RBT
 

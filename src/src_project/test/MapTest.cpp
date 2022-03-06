@@ -168,10 +168,6 @@ void	MapTest::testPerTypeCapacity(const Source< ft::map<Key, T> >& src) {
 	//TODO: to final check:
 	//Note: skip max_size() because allocator is based on node type.
 	
-	logTitleSubSection("find");
-	Key	k = src.data.begin()->first;
-	typename t_map::const_iterator it = src.data.find(k);
-	printPair(*it);
 }
 
 
@@ -188,8 +184,29 @@ void	MapTest::testCapacity() {
 template<class Key, class T>
 void	MapTest::testPerTypeElementAccess(const Source< ft::map<Key, T> >& src) {
 	typedef	ft::map<Key, T>	t_map;
+	typedef	typename ft::map<Key, T>::const_iterator	const_iterator;
 	logTitleSection(src.type);
 
+	logTitleSubSection("operator[] insert new pair");
+	t_map	map;
+	const_iterator it = src.data.begin();
+	for (std::size_t i = 0; i < src.data.size() / 2; ++i) {
+		map[it->first] = it->second;
+		++it;
+	}
+	printMap(map);
+	logTitleSubSection("operator[] change existing pair");
+	for (std::size_t i = 0; i < src.data.size() / 2; ++i) {
+		const_iterator it_next = it;
+		--it;
+		map[it->first] = it_next->second;
+	}
+	printMap(map);
+	logTitleSubSection("operator[] access exisiting pair");
+	for (const_iterator it_map = map.begin(); it_map != map.end(); ++it_map) {
+		PRINT << map[it_map->first] << ' ';
+	}
+	PRINT << '\n';
 }
 
 void	MapTest::testElementAccess() {
@@ -304,6 +321,68 @@ void	MapTest::testAllocator() {
 /**				operator					**/ 
 /*********************************************/
 
+template<class Key, class T>
+void	MapTest::testPerTypeOperator(const Source< ft::map<Key, T> >& src) {
+	typedef	ft::map<Key, T>	t_map;
+	typedef	typename t_map::iterator iterator;
+	typedef	typename t_map::const_iterator const_iterator;
+	logTitleSection(src.type);
+
+	logTitleSubSection("find & count");
+	t_map	map(src.data);
+	const_iterator it_src = src.data.begin();
+	for (int i = 0; i < 10; ++i) {
+		Key	k = it_src->first;
+		iterator it = map.find(k);
+		if (it != map.end()) {
+			printPair(*it);
+		}
+		else {
+			PRINT << "[NotFound] ";
+		}
+		PRINT << map.count(k) << ' ';
+		map.erase(it);
+		it = map.find(k);
+		if (it != map.end()) {
+			printPair(*it);
+		}
+		else {
+			PRINT << "[NotFound] ";
+		}
+		PRINT << map.count(k) << ' ';
+		++it_src;
+	}
+}
+
+void	MapTest::testBound() {
+	logTitleSubSection("lower/upper bound");
+	t_int	map;
+	for (int i = 0; i < 100; ++i) {
+		t_pair_int	pair(i * 2 - 1, 'a' + i % 26);
+		map.insert(pair);
+	}
+	printMap(map);
+	for (int i = 0; i < 99; ++i) {
+		printPair(*map.lower_bound(i * 2));
+		printPair(*map.lower_bound(i * 2 - 1));
+		printPair(*map.upper_bound(i * 2));
+		printPair(*map.upper_bound(i * 2 - 1));
+	}
+	t_int::iterator it = map.lower_bound(100 * 2);
+	if (it == map.end()) {
+		PRINT << "end!\n";
+	}
+	it = map.upper_bound(100 * 2 - 1);
+	if (it == map.end()) {
+		PRINT << "end!\n";
+	}
+}
+
 void	MapTest::testOperator() {
+	testPerTypeOperator(Source<t_int>(42));
+	testPerTypeOperator(Source<t_str>(30));
+	testPerTypeOperator(Source<t_dummy>(100));
+	testPerTypeOperator(Source<t_dummy_2D>(200));
+	testBound();
 }
 

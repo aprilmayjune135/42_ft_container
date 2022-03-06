@@ -21,7 +21,7 @@
     [v]	empty
 
 >> Element access:
-    [x]	operator[]
+    [v]	operator[]
 
 >> Modifiers:
     [x]	insert
@@ -41,6 +41,14 @@
 
 >> Allocator:
     [v]	get_allocator
+
+>> Operations:
+    [v] find
+    [v] count
+    [x] lower_bound
+    [x] upper_bound
+    [x] equal_range
+
 
 
     		- parent:	last

@@ -82,6 +82,45 @@ class map {
 		}
 	};
 
+	//TODO: to evaluate whether to directly use iterator++?
+	node_base_pointer	findLowerBound(node_base_pointer node, const key_type& k) const {
+		if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+			if (!node->left) {
+				return node;
+			}
+			return findLowerBound(node->left, k);
+		}
+		else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
+			if (isEdge(node->right)) {
+				return incrementNode(node);
+			}
+			return findLowerBound(node->right, k);
+		}
+		else {
+			return node;
+		}
+	};
+
+	//TODO: to evaluate whether to directly use iterator++?
+	node_base_pointer	findUpperBound(node_base_pointer node, const key_type& k) const {
+		if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+			if (!node->left) {
+				return node;
+			}
+			return findUpperBound(node->left, k);
+		}
+		else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
+			if (isEdge(node->right)) {
+				return incrementNode(node);
+			}
+			return findUpperBound(node->right, k);
+		}
+		else {
+			return incrementNode(node);
+		}
+	};
+
+
 	public:
 	// TODO: todelete
 		void	print() const { tree.print(); };
@@ -144,7 +183,9 @@ class map {
 	/*****************************************************/ 
 	/**					element access					**/ 
 	/*****************************************************/
-
+		mapped_type&	operator[] (const key_type& k) {
+			return (*((this->insert(ft::make_pair<const Key, T>(k, mapped_type()))).first)).second;
+		};
 
 	/*****************************************************/ 
 	/**						modifiers					**/ 
@@ -215,6 +256,28 @@ class map {
 				return tree.end();
 			}
 			return const_iterator(node);
+		};
+
+		/**** count ****/
+		size_type	count(const key_type& k) const {
+			return !isEdge(findNode(tree.getRoot(), k));
+		};
+
+		/**** bound ****/
+		iterator	lower_bound(const key_type& k) {
+			return iterator(findLowerBound(tree.getRoot(), k));
+		};
+
+		const_iterator	lower_bound(const key_type& k) const {
+			return const_iterator(findLowerBound(tree.getRoot(), k));
+		};
+
+		iterator	upper_bound(const key_type& k) {
+			return iterator(findUpperBound(tree.getRoot(), k));
+		};
+
+		const_iterator	upper_bound(const key_type& k) const {
+			return const_iterator(findUpperBound(tree.getRoot(), k));
 		};
 
 
