@@ -76,7 +76,7 @@ class map {
 
 		/**** range constructor ****/
 		template <class InputIterator>
-		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
+		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(), typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0):
 			compare(comp),
 			allocator(alloc),
 			tree(first, last, value_comp(), allocator) {};	
@@ -137,7 +137,7 @@ class map {
 		}
 
 		template <class InputIterator>
-		void	insert(InputIterator first, InputIterator last) {
+		void	insert(InputIterator first, InputIterator last, typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0) {
 			return tree.insert(first, last);
 		};
 

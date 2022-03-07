@@ -1,9 +1,9 @@
 [v] iterator_traits
 [v] reverse_iterator 
 [v] enable_if
-[x]	is_integral
+[v]	is_integral
 [v] equal/lexicographical compare 
 	[v] default
 	[v] custom
-[x] std::pair
-[x] std::make_pair
+[v] std::pair
+[v] std::make_pair

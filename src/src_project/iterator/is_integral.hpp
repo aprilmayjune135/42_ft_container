@@ -5,9 +5,6 @@ namespace ft {
 template <typename T, typename = void>
 struct is_integral { const static bool	value = false; };
 
-template <typename T>
-struct is_integral<T*> { const static bool	value = true; };
-
 template <>
 struct is_integral<bool> { const static bool	value = true; };
 

@@ -54,7 +54,7 @@ class Tree {
 
 		/**** range constructor ****/
 		template <class InputIterator>
-		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
+		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type(), typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0):
 			compare(comp),
 			allocator(alloc),
 			sentinel(&sentinel, &sentinel, 0),
@@ -144,7 +144,7 @@ class Tree {
 		}
 
 		template <class InputIterator>
-		void	insert(InputIterator first, InputIterator last) {
+		void	insert(InputIterator first, InputIterator last, typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0) {
 			while (first != last) {
 				insert(*first);
 				++first;

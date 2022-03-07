@@ -113,10 +113,12 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- equal_range
 	- evaluate ft_container
 	- finalize map test
+	- add enable_if on map
 
 **************************
 **		Next To Do		**
 **************************
+	- stack
 	- implement RBT
 
 
@@ -124,7 +126,7 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 **		General To Do		**
 ******************************
 - map::insert-hint
-- is_integral
+- is_integral (how to implement with iterator_traits)
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
 - ReverseIterator, operator overload (1 template parameter or 2?)
