@@ -108,6 +108,9 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- operator[] (+test)
 	- lower/upper bound
 
+2022-03-07 (Mon)
+	- implement time check
+
 **************************
 **		Next To Do		**
 **************************

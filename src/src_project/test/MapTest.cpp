@@ -352,10 +352,21 @@ void	MapTest::testPerTypeOperator(const Source< ft::map<Key, T> >& src) {
 		PRINT << map.count(k) << ' ';
 		++it_src;
 	}
+
+	logTitleSubSection("lower/upper bound");
+	map = src.data;
+	iterator	it_first = map.begin();
+	iterator	it_last = map.end();
+	--it_last;
+	iterator	it_begin = map.lower_bound(it_first->first);
+	iterator	it_end = map.upper_bound(it_last->first);
+	map.erase(it_begin, it_end);
+	printMap(map);
+
 }
 
 void	MapTest::testBound() {
-	logTitleSubSection("lower/upper bound");
+	logTitleSubSection("lower/upper bound - specialt");
 	t_int	map;
 	for (int i = 0; i < 100; ++i) {
 		t_pair_int	pair(i * 2 - 1, 'a' + i % 26);

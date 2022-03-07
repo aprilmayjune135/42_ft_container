@@ -21,20 +21,43 @@ elif [ "$1" == "catch" ]; then
 	make catch
 	./catch.out
 else
+	# run ft program
 	make
-	echo $MAGENTA_BOLD"Executing ft.out..."$RESET_COLOR
+	echo $MAGENTA_BOLD">> Executing ft.out..."$RESET_COLOR
+	START_TIME_FT=$(date +%s)
 	./ft.out
-	echo $MAGENTA_BOLD"Output saved on ft_log.txt..."$RESET_COLOR
+	END_TIME_FT=$(date +%s)
+	TIME_FT=$(($END_TIME_FT - $START_TIME_FT))
+	echo $MAGENTA_BOLD">> Output saved on ft_log.txt..."$RESET_COLOR
+	
+	# run std program
 	make standard
-	echo $MAGENTA_BOLD"Executing std.out..."$RESET_COLOR
+	echo $MAGENTA_BOLD">> Executing std.out..."$RESET_COLOR
+	START_TIME_STD=$(date +%s)
 	./std.out
-	echo $MAGENTA_BOLD"Output saved on std_log.txt..."$RESET_COLOR
-	echo "\n"$MAGENTA_BOLD"Comparing output..."$RESET_COLOR
+	END_TIME_STD=$(date +%s)
+	TIME_STD=$(($END_TIME_STD - $START_TIME_STD))
+	echo $MAGENTA_BOLD">> Output saved on std_log.txt..."$RESET_COLOR
+
+	# check output
+	echo "\n"$MAGENTA_BOLD">> Comparing output..."$RESET_COLOR
 	if diff -q ./ft.log ./std.log > /dev/null
 	then
-		echo $GREEN_BOLD"The files are equal!"$RESET_COLOR
+		echo $GREEN_BOLD"✅ The files are equal!"$RESET_COLOR
 	else
-		echo $RED_BOLD"The files are not equal!"$RESET_COLOR
+		echo $RED_BOLD"❌ The files are not equal!"$RESET_COLOR
 		diff ./ft.log ./std.log > diff.log
+	fi
+
+	# check timing
+	echo "\n"$MAGENTA_BOLD">> Comparing timing..."$RESET_COLOR
+	echo $BLUE_BOLD"Elapsed time for ft.out is [$TIME_FT] seconds."
+	echo $BLUE_BOLD"Elapsed time for std.out is [$TIME_STD] seconds."
+	TIME_MAX=$(($TIME_STD * 20))
+	if [ $TIME_FT -le $TIME_MAX ]
+	then
+		echo $GREEN_BOLD"✅ Timing meets requirement!"$RESET_COLOR
+	else
+		echo $RED_BOLD"❌ Timing does NOT meet requirement!"$RESET_COLOR
 	fi
 fi
