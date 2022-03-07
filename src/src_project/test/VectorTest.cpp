@@ -250,10 +250,12 @@ void	VectorTest::testPerTypeModifiers(const Source< ft::vector<T> >& src) {
 	printVector(v_insert);
 
 	logTitleSubSection("erase - single");
-	for (std::size_t i = 0; i < n; ++i) {
-		PRINT << *v_insert.erase(v_insert.begin()) << " ";
+	typename t_vector::iterator	it_valid = v_insert.begin(); // to check iterator validity after erase
+	for (std::size_t i = 1; i < n; ++i) {
+		PRINT << *v_insert.erase(v_insert.begin() + i) << " ";
 	}
 	printVector(v_insert);
+	PRINT << *it_valid << '\n';
 
 	logTitleSubSection("insert - fill");
 	for (std::size_t i = 0; i < count; ++i) {
@@ -294,16 +296,6 @@ void	VectorTest::testModifiers() {
 	testPerTypeModifiers(Source<t_dummy_2D>(15));
 }
 
-
-/*********************************************/ 
-/**				allocator					**/ 
-/*********************************************/
-
-void	VectorTest::testAllocator() {
-	// TODO
-}
-
-
 /*********************************************/ 
 /**				operator					**/ 
 /*********************************************/
@@ -330,3 +322,18 @@ void	VectorTest::testOperator() {
 	testPerTypeOperator(Source<t_dummy_2D>(15));
 }
 
+
+/*********************************************/ 
+/**				allocator					**/ 
+/*********************************************/
+
+void	VectorTest::testAllocator() {
+	int psize;
+	t_int		vector;
+	int* 		p;
+
+	p = vector.get_allocator().allocate(5);
+	psize = sizeof(t_int::value_type) * 5;
+	PRINT << "The allocated array has a size of " << psize << " bytes.\n";
+	vector.get_allocator().deallocate(p, 5);
+}

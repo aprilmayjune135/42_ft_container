@@ -110,19 +110,20 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 
 2022-03-07 (Mon)
 	- implement time check
+	- equal_range
+	- evaluate ft_container
+	- finalize map test
 
 **************************
 **		Next To Do		**
 **************************
-	- insert-hint
-	- equal range
-	- test all map
 	- implement RBT
 
 
 ******************************
 **		General To Do		**
 ******************************
+- map::insert-hint
 - is_integral
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out
@@ -134,11 +135,6 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 ******************************
 **		Final check			**
 ******************************
-- map.max_size()
+- leaks
 - check "friend" use if is valid
 - function body in .hpp file
-
-
-ft	2305843009213693951
-ft	384307168202282325
-std	461168601842738790

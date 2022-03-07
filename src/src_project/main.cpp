@@ -1,7 +1,6 @@
 #include <iostream>
 #include "container/vector.hpp"
 #include "test/TestCase.hpp"
-#include "utility/Timer.hpp"
 #include "utility/print_color.hpp"
 #include <vector>
 

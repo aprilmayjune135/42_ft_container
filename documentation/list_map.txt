@@ -1,64 +1,66 @@
 ******************************
+**		AVL tree structure 	**
+******************************
+
+                - parent:	last
+    sentinel 	- left:		sentinel
+                - right:	sentinel
+
+                - parent:	sentinel
+    first	 	- left:		0/x
+                - right:	0/x
+
+                - parent:	x
+    last	 	- left:		0
+                - right:	sentinel
+
+******************************
 **		Member functions	**
 ******************************
 >> Basic:
         (constructor)
-    [v] (1) empty container constructor (default constructor)
-    [v] (2) range constructor
-    [v] (3) copy constructor
-    [v]	(destructor)
-    [v]	operator=
+    [t] (1) empty container constructor (default constructor)
+    [t] (2) range constructor
+    [t] (3) copy constructor
+    [t]	(destructor)
+    [t]	operator=
 
 >> Iterators:
-    [v]	begin (regular + const)
-    [v]	end (regular + const)
-    [v]	rbegin (regular + const)
-    [v]	rend (regular + const)
+    [t]	begin (regular + const)
+    [t]	end (regular + const)
+    [t]	rbegin (regular + const)
+    [t]	rend (regular + const)
 
 >> Capacity:
-    [v]	size
+    [t]	size
     [v]	max_size
-    [v]	empty
+    [t]	empty
 
 >> Element access:
-    [v]	operator[]
+    [t]	operator[]
 
 >> Modifiers:
-    [x]	insert
-        [v] single element
-        [x]	hint
-        [v]	range
-    [v]	erase
-        [v] 1
-        [v]	2
-        [v] 3
-    [v]	swap
-    [v]	clear
+    [t]	insert
+        [t] single element
+        [o]	hint
+        [t]	range
+    [t]	erase
+        [t] 1
+        [t]	2
+        [t] 3
+    [t]	swap
+    [t]	clear
 
 >> Observer:
     [v] key_comp
     [v] value_comp
 
->> Allocator:
-    [v]	get_allocator
-
 >> Operations:
-    [v] find
-    [v] count
-    [x] lower_bound
-    [x] upper_bound
-    [x] equal_range
+    [t] find (regular + const)
+    [t] count
+    [t] lower_bound (regular + const)
+    [t] upper_bound (regular + const)
+    [t] equal_range (regular + const)
 
-
-
-    		- parent:	last
-sentinel 	- left:		sentinel
-    		- right:	sentinel
-
-    		- parent:	sentinel
-first	 	- left:		0/x
-    		- right:	0/x
-
-    		- parent:	x
-last	 	- left:		0
-    		- right:	sentinel
+>> Allocator:
+    [t]	get_allocator

@@ -366,6 +366,18 @@ typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator position) {
 }
 
 template <class T, class Alloc>
+typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator first, iterator last) {
+	size_type	pos = static_cast<size_type>(first - begin());
+	size_type	n = static_cast<size_type>(last - first);
+	size_type	size = data_size;
+	for (size_type i = 0; i < n; ++i) {
+		destroyElement(pos + i);
+	}
+	moveElements(pos + n, pos, size - pos - n);
+	return begin() + pos;
+}
+
+template <class T, class Alloc>
 void	vector<T, Alloc>::swap(vector& x) {
 	pointer		temp_data = data;
 	size_type	temp_size = data_size;
@@ -376,18 +388,6 @@ void	vector<T, Alloc>::swap(vector& x) {
 	x.data = temp_data;
 	x.data_size = temp_size;
 	x.data_capacity = temp_capacity;
-}
-
-template <class T, class Alloc>
-typename vector<T, Alloc>::iterator	vector<T, Alloc>::erase(iterator first, iterator last) {
-	size_type	pos = static_cast<size_type>(first - begin());
-	size_type	n = static_cast<size_type>(last - first);
-	size_type	size = data_size;
-	for (size_type i = 0; i < n; ++i) {
-		destroyElement(pos + i);
-	}
-	moveElements(pos + n, pos, size - pos - n);
-	return begin() + pos;
 }
 
 template <class T, class Alloc>
@@ -600,7 +600,7 @@ template <class InputIterator>
 void	vector<T, Alloc>::insertWithCurrentCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
 	size_type	n = iteratorDistance(first, last);
 	size_type	pos_insert = static_cast<size_type>(position - begin());
-	moveElements(pos_insert, pos_insert + n, data_size - pos_insert);
+	moveElements(pos_insert, pos_insert + n, data_size - pos_insert); //TODO: to evaluate moveElement (destroy/construct should be taken care directly by operator=)
 	for (size_type i = 0; i < n; ++i) {
 		constructElement(pos_insert + i, *first);
 		++first;

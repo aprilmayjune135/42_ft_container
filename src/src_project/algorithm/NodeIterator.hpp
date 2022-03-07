@@ -72,4 +72,4 @@ class NodeIterator {
 
 };
 
-} /* end of namespace ATL */
+} /* end of namespace AVL */

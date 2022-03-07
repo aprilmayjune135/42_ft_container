@@ -50,45 +50,37 @@ MapTest::MapTest(): ContainerTest("map") {}
 /**				constructor					**/ 
 /*********************************************/
 
+template<class Key, class T>
+void	MapTest::testPerTypeConstructor(const Source< ft::map<Key, T> >& src) {
+	typedef	ft::map<Key, T>	t_map;
+	logTitleSection(src.type);
+
+	logTitleSubSection("Constructor - default");
+	t_map	map_default;
+	printMap(map_default);
+
+	logTitleSubSection("Constructor - range");
+	t_map	map_range(src.data.begin(), src.data.end());
+	printMap(map_range);
+	map_range = map_default;
+	printMap(map_range);
+
+	logTitleSubSection("Constructor - copy");
+	t_map	map_copy(src.data);
+	printMap(map_copy);
+	map_copy = map_default;
+	printMap(map_copy);
+
+	logTitleSubSection("Constructor - operator=");
+	t_map	map_assign = src.data;
+	printMap(map_assign);
+}
+
 void	MapTest::testConstructor() {
-	t_int	map;
-	for (int i = 100; i > 0; --i) {
-		t_pair_int	pair(i, 'a' + i % 26);
-		map.insert(pair);
-	}
-	// #ifndef STANDARD
-	// map.print();
-	// #endif
-	// t_int	map2(map);
-	// printMap(map2);
-	// t_int	map3;
-	// map2 = map3;
-	// printMap(map2);
-	// t_int	map4(map);
-	// map2 = map4;
-	// printMap(map2);
-
-	// t_pair_int	pair1(11, 'a');
-	// t_pair_int	pair2(0, 'a');
-	// t_pair_int	pair3(10, 'a');
-	// t_pair_int	pair4(1, 'a');
-	// t_pair_int	pair5(30, 'a');
-	// t_pair_int	pair6(2, 'a');
-	// t_pair_int	pair7(4, 'a');
-	// t_pair_int	pair8(3, 'a');
-
-	// map.insert(pair1);
-	// map.insert(pair2);
-	// map.insert(pair3);
-	// map.insert(pair4);
-	// map.insert(pair5);
-	// map.insert(pair6);
-	// map.insert(pair7);
-	// map.insert(pair8);
-
-
-	// PRINT << "size: " << map.size() << '\n';
-
+	testPerTypeConstructor(Source<t_int>(200));
+	testPerTypeConstructor(Source<t_str>(30));
+	testPerTypeConstructor(Source<t_dummy>(100));
+	testPerTypeConstructor(Source<t_dummy_2D>(42));
 }
 
 /*********************************************/ 
@@ -96,59 +88,58 @@ void	MapTest::testConstructor() {
 /*********************************************/
 
 template<class Key, class T>
-void	MapTest::testPerTypeIterator(Source< ft::map<Key, T> > src) {
+void	MapTest::testPerTypeIterator(const Source< ft::map<Key, T> >& src) {
 	typedef	ft::map<Key, T>	t_map;
 	logTitleSection(src.type);
 
-
+	t_map	map(src.data);
 	logTitleSubSection("Iterator - from begin ++ to end");
-	for (typename t_map::iterator it = src.data.begin(); it != src.data.end(); ++it) {
+	for (typename t_map::iterator it = map.begin(); it != map.end(); ++it) {
 		printPair(*it);
 	}
 	PRINT << '\n';
 
 	logTitleSubSection("Iterator - from end --");
-	typename t_map::iterator ite = src.data.end();
-	for (size_t i = 0; i < src.data.size(); ++i) {
+	typename t_map::iterator ite = map.end();
+	for (size_t i = 0; i < map.size(); ++i) {
 		--ite;
 		printPair(*ite);
 	}
 	PRINT << '\n';
 
 	logTitleSubSection("Const Iterator - from begin ++ to end");
-	for (typename t_map::const_iterator it = src.data.begin(); it != src.data.end(); ++it) {
+	for (typename t_map::const_iterator it = map.begin(); it != map.end(); ++it) {
 		printPair(*it);
 	}
 	PRINT << '\n';
 
 
 	logTitleSubSection("Reverse Iterator - from rbegin ++ to rend");
-	for (typename t_map::reverse_iterator it = src.data.rbegin(); it != src.data.rend(); ++it) {
+	for (typename t_map::reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
 		printPair(*it);
 	}
 	PRINT << '\n';
 
 	logTitleSubSection("Reverse Iterator - from rend --");
-	typename t_map::reverse_iterator reit = src.data.rend();
-	for (size_t i = 0; i < src.data.size(); ++i) {
+	typename t_map::reverse_iterator reit = map.rend();
+	for (size_t i = 0; i < map.size(); ++i) {
 		--reit;
 		printPair(*reit);
 	}
 	PRINT << '\n';
 
 	logTitleSubSection("Const Reverse Iterator - from rbegin ++ to rend");
-	for (typename t_map::const_reverse_iterator it = src.data.rbegin(); it != src.data.rend(); ++it) {
+	for (typename t_map::const_reverse_iterator it = map.rbegin(); it != map.rend(); ++it) {
 		printPair(*it);
 	}
 	PRINT << '\n';
-
 }
 
 void	MapTest::testIterator() {
-	testPerTypeIterator(Source<t_int>(42));
+	testPerTypeIterator(Source<t_int>(200));
 	testPerTypeIterator(Source<t_str>(30));
 	testPerTypeIterator(Source<t_dummy>(100));
-	testPerTypeIterator(Source<t_dummy_2D>(200));
+	testPerTypeIterator(Source<t_dummy_2D>(42));
 }
 
 /*********************************************/ 
@@ -160,22 +151,19 @@ void	MapTest::testPerTypeCapacity(const Source< ft::map<Key, T> >& src) {
 	typedef	ft::map<Key, T>	t_map;
 	logTitleSection(src.type);
 
-	t_map	empty_map;
-
 	logTitleSubSection("empty - size");
+	t_map	empty_map;
 	PRINT << src.data.empty() << ' ' << src.data.size() << '\n';
 	PRINT << empty_map.empty() << ' ' << empty_map.size() << '\n';
-	//TODO: to final check:
-	//Note: skip max_size() because allocator is based on node type.
-	
+	//Note: skip max_size() because allocator is based on node type.	
 }
 
 
 void	MapTest::testCapacity() {
-	testPerTypeCapacity(Source<t_int>(42));
+	testPerTypeCapacity(Source<t_int>(200));
 	testPerTypeCapacity(Source<t_str>(30));
 	testPerTypeCapacity(Source<t_dummy>(100));
-	testPerTypeCapacity(Source<t_dummy_2D>(200));
+	testPerTypeCapacity(Source<t_dummy_2D>(42));
 }
 
 /*********************************************/ 
@@ -210,10 +198,10 @@ void	MapTest::testPerTypeElementAccess(const Source< ft::map<Key, T> >& src) {
 }
 
 void	MapTest::testElementAccess() {
-	testPerTypeElementAccess(Source<t_int>(42));
+	testPerTypeElementAccess(Source<t_int>(200));
 	testPerTypeElementAccess(Source<t_str>(30));
 	testPerTypeElementAccess(Source<t_dummy>(100));
-	testPerTypeElementAccess(Source<t_dummy_2D>(200));
+	testPerTypeElementAccess(Source<t_dummy_2D>(42));
 }
 
 /*********************************************/ 
@@ -227,15 +215,15 @@ void	MapTest::testPerTypeModifiers(const Source< ft::map<Key, T> >& src) {
 	typedef	typename t_map::const_iterator const_iterator;
 	logTitleSection(src.type);
 
-	logTitleSubSection("insert - value");
+	logTitleSubSection("insert - single value");
 	t_map	map;
 	const_iterator	it = src.data.begin();
 	for (int i = 0; i < 5; ++i) {
 		const_iterator temp = it;
-		ft::pair<iterator, bool> pair = map.insert(*it);
+		ft::pair<iterator, bool> pair = map.insert(*it); // inserting new value
 		printPair(*pair.first);
 		PRINT << pair.second << ' ';
-		pair = map.insert(*temp);
+		pair = map.insert(*temp); // inserting existing value
 		printPair(*pair.first);
 		PRINT << pair.second << ' ';
 		++it;
@@ -247,21 +235,31 @@ void	MapTest::testPerTypeModifiers(const Source< ft::map<Key, T> >& src) {
 	map.insert(src.data.begin(), src.data.end());
 	printMap(map);
 
+	logTitleSubSection("insert - hint");
+	map.insert(src.data.begin(), src.data.end());
+	printMap(map);
+
 	logTitleSubSection("erase - iterator");
+	iterator it_valid = map.end(); // for iterator validity check
+	--it_valid;
+	printPair(*it_valid);
 	map.erase(map.begin());
 	printMap(map);
+	printPair(*it_valid); // check iterator validity after erase
 
 	logTitleSubSection("erase - key");
 	Key k = map.begin()->first;
 	PRINT << map.erase(k) << '\n';
 	PRINT << map.erase(k) << '\n';
 	printMap(map);
+	printPair(*it_valid); // check iterator validity after erase
 
 	logTitleSubSection("erase - range");
 	iterator begin = map.begin();
-	iterator end = map.end();
+	iterator end = it_valid;
 	map.erase(++begin, --end);
 	printMap(map);
+	printPair(*it_valid); // check iterator validity after erase
 
 	logTitleSubSection("swap - 2 empty");
 	t_map map1;
@@ -284,12 +282,16 @@ void	MapTest::testPerTypeModifiers(const Source< ft::map<Key, T> >& src) {
 	for (int i = 0; i < 5; ++ i) {
 		map2.erase(map2.begin());
 	}
+	iterator it_valid_1 = map1.begin(); // for iterator validity check
+	iterator it_valid_2 = map2.begin(); // for iterator validity check
 	map1.swap(map2);
 	printMap(map1);
 	printMap(map2);
 	map1.swap(map2);
 	printMap(map1);
 	printMap(map2);
+	printPair(*it_valid_1);
+	printPair(*it_valid_2);
 
 	logTitleSubSection("clear - non-empty");
 	map1.clear();
@@ -297,25 +299,14 @@ void	MapTest::testPerTypeModifiers(const Source< ft::map<Key, T> >& src) {
 	logTitleSubSection("clear - empty");
 	map1.clear();
 	printMap(map1);	
-
 }
 
 void	MapTest::testModifiers() {
-	testPerTypeModifiers(Source<t_int>(42));
+	testPerTypeModifiers(Source<t_int>(200));
 	testPerTypeModifiers(Source<t_str>(30));
 	testPerTypeModifiers(Source<t_dummy>(100));
-	testPerTypeModifiers(Source<t_dummy_2D>(200));
+	testPerTypeModifiers(Source<t_dummy_2D>(42));
 }
-
-
-/*********************************************/ 
-/**				allocator					**/ 
-/*********************************************/
-
-void	MapTest::testAllocator() {
-	// TODO
-}
-
 
 /*********************************************/ 
 /**				operator					**/ 
@@ -363,6 +354,16 @@ void	MapTest::testPerTypeOperator(const Source< ft::map<Key, T> >& src) {
 	map.erase(it_begin, it_end);
 	printMap(map);
 
+	logTitleSubSection("equal range");
+	map = src.data;
+	it_first = map.begin();
+	it_last = map.end();
+	--it_last;
+	ft::pair<iterator, iterator>	pair1 = map.equal_range(it_first->first);
+	ft::pair<iterator, iterator>	pair2 = map.equal_range(it_last->first);
+	map.erase(pair1.first, pair1.second);
+	map.erase(pair2.first, pair2.second);
+	printMap(map);
 }
 
 void	MapTest::testBound() {
@@ -373,11 +374,14 @@ void	MapTest::testBound() {
 		map.insert(pair);
 	}
 	printMap(map);
-	for (int i = 0; i < 99; ++i) {
+	for (int i = 0; i < 98; ++i) {
 		printPair(*map.lower_bound(i * 2));
 		printPair(*map.lower_bound(i * 2 - 1));
 		printPair(*map.upper_bound(i * 2));
 		printPair(*map.upper_bound(i * 2 - 1));
+		ft::pair<t_int::iterator, t_int::iterator>	pair = map.equal_range(i * 2 - 1);
+		printPair(*pair.first);
+		printPair(*pair.second);
 	}
 	t_int::iterator it = map.lower_bound(100 * 2);
 	if (it == map.end()) {
@@ -390,10 +394,24 @@ void	MapTest::testBound() {
 }
 
 void	MapTest::testOperator() {
-	testPerTypeOperator(Source<t_int>(42));
+	testPerTypeOperator(Source<t_int>(200));
 	testPerTypeOperator(Source<t_str>(30));
 	testPerTypeOperator(Source<t_dummy>(100));
-	testPerTypeOperator(Source<t_dummy_2D>(200));
+	testPerTypeOperator(Source<t_dummy_2D>(42));
 	testBound();
 }
 
+/*********************************************/ 
+/**				allocator					**/ 
+/*********************************************/
+
+void	MapTest::testAllocator() {
+	int psize;
+	t_int		map;
+	t_pair_int* p;
+
+	p = map.get_allocator().allocate(5);
+	psize = sizeof(t_int::value_type) * 5;
+	PRINT << "The allocated array has a size of " << psize << " bytes.\n";
+	map.get_allocator().deallocate(p, 5);
+}

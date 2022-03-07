@@ -63,67 +63,6 @@ class map {
 		key_compare				compare;
 		allocator_type			allocator;
 		tree_type				tree;
-	
-	/*****************************************************/ 
-	/**				private member function				**/ 
-	/*****************************************************/
-	node_base_pointer	findNode(node_base_pointer node, const key_type& k) const {
-		if (isEdge(node)) {
-			return node;
-		}
-		if (compare(k, static_cast<node_pointer>(node)->value.first)) {
-			return findNode(node->left, k);
-		}
-		else if (compare( static_cast<node_pointer>(node)->value.first, k)) {
-			return findNode(node->right, k);
-		}
-		else {
-			return node;
-		}
-	};
-
-	//TODO: to evaluate whether to directly use iterator++?
-	node_base_pointer	findLowerBound(node_base_pointer node, const key_type& k) const {
-		if (compare(k, static_cast<node_pointer>(node)->value.first)) {
-			if (!node->left) {
-				return node;
-			}
-			return findLowerBound(node->left, k);
-		}
-		else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
-			if (isEdge(node->right)) {
-				return incrementNode(node);
-			}
-			return findLowerBound(node->right, k);
-		}
-		else {
-			return node;
-		}
-	};
-
-	//TODO: to evaluate whether to directly use iterator++?
-	node_base_pointer	findUpperBound(node_base_pointer node, const key_type& k) const {
-		if (compare(k, static_cast<node_pointer>(node)->value.first)) {
-			if (!node->left) {
-				return node;
-			}
-			return findUpperBound(node->left, k);
-		}
-		else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
-			if (isEdge(node->right)) {
-				return incrementNode(node);
-			}
-			return findUpperBound(node->right, k);
-		}
-		else {
-			return incrementNode(node);
-		}
-	};
-
-
-	public:
-	// TODO: todelete
-		void	print() const { tree.print(); };
 
 	public:
 	/*****************************************************/ 
@@ -157,8 +96,6 @@ class map {
 			return *this;
 		};
 
-
-
 	/*****************************************************/ 
 	/**						iterator					**/ 
 	/*****************************************************/
@@ -184,7 +121,7 @@ class map {
 	/**					element access					**/ 
 	/*****************************************************/
 		mapped_type&	operator[] (const key_type& k) {
-			return (*((this->insert(ft::make_pair<const Key, T>(k, mapped_type()))).first)).second;
+			return (*((insert(ft::make_pair<const Key, T>(k, mapped_type()))).first)).second;
 		};
 
 	/*****************************************************/ 
@@ -222,7 +159,7 @@ class map {
 			}
 		}
 
-		/**** clear ****/
+		/**** swap ****/
 		void	swap(map& x) {
 			tree.swap(x.tree);
 		};
@@ -230,7 +167,6 @@ class map {
 		/**** clear ****/
 		void	clear() { tree.clear(); };
 	
-
 	/*****************************************************/ 
 	/**						observer					**/ 
 	/*****************************************************/
@@ -280,11 +216,74 @@ class map {
 			return const_iterator(findUpperBound(tree.getRoot(), k));
 		};
 
+		pair<iterator, iterator>	equal_range(const key_type& k) {
+			return ft::make_pair<iterator, iterator>(lower_bound(k), upper_bound(k));
+		};
+
+		pair<const_iterator, const_iterator>	equal_range(const key_type& k) const {
+			return ft::make_pair<iterator, iterator>(lower_bound(k), upper_bound(k));
+		};
 
 	/*****************************************************/ 
 	/**						allocator					**/ 
 	/*****************************************************/
 		allocator_type	get_allocator() const { return allocator; };
+	
+	/*****************************************************/ 
+	/**				private member function				**/ 
+	/*****************************************************/
+		node_base_pointer	findNode(node_base_pointer node, const key_type& k) const {
+			if (isEdge(node)) {
+				return node;
+			}
+			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+				return findNode(node->left, k);
+			}
+			else if (compare( static_cast<node_pointer>(node)->value.first, k)) {
+				return findNode(node->right, k);
+			}
+			else {
+				return node;
+			}
+		};
+
+		//TODO: to evaluate whether to directly use iterator++?
+		node_base_pointer	findLowerBound(node_base_pointer node, const key_type& k) const {
+			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+				if (!node->left) {
+					return node;
+				}
+				return findLowerBound(node->left, k);
+			}
+			else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
+				if (isEdge(node->right)) {
+					return incrementNode(node);
+				}
+				return findLowerBound(node->right, k);
+			}
+			else {
+				return node;
+			}
+		};
+
+		//TODO: to evaluate whether to directly use iterator++?
+		node_base_pointer	findUpperBound(node_base_pointer node, const key_type& k) const {
+			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+				if (!node->left) {
+					return node;
+				}
+				return findUpperBound(node->left, k);
+			}
+			else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
+				if (isEdge(node->right)) {
+					return incrementNode(node);
+				}
+				return findUpperBound(node->right, k);
+			}
+			else {
+				return incrementNode(node);
+			}
+		};
 
 }; /* end of class map */
 

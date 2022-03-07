@@ -41,6 +41,166 @@ class Tree {
 		size_type			tree_size;
 
 	/*****************************************************/ 
+	/**			constructor	& destructor & operator		**/ 
+	/*****************************************************/
+	public:
+		/**** empty constructor ****/
+		explicit Tree(const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
+			compare(comp),
+			allocator(alloc),
+			sentinel(&sentinel, &sentinel, 0),
+			root(&sentinel),
+			tree_size(0) {};
+
+		/**** range constructor ****/
+		template <class InputIterator>
+		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
+			compare(comp),
+			allocator(alloc),
+			sentinel(&sentinel, &sentinel, 0),
+			root(&sentinel),
+			tree_size (0) { insert<InputIterator>(first, last); };
+
+		~Tree() {
+			clear();
+		};
+
+		tree_type&	operator=(const tree_type& rhs) {
+			clear();
+			insertTree(rhs.root);
+			return *this;
+		};
+
+		//TODO: to evaluate
+		base_pointer	getRoot() const { return root; };
+
+	/*****************************************************/ 
+	/**						iterator					**/ 
+	/*****************************************************/
+		iterator	begin() {
+			return iterator(minimumNode(root));
+		};
+
+		const_iterator	begin() const {
+			return const_iterator(minimumNode(root));
+		};
+
+		iterator	end() {
+			return iterator(&sentinel);
+		};
+
+		const_iterator	end() const {
+			return const_iterator(const_cast<base_pointer>(&sentinel));
+		};
+
+		reverse_iterator	rbegin() {
+			return reverse_iterator(end());
+		};
+
+		const_reverse_iterator	rbegin() const {
+			return const_reverse_iterator(end());
+		};
+
+		reverse_iterator	rend() {
+			return reverse_iterator(begin());
+		};
+
+		const_reverse_iterator	rend() const {
+			return const_reverse_iterator(begin());
+		};
+
+	/*****************************************************/ 
+	/**					member function					**/ 
+	/*****************************************************/
+		bool	empty() const { return tree_size == 0; };
+		
+		size_type	size() const { return tree_size; };
+
+		size_type	max_size() const { 	return allocator.max_size(); };
+
+		ft::pair<iterator, bool>	insert(const value_type& val) {
+			iterator	it = find(val);
+			if (it != end()) {
+				return ft::make_pair<iterator, bool>(it, false);
+			}
+			else {
+				pointer	new_node = createNode(val);
+				root = insertNode(root, new_node);
+				return ft::make_pair<iterator, bool>(iterator(new_node), true);
+			}			
+		};
+
+		//TODO: to implement for position (lower/upper bound???)
+		iterator	insert(iterator position, const value_type& val) {
+			iterator	it = find(val);
+			if (it != end()) {
+				return it;
+			}
+			else {
+				pointer	new_node = createNode(val);
+				root = insertNode(root, new_node);
+				return iterator(new_node);
+			}
+		}
+
+		template <class InputIterator>
+		void	insert(InputIterator first, InputIterator last) {
+			while (first != last) {
+				insert(*first);
+				++first;
+			}
+		};
+
+		size_type	erase(iterator position) {
+			if (position == end()) {
+				return 0;
+			}
+			else {
+				root = deleteNode(root, *position);
+				return 1;				
+			}
+		};
+
+		void	swap(tree_type& x) {
+			swapPointer(root->parent, x.root->parent, &sentinel, &(x.sentinel));
+			swapPointer(root, x.root, &sentinel, &(x.sentinel));
+			swapPointer(sentinel.parent, x.sentinel.parent, &sentinel, &(x.sentinel));
+			swapPointer(sentinel.parent->right, x.sentinel.parent->right, &sentinel, &(x.sentinel));
+			
+			std::swap(tree_size, x.tree_size);
+		}
+
+		void	clear() {
+			clearTree(root);
+			sentinel.parent = &sentinel;
+			root = &sentinel;
+		};
+
+		iterator	find(const value_type& val) {
+			base_pointer	node = findNode(root, val);
+			if (isEdge(node)) {
+				return end();
+			}
+			return iterator(node);
+		}
+
+		const_iterator	find(const value_type& val) const {
+			base_pointer	node = findNode(root, val);
+			if (isEdge(node)) {
+				return end();
+			}
+			return const_iterator(node);
+		}
+
+	/*****************************************************/ 
+	/**					public utility					**/ 
+	/*****************************************************/
+	public:
+		void	print() const {
+			utility::printNode<value_type>(root, NULL, false);
+		};
+
+	/*****************************************************/ 
 	/**				private member function				**/ 
 	/*****************************************************/
 	private:
@@ -245,127 +405,6 @@ class Tree {
 			}
 		};
 
-	/*****************************************************/ 
-	/**			constructor	& destructor & operator		**/ 
-	/*****************************************************/
-	public:
-		/**** empty constructor ****/
-		explicit Tree(const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
-			compare(comp),
-			allocator(alloc),
-			sentinel(&sentinel, &sentinel, 0),
-			root(&sentinel),
-			tree_size(0) {};
-
-		/**** range constructor ****/
-		template <class InputIterator>
-		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
-			compare(comp),
-			allocator(alloc),
-			sentinel(&sentinel, &sentinel, 0),
-			root(&sentinel),
-			tree_size (0) { insert<InputIterator>(first, last); };
-
-		~Tree() {
-			clear();
-		};
-
-		tree_type&	operator=(const tree_type& rhs) {
-			clear();
-			insertTree(rhs.root);
-			return *this;
-		};
-
-		//TODO: to evaluate
-		base_pointer	getRoot() const { return root; };
-
-	/*****************************************************/ 
-	/**						iterator					**/ 
-	/*****************************************************/
-		iterator	begin() {
-			return iterator(minimumNode(root));
-		};
-
-		const_iterator	begin() const {
-			return const_iterator(minimumNode(root));
-		};
-
-		iterator	end() {
-			return iterator(&sentinel);
-		};
-
-		const_iterator	end() const {
-			return const_iterator(const_cast<base_pointer>(&sentinel));
-		};
-
-		reverse_iterator	rbegin() {
-			return reverse_iterator(end());
-		};
-
-		const_reverse_iterator	rbegin() const {
-			return const_reverse_iterator(end());
-		};
-
-		reverse_iterator	rend() {
-			return reverse_iterator(begin());
-		};
-
-		const_reverse_iterator	rend() const {
-			return const_reverse_iterator(begin());
-		};
-
-	/*****************************************************/ 
-	/**					member function					**/ 
-	/*****************************************************/
-		bool	empty() const { return tree_size == 0; };
-		
-		size_type	size() const { return tree_size; };
-
-		size_type	max_size() const { 	return allocator.max_size(); };
-
-		ft::pair<iterator, bool>	insert(const value_type& val) {
-			iterator	it = find(val);
-			if (it != end()) {
-				return ft::make_pair<iterator, bool>(it, false);
-			}
-			else {
-				pointer	new_node = createNode(val);
-				root = insertNode(root, new_node);
-				return ft::make_pair<iterator, bool>(iterator(new_node), true);
-			}			
-		};
-
-		//TODO: to implement for position (lower/upper bound???)
-		iterator	insert(iterator position, const value_type& val) {
-			iterator	it = find(val);
-			if (it != end()) {
-				return it;
-			}
-			else {
-				pointer	new_node = createNode(val);
-				root = insertNode(root, new_node);
-				return iterator(new_node);
-			}
-		}
-
-		template <class InputIterator>
-		void	insert(InputIterator first, InputIterator last) {
-			while (first != last) {
-				insert(*first);
-				++first;
-			}
-		};
-
-		size_type	erase(iterator position) {
-			if (position == end()) {
-				return 0;
-			}
-			else {
-				root = deleteNode(root, *position);
-				return 1;				
-			}
-		};
-
 		void	swapPointer(base_pointer& x1, base_pointer& x2, base_pointer s1, base_pointer s2) {
 			if (x1 == s1) {
 				if (x2 == s2) {
@@ -386,45 +425,6 @@ class Tree {
 				}
 			}
 		}
-
-		void	swap(tree_type& x) {
-			swapPointer(root->parent, x.root->parent, &sentinel, &(x.sentinel));
-			swapPointer(root, x.root, &sentinel, &(x.sentinel));
-			swapPointer(sentinel.parent, x.sentinel.parent, &sentinel, &(x.sentinel));
-			swapPointer(sentinel.parent->right, x.sentinel.parent->right, &sentinel, &(x.sentinel));
-			
-			std::swap(tree_size, x.tree_size);
-		}
-
-		void	clear() {
-			clearTree(root);
-			sentinel.parent = &sentinel;
-			root = &sentinel;
-		};
-
-		iterator	find(const value_type& val) {
-			base_pointer	node = findNode(root, val);
-			if (isEdge(node)) {
-				return end();
-			}
-			return iterator(node);
-		}
-
-		const_iterator	find(const value_type& val) const {
-			base_pointer	node = findNode(root, val);
-			if (isEdge(node)) {
-				return end();
-			}
-			return const_iterator(node);
-		}
-
-	/*****************************************************/ 
-	/**					public utility					**/ 
-	/*****************************************************/
-	public:
-		void	print() const {
-			utility::printNode<value_type>(root, NULL, false);
-		};
 
 
 }; /* end of class TreeAVL */
