@@ -51,9 +51,15 @@ else
 
 	# check timing
 	echo "\n"$MAGENTA_BOLD">> Comparing timing..."$RESET_COLOR
-	echo $BLUE_BOLD"Elapsed time for ft.out is [$TIME_FT] seconds."
-	echo $BLUE_BOLD"Elapsed time for std.out is [$TIME_STD] seconds."
-	TIME_MAX=$(($TIME_STD * 20))
+	echo $BLUE_BOLD"Elapsed time for ft.out is $WHITE_BOLD$TIME_FT$BLUE_BOLD seconds."
+	echo $BLUE_BOLD"Elapsed time for std.out is $WHITE_BOLD$TIME_STD$BLUE_BOLD seconds."
+		# if TIME_STD is 0 second, set it at 1 for next comparison step
+		if [ $TIME_STD -eq 0 ]
+		then
+			TIME_MAX=1
+		else
+			TIME_MAX=$(($TIME_STD * 20))
+		fi
 	if [ $TIME_FT -le $TIME_MAX ]
 	then
 		echo $GREEN_BOLD"✅ Timing meets requirement!"$RESET_COLOR

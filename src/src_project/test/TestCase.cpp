@@ -1,6 +1,7 @@
 #include "TestCase.hpp"
 #include "VectorTest.hpp"
 #include "MapTest.hpp"
+#include "StackTest.hpp"
 #include "../utility/get_input.hpp"
 #include "../utility/log_formatting.hpp"
 
@@ -77,7 +78,8 @@ void	TestCase::testMap(int category) {
 }
 
 void	TestCase::testStack(int category) {
-	//TODO: to add
+	StackTest test;
+	test.test(category);
 }
 
 void	TestCase::testContainer(int container, int category) {
@@ -106,5 +108,5 @@ void	TestCase::run() {
 	// int category = utility::getInput<int>("Choose test category (index): ", checkCategoryScope);
 	// testContainer(container, category);
 
-	testContainer(2, 0);
+	testContainer(0, 0);
 }

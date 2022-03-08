@@ -74,6 +74,7 @@
 		"variant": "cpp",
 		"vector": "cpp",
 		"filesystem": "cpp",
-		"memory_resource": "cpp"
+		"memory_resource": "cpp",
+		"list": "cpp"
 	}
 }

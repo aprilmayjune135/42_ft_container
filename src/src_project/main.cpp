@@ -1,8 +1,5 @@
 #include <iostream>
-#include "container/vector.hpp"
 #include "test/TestCase.hpp"
-#include "utility/print_color.hpp"
-#include <vector>
 
 #ifndef CATCH
 int main() {

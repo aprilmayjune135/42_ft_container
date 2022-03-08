@@ -238,7 +238,9 @@ void	VectorTest::testPerTypeModifiers(const Source< ft::vector<T> >& src) {
 	printVector(v_push);
 
 	logTitleSubSection("pop_back");
-	v_push.pop_back();
+	while (!v_push.empty()) {
+		v_push.pop_back();
+	}
 	printVector(v_push);
 
 	logTitleSubSection("insert - single");
@@ -251,7 +253,7 @@ void	VectorTest::testPerTypeModifiers(const Source< ft::vector<T> >& src) {
 
 	logTitleSubSection("erase - single");
 	typename t_vector::iterator	it_valid = v_insert.begin(); // to check iterator validity after erase
-	for (std::size_t i = 1; i < n; ++i) {
+	for (std::size_t i = 1; i < v_insert.size(); ++i) {
 		PRINT << *v_insert.erase(v_insert.begin() + i) << " ";
 	}
 	printVector(v_insert);

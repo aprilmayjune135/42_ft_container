@@ -35,8 +35,8 @@ void	printPair(const T& pair) {
 }
 
 template <class C>
-void	printMapSize(const C& map) {
-	PRINT << "size " << map.size() << '\n';
+void	printContainerSize(const C& container) {
+	PRINT << "size " << container.size() << '\n';
 }
 
 template <class C>
@@ -57,7 +57,18 @@ void	printMapDataReverse(const C& map) {
 
 template <class C>
 void	printMap(const C& map) {
-	printMapSize(map);
+	printContainerSize(map);
 	printMapData(map);
 	printMapDataReverse(map);
+}
+
+/* Note: this function will erase every element of the stack */
+template <class C>
+void	printStack(C& stack) {
+	printContainerSize(stack);
+	while (!stack.empty()) {
+		PRINT << stack.top() << ' ';
+		stack.pop();
+	}
+	PRINT << '\n';
 }

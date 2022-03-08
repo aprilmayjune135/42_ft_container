@@ -108,19 +108,22 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- operator[] (+test)
 	- lower/upper bound
 
-2022-03-07 (Mon)
+2022-03-07 (Mon) map
 	- implement time check
 	- equal_range
 	- evaluate ft_container
 	- finalize map test
 	- add enable_if on map
 
+2022-03-08 (Tue) stack
+	- stack + test
+	- add Timer.hpp
+
 **************************
 **		Next To Do		**
 **************************
-	- stack
+	- add extreme large test
 	- implement RBT
-
 
 ******************************
 **		General To Do		**

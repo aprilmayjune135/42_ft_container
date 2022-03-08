@@ -1,6 +1,9 @@
 #include "ContainerTest.hpp"
 #include "TestCase.hpp"
 #include "../utility/log_formatting.hpp"
+#include "../utility/Timer.hpp"
+#include "../utility/print_color.hpp"
+#include <iostream>
 
 ContainerTest::ContainerTest(const std::string& type):
 container_type(type) {}
@@ -16,6 +19,7 @@ void	ContainerTest::test(int category) {
 		&ContainerTest::testAllocator,
 		&ContainerTest::testOperator
 	};
+	utility::Timer	timer;
 	if (category == 0) {
 		for (int i = 0; i < ALL_CATEGORY; ++i) {
 			logTitleCategory(container_type, getCategoryName(static_cast<CategoryType>(i)));
@@ -26,4 +30,6 @@ void	ContainerTest::test(int category) {
 		logTitleCategory(container_type, getCategoryName(static_cast<CategoryType>(category - 1)));
 		(this->*func_array[category - 1])();
 	}
+	std::cout << BLUE_BOLD << "[ " << container_type << " ] running time is: " 
+				<< WHITE_BOLD << timer.elapsed() << BLUE_BOLD << " seconds\n" << RESET_COLOR;
 }

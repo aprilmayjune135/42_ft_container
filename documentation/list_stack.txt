@@ -1,0 +1,22 @@
+******************************
+**		Member functions	**
+******************************
+>> Basic:
+    [t] constructor
+
+>> Capacity:
+    [t]	empty
+    [t]	size
+
+>> Modifiers:
+    [t] top (regular + const)
+    [t] push
+    [t]	pop
+
+>> Operations:
+    [v] ==
+    [v] !=
+    [v] <
+    [v] <=
+    [v] >
+    [v] >=
