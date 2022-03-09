@@ -1,5 +1,5 @@
 #pragma once
-#include "NodeIteratorAVL.hpp"
+#include "NodeIteratorRBT.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../pair/pair.hpp"
 #include "../utility/print_tree.hpp" //TODO: to delete
@@ -7,7 +7,7 @@
 #include <memory>
 #include <algorithm>
 
-namespace AVL {
+namespace RBT {
 
 template <class T, class Compare, class Alloc>
 class Tree {
@@ -48,7 +48,7 @@ class Tree {
 		explicit Tree(const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type()):
 			compare(comp),
 			allocator(alloc),
-			sentinel(&sentinel, &sentinel, 0),
+			sentinel(&sentinel, &sentinel, RBT_BLACK),
 			root(&sentinel),
 			tree_size(0) {};
 
@@ -57,7 +57,7 @@ class Tree {
 		Tree(InputIterator first, InputIterator last, const compare_type& comp = compare_type(), const allocator_type& alloc = allocator_type(), typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0):
 			compare(comp),
 			allocator(alloc),
-			sentinel(&sentinel, &sentinel, 0),
+			sentinel(&sentinel, &sentinel, RBT_BLACK),
 			root(&sentinel),
 			tree_size (0) { insert<InputIterator>(first, last); };
 
@@ -125,6 +125,7 @@ class Tree {
 			else {
 				pointer	new_node = createNode(val);
 				root = insertNode(root, new_node);
+				recolorNode(new_node);
 				return ft::make_pair<iterator, bool>(iterator(new_node), true);
 			}			
 		};
@@ -138,6 +139,7 @@ class Tree {
 			else {
 				pointer	new_node = createNode(val);
 				root = insertNode(root, new_node);
+				recolorNode(new_node);
 				return iterator(new_node);
 			}
 		}
@@ -150,15 +152,15 @@ class Tree {
 			}
 		};
 
-		size_type	erase(iterator position) {
-			if (position == end()) {
-				return 0;
-			}
-			else {
-				root = deleteNode(root, *position);
-				return 1;				
-			}
-		};
+		// size_type	erase(iterator position) {
+		// 	if (position == end()) {
+		// 		return 0;
+		// 	}
+		// 	else {
+		// 		root = deleteNode(root, *position);
+		// 		return 1;				
+		// 	}
+		// };
 
 		void	swap(tree_type& x) {
 			swapPointer(root->parent, x.root->parent, &sentinel, &(x.sentinel));
@@ -220,26 +222,6 @@ class Tree {
 			tree_size--;
 		}
 
-		base_pointer	rebalanceInsertNode(base_pointer node, const value_type& val) {
-			int balance_factor = getBalance(node);
-			if (isLeftHeavy(balance_factor) && compare(val, static_cast<pointer>(node->left)->value)) {
-				return rightRotate(node);
-			}
-			else if (isLeftHeavy(balance_factor) && compare(static_cast<pointer>(node->left)->value, val)) {
-				node->left = leftRotate(node->left);
-				return rightRotate(node);
-			}
-			else if (isRightHeavy(balance_factor) && compare(static_cast<pointer>(node->right)->value, val)) {
-				return leftRotate(node);
-			}
-			else if (isRightHeavy(balance_factor) && compare(val, static_cast<pointer>(node->right)->value)) {
-				node->right = rightRotate(node->right);
-				return leftRotate(node);
-			}
-			else {
-				return node;
-			}
-		};
 
 		base_pointer	findNode(base_pointer node, const value_type& val) const {
 			if (isEdge(node)) {
@@ -255,7 +237,55 @@ class Tree {
 				return node;
 			}
 		};	
-	
+
+		void	recolorNode(base_pointer node) {
+			if (!node) {
+				std::cout << "NULL!!!\n";
+				exit(2);
+			}
+			// scenario 2: Parent is black => do nothing
+			// scenario 3: Parent is red (proof of Grandparent exists (because root cannot be red), and Grandparent has to be black (cannot be two red together))
+			while (isRed(node->parent)) {
+				// scenario 3.1: Parent is red, Uncle is red
+				base_pointer uncle = getUncle(node);
+				if (isRed(uncle)) {
+					node->parent->parent->color = RBT_RED;
+					node->parent->color = RBT_BLACK;
+					uncle->color = RBT_BLACK;
+				}
+				// scenario 3.2: Parent is red, Uncle is black
+				else {
+					if (isRightChild(node->parent)) {
+						// scenario 3.2.2: Parent is right child and Node is left child
+						if (isLeftChild(node)) {
+							node = node->parent;
+							node = rightRotate(node);
+						}
+						// scenario 3.2.1: Parent is right child and Node is right child
+						node->parent->parent = leftRotate(node->parent->parent);
+						getUncle(node)->color = RBT_RED;
+						node->parent = RBT_BLACK;
+					}
+					else {
+						// scenario 3.2.4: Parent is left child and Node is right child
+						if (isRightChild(node)) {
+							node = node->parent;
+							node = leftRotate(node);
+						}
+						// scenario 3.2.3: Parent is left child and Node is left child
+						node->parent->parent = rightRotate(node->parent->parent);
+						getUncle(node)->color = RBT_RED;
+						node->parent = RBT_BLACK;
+					}
+				}
+				node = node->parent->parent;
+			}
+			// scenario 1: node is the root
+			if (node == root) {
+				node->color = RBT_BLACK;
+			}
+		};
+
 		/* assume new_node is not an existing value */
 		base_pointer	insertNode(base_pointer node, pointer new_node) {
 			if (isEdge(node)) {
@@ -267,7 +297,7 @@ class Tree {
 			}
 			if (compare(new_node->value, static_cast< pointer >(node)->value)) {
 				node->left = insertNode(node->left, new_node);
-				node->left->parent = node; //TODO: to evaluate efficiency: check if node->left->parent == NULL first?
+				node->left->parent = node;
 			}
 			else if (compare(static_cast< pointer >(node)->value, new_node->value)) {
 				if (node->right == &sentinel) {
@@ -281,34 +311,33 @@ class Tree {
 			else {
 				return node; // do nothing if node is already exist;
 			}
-			updateHeight(node);
-			return rebalanceInsertNode(node, new_node->value);
+			return node;
 		};
 
-		base_pointer	rebalanceDeleteNode(base_pointer node) {
-			int balance_factor = getBalance(node);
-			if (isLeftHeavy(balance_factor)) {
-				if (getBalance(node->left) >= 0) {
-					return rightRotate(node);
-				}
-				else {
-					node->left = leftRotate(node->left);
-					return rightRotate(node);
-				}
-			}
-			else if (isRightHeavy(balance_factor)) {
-				if (getBalance(node->right) <= 0) {
-					return leftRotate(node);
-				}
-				else {
-					node->right = rightRotate(node->right);
-					return leftRotate(node);
-				}
-			}
-			else {
-				return node;
-			}
-		}
+		// base_pointer	rebalanceDeleteNode(base_pointer node) {
+		// 	int balance_factor = getBalance(node);
+		// 	if (isLeftHeavy(balance_factor)) {
+		// 		if (getBalance(node->left) >= 0) {
+		// 			return rightRotate(node);
+		// 		}
+		// 		else {
+		// 			node->left = leftRotate(node->left);
+		// 			return rightRotate(node);
+		// 		}
+		// 	}
+		// 	else if (isRightHeavy(balance_factor)) {
+		// 		if (getBalance(node->right) <= 0) {
+		// 			return leftRotate(node);
+		// 		}
+		// 		else {
+		// 			node->right = rightRotate(node->right);
+		// 			return leftRotate(node);
+		// 		}
+		// 	}
+		// 	else {
+		// 		return node;
+		// 	}
+		// }
 
 		void	swapNode(base_pointer x, base_pointer y) {
 			// swap parent
@@ -340,52 +369,52 @@ class Tree {
 			}		
 			std::swap(x->right, y->right);
 
-			// swap height
-			std::swap(x->height, y->height);
+			// swap color
+			std::swap(x->color, y->color);
 		}
 
-		base_pointer	deleteNode(base_pointer node, const value_type& val) {
-			if (isEdge(node)) {
-				return node;
-			}
-			if (compare(val, static_cast< pointer >(node)->value)) {
-				node->left = deleteNode(node->left, val);
-			}
-			else if (compare(static_cast< pointer >(node)->value, val)) {
-				node->right = deleteNode(node->right, val);
-			}
-			else {
-				// scenario 1: leaf node
-				if (node->height == 1) {
-					if (isSentinel(node->right)) {
-						sentinel.parent = node->parent;
-					}
-					base_pointer	temp = node->right;
-					removeNode(static_cast<pointer>(node));
-					return temp;
-				}
-				// scenario 2: has 1 child node
-				else if (isEdge(node->left) || isEdge(node->right)) {
-					base_pointer	temp = node->left ? node->left : node->right;
-					if (isSentinel(node->right)) {
-						temp->right = node->right;
-						sentinel.parent = temp;
-					}
-					temp->parent = node->parent;
-					removeNode(static_cast<pointer>(node));
-					return temp;
-				}
-				// scenario 2: has 2 child nodes
-				else {
-					base_pointer	temp = incrementNode(node);
-					swapNode(node, temp);
-					temp->right = deleteNode(temp->right, static_cast<pointer>(node)->value);
-					node = temp;
-				}
-			}
-			updateHeight(node);
-			return rebalanceDeleteNode(node);
-		}
+		// base_pointer	deleteNode(base_pointer node, const value_type& val) {
+		// 	if (isEdge(node)) {
+		// 		return node;
+		// 	}
+		// 	if (compare(val, static_cast< pointer >(node)->value)) {
+		// 		node->left = deleteNode(node->left, val);
+		// 	}
+		// 	else if (compare(static_cast< pointer >(node)->value, val)) {
+		// 		node->right = deleteNode(node->right, val);
+		// 	}
+		// 	else {
+		// 		// scenario 1: leaf node
+		// 		if (node->height == 1) {
+		// 			if (isSentinel(node->right)) {
+		// 				sentinel.parent = node->parent;
+		// 			}
+		// 			base_pointer	temp = node->right;
+		// 			removeNode(static_cast<pointer>(node));
+		// 			return temp;
+		// 		}
+		// 		// scenario 2: has 1 child node
+		// 		else if (isEdge(node->left) || isEdge(node->right)) {
+		// 			base_pointer	temp = node->left ? node->left : node->right;
+		// 			if (isSentinel(node->right)) {
+		// 				temp->right = node->right;
+		// 				sentinel.parent = temp;
+		// 			}
+		// 			temp->parent = node->parent;
+		// 			removeNode(static_cast<pointer>(node));
+		// 			return temp;
+		// 		}
+		// 		// scenario 2: has 2 child nodes
+		// 		else {
+		// 			base_pointer	temp = incrementNode(node);
+		// 			swapNode(node, temp);
+		// 			temp->right = deleteNode(temp->right, static_cast<pointer>(node)->value);
+		// 			node = temp;
+		// 		}
+		// 	}
+		// 	updateHeight(node);
+		// 	return rebalanceDeleteNode(node);
+		// }
 
 		void	insertTree(base_pointer node) {
 			if (isEdge(node)) {
@@ -426,6 +455,6 @@ class Tree {
 		}
 
 
-}; /* end of class TreeAVL */
+}; /* end of class TreeRBT */
 
-} /* end of namespace AVL */
+} /* end of namespace RBT */

@@ -4,6 +4,7 @@
 #include "StackTest.hpp"
 #include "../utility/get_input.hpp"
 #include "../utility/log_formatting.hpp"
+#include "map_temp.hpp" //TODO: to delete when RBT is done
 
 std::string	getContainerName(ContainerType container) {
 	switch (container) {
@@ -108,5 +109,7 @@ void	TestCase::run() {
 	// int category = utility::getInput<int>("Choose test category (index): ", checkCategoryScope);
 	// testContainer(container, category);
 
-	testContainer(0, 0);
+	// testContainer(0, 0);
+	testMapTemp();
+
 }

@@ -1,12 +1,12 @@
-#include "NodeAVL.hpp"
+#include "NodeRBT.hpp"
 #define BALANCE_MIN -1
 #define BALANCE_MAX 1
 
 
-namespace AVL {
+namespace RBT {
 
 bool	isSentinel(NodeBase* node) {
-	return node && node->height == 0;
+	return node && node->left == node && node->right == node;
 }
 
 bool	isEdge(NodeBase* node) {
@@ -14,33 +14,33 @@ bool	isEdge(NodeBase* node) {
 }
 
 bool	notLeaf(NodeBase* node) {
-	return node && node->height > 1;
+	return node && (!isEdge(node->left) || !isEdge(node->right));
 }
 
-bool	isLeftHeavy(int balance_factor){
-	return balance_factor > BALANCE_MAX;
+bool	isBlack(NodeBase* node) {
+	return isEdge(node) || node->color == RBT_BLACK;
 }
 
-bool	isRightHeavy(int balance_factor){
-	return balance_factor < BALANCE_MIN;
+bool	isRed(NodeBase* node) {
+	return !isEdge(node) && node->color == RBT_RED;
 }
 
-int height(NodeBase* node) {
-	if (!node) {
-		return 0;
+/* assume Parent is not NULL or Sentinel */
+bool	isLeftChild(NodeBase* node) {
+	return node == node->parent->left;
+}
+
+/* assume Parent is not NULL or Sentinel */
+bool	isRightChild(NodeBase* node) {
+	return node == node->parent->right;
+}
+
+/* assume Grandparent is not NULL or Sentinel */
+NodeBase*	getUncle(NodeBase* node){
+	if (isLeftChild(node->parent)) {
+		return node->parent->parent->right;
 	}
-	return node->height;
-}
-
-int	getBalance(NodeBase* node) {
-	if (!node) {
-		return 0;
-	}
-	return height(node->left) - height(node->right);
-}
-
-void	updateHeight(NodeBase* node) {
-	node->height = std::max(height(node->left), height(node->right)) + 1;
+	return node->parent->parent->left;
 }
 
 NodeBase* 	minimumNode(NodeBase*  node) {
@@ -66,8 +66,6 @@ NodeBase*	rightRotate(NodeBase* x) {
 	}
 	y->right = x;
 	x->parent = y;
-	updateHeight(x);
-	updateHeight(y);
 	return y;
 }
 
@@ -80,8 +78,6 @@ NodeBase*	leftRotate(NodeBase* x) {
 	}
 	y->left = x;
 	x->parent = y;
-	updateHeight(x);
-	updateHeight(y);
 	return y;
 }
 
@@ -127,4 +123,4 @@ NodeBase*	decrementNode(NodeBase* node) {
 	}
 }
 
-} /* end of namespace AVL */
+} /* end of namespace RBT */
