@@ -2,6 +2,7 @@
 #include "../utility/Print.hpp"
 #include "../utility/print_container.hpp"
 #include "../utility/log_formatting.hpp"
+#include <limits>
 
 /*********************************************/ 
 /**				Source Constructor			**/ 
@@ -296,6 +297,16 @@ void	VectorTest::testModifiers() {
 	testPerTypeModifiers(Source<t_str>(20));
 	testPerTypeModifiers(Source<t_dummy>(30));
 	testPerTypeModifiers(Source<t_dummy_2D>(15));
+	
+	#ifdef EXTREME
+		logTitleSubSection("insert/erase - large amount");
+		t_int	vector;
+		std::size_t max_size = 1000000000;
+		vector.insert(vector.end(), max_size, 0);
+		printVectorCapacity(vector);
+		vector.erase(vector.begin(), vector.end());
+		printVectorCapacity(vector);
+	#endif
 }
 
 /*********************************************/ 

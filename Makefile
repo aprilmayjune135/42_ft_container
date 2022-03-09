@@ -3,7 +3,9 @@ NAME = ft.out
 NAME_STD = std.out
 NAME_CATCH = catch.out
 NAME_FSANITIZE = fsanitize.out
-EXECS = $(NAME) $(NAME_STD) $(NAME_CATCH) $(NAME_FSANITIZE)
+NAME_EXTREME = ft_extreme.out
+NAME_STD_EXTREME = std_extreme.out
+EXECS = $(NAME) $(NAME_STD) $(NAME_CATCH) $(NAME_FSANITIZE) $(NAME_EXTREME) $(NAME_STD_EXTREME)
 
 CPP = clang++
 
@@ -18,39 +20,49 @@ endif
 CFLAG = -Wall -Wextra -Werror -pedantic 
 CFLAG += -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-unused-local-typedef
 ifdef CATCH
-	CFLAG += -std=c++17 -DCATCH
+	CFLAG += -std=c++17
 else
 	CFLAG += -std=c++98
 endif
 
-ifdef STANDARD
-	CFLAG += -DSTANDARD
-endif
-
-ifdef FSANITIZE
-	CFLAG += -DFSANITIZE
-endif
-
-###### STD MODE ######
-ifdef STANDARD
-	NAME = $(NAME_STD)
-	SUBDIR_OBJ = /obj_std
-	SUBDIR_DEP = /dep_std
-endif
-
+# Note: settings related to MODE: 1) CFLAG -D; 2) NAME; 3) SUB_DIR_OBJ and SUB_DIR_DEP;
 ###### FSANITIZE MODE ######
 ifdef FSANITIZE
-	NAME = $(NAME_FSANITIZE)
 	CFLAG += $(SANITIZE_FLAG)
+	CFLAG += -DFSANITIZE
+	NAME = $(NAME_FSANITIZE)
 	SUBDIR_OBJ = /obj_fsanitize
 	SUBDIR_DEP = /dep_fsanitize
 endif
 
 ###### CATCH MODE ######
 ifdef CATCH
+	CFLAG += -DCATCH
 	NAME = $(NAME_CATCH)
 	SUBDIR_OBJ = /obj_catch
 	SUBDIR_DEP = /dep_catch
+endif
+
+###### STD MODE ######
+ifdef STANDARD
+	CFLAG += -DSTANDARD
+	NAME = $(NAME_STD)
+	SUBDIR_OBJ = /obj_std
+	SUBDIR_DEP = /dep_std
+endif
+
+###### EXTREME MODE ######
+ifdef EXTREME
+	CFLAG += -DEXTREME
+ifdef STANDARD
+	NAME = $(NAME_STD_EXTREME)
+	SUBDIR_OBJ = /obj_std_extreme
+	SUBDIR_DEP = /dep_std_extreme
+else
+	NAME = $(NAME_EXTREME)
+	SUBDIR_OBJ = /obj_extreme
+	SUBDIR_DEP = /dep_extreme
+endif
 endif
 
 ###### DIR & FILES######
@@ -93,6 +105,12 @@ fsanitize:
 
 catch:
 	@$(MAKE) all CATCH=1
+
+extreme:
+	@$(MAKE) all EXTREME=1
+
+standard_extreme:
+	@$(MAKE) all STANDARD=1 EXTREME=1
 
 ###### clean ######
 clean:

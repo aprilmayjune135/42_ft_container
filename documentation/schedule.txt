@@ -119,10 +119,13 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- stack + test
 	- add Timer.hpp
 
+2022-03-09 (Wed) RBT
+	- add extreme test
+
+
 **************************
 **		Next To Do		**
 **************************
-	- add extreme large test
 	- implement RBT
 
 ******************************

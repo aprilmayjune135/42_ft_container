@@ -306,6 +306,20 @@ void	MapTest::testModifiers() {
 	testPerTypeModifiers(Source<t_str>(30));
 	testPerTypeModifiers(Source<t_dummy>(100));
 	testPerTypeModifiers(Source<t_dummy_2D>(42));
+	#ifdef EXTREME
+		logTitleSubSection("insert/erase - large amount");
+		t_int	map;
+		std::size_t max_size = 1000000;
+		for (std::size_t i = 0; i < max_size; ++i) {
+			MapTest::t_pair_int	pair(i, 'a' + i % 26);
+			map.insert(pair);
+		}
+		printContainerSize(map);
+		for (std::size_t i = 0; i < max_size; ++i) {
+			map.erase(i);
+		}
+		printContainerSize(map);
+	#endif
 }
 
 /*********************************************/ 

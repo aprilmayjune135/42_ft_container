@@ -11,7 +11,17 @@ BLUE_BOLD='\033[1;34m'
 MAGENTA_BOLD='\033[1;35m'
 CYAN_BOLD='\033[1;36m'
 WHITE_BOLD='\033[1;37m'
+RESET_COLOR='\033[0m'
+BLACK='\033[0;30m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
+WHITE='\033[0;37m'
 
+# Start
 rm -rf *.log
 
 if [ "$1" == "fsanitize" ]; then
@@ -21,22 +31,42 @@ elif [ "$1" == "catch" ]; then
 	make catch
 	./catch.out
 else
+	# define extreme or regular
+	if [ "$1" == "extreme" ]; then
+		MAKE_FT="make extreme"
+		MAKE_STD="make standard_extreme"
+		FT_OUT="./ft_extreme.out"
+		STD_OUT="./std_extreme.out"
+		# display art
+		echo $MAGENTA_BOLD"\n ☕ Start EXTREME mode, it's gonna take a while, sit back and relax :) ☕"$RESET_COLOR
+		echo $YELLOW
+		cat ./src/src_project/utility/cat.txt
+		echo $RESET_COLOR
+	else
+		MAKE_FT="make"
+		MAKE_STD="make standard"
+		FT_OUT="./ft.out"
+		STD_OUT="./std.out"
+	fi
+
 	# run ft program
-	make
-	echo $MAGENTA_BOLD">> Executing ft.out..."$RESET_COLOR
-	START_TIME_FT=$(date +%s)
-	./ft.out
-	END_TIME_FT=$(date +%s)
-	TIME_FT=$(($END_TIME_FT - $START_TIME_FT))
+	$MAKE_FT
+	echo $MAGENTA_BOLD">> Executing ft program..."$RESET_COLOR
+		# calcualte time
+		START_TIME_FT=$(date +%s)
+		$FT_OUT
+		END_TIME_FT=$(date +%s)
+		TIME_FT=$(($END_TIME_FT - $START_TIME_FT))
 	echo $MAGENTA_BOLD">> Output saved on ft_log.txt..."$RESET_COLOR
 	
 	# run std program
-	make standard
-	echo $MAGENTA_BOLD">> Executing std.out..."$RESET_COLOR
-	START_TIME_STD=$(date +%s)
-	./std.out
-	END_TIME_STD=$(date +%s)
-	TIME_STD=$(($END_TIME_STD - $START_TIME_STD))
+	$MAKE_STD
+	echo $MAGENTA_BOLD">> Executing std program..."$RESET_COLOR
+		# calcualte time
+		START_TIME_STD=$(date +%s)
+		$STD_OUT
+		END_TIME_STD=$(date +%s)
+		TIME_STD=$(($END_TIME_STD - $START_TIME_STD))
 	echo $MAGENTA_BOLD">> Output saved on std_log.txt..."$RESET_COLOR
 
 	# check output
