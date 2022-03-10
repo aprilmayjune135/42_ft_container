@@ -125,13 +125,15 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 		https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/
 
 2022-03-10 (Thu) RBT
-	- 
+	- RBT insert Done
+	- RBT delete Done
+		https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/?ref=lbp
 
 
 **************************
 **		Next To Do		**
 **************************
-	- implement RBT
+	- improve RBT delete code
 
 ******************************
 **		General To Do		**

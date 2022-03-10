@@ -43,12 +43,12 @@ NodeBase*	getUncle(NodeBase* node){
 	return node->parent->parent->left;
 }
 
-void	flipColor(NodeBase* node) {
-	// if node is root and color is black, do not flip color
-	if (isEdge(node) || (isSentinel(node->parent) && node->color == RBT_BLACK)) {
-		return ;
+/* assume Parent is not NULL or Sentinel */
+NodeBase*	getSibling(NodeBase* node){
+	if (isLeftChild(node)) {
+		return node->parent->right;
 	}
-	node->color = !(node->color);
+	return node->parent->left;
 }
 
 NodeBase* 	minimumNode(NodeBase*  node) {
@@ -63,6 +63,48 @@ NodeBase* 	maximumNode(NodeBase*  node) {
 		node = node->right;
 	}
 	return node;
+}
+
+NodeBase*	incrementNode(NodeBase* node) {
+	if (!node) {
+		return NULL;
+	}
+	if (!isEdge(node) && node->right) {
+		node = node->right;
+		while (!isEdge(node->left)) {
+			node = node->left;
+		}
+		return node;
+	}
+	else {
+		NodeBase* temp = node->parent;
+		while (node == temp->right) {
+			node = temp;
+			temp = temp->parent;
+		}
+		return temp;
+	}
+}
+
+NodeBase*	decrementNode(NodeBase* node) {
+	if (!node) {
+		return NULL;
+	}
+	if (!isEdge(node) && node->left) {
+		node = node->left;
+		while (!isEdge(node->right)) {
+			node = node->right;
+		}
+		return node;
+	}
+	else {
+		NodeBase* temp = node->parent;
+		while (node == temp->left) {
+			node = temp;
+			temp = temp->parent;
+		}
+		return temp;
+	}
 }
 
 } /* end of namespace RBT */

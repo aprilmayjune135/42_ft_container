@@ -78,7 +78,8 @@ void	printNode(RBT::NodeBase* root, Trunk* prev, bool isLeft) {
 
 	showTrunk(trunk);
 	PRINT << " ";
-	printPair(static_cast< RBT::Node<T>* >(root)->value);
+	PRINT << static_cast< RBT::Node<T>* >(root)->value.first; //TODO: to delete
+	// printPair(static_cast< RBT::Node<T>* >(root)->value); //TODO: to uncomment
 	static_cast< RBT::Node<T>* >(root)->color == RBT_RED ? (PRINT << "[R]") : (PRINT << "[B]");
 	if (isSentinel(root->right)) {
 		PRINT << '$';

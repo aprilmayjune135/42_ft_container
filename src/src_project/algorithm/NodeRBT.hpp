@@ -43,11 +43,14 @@ bool	isRed(NodeBase* node);
 bool	isLeftChild(NodeBase* node);
 bool	isRightChild(NodeBase* node);
 NodeBase*	getUncle(NodeBase* node);
-void	flipColor(NodeBase* node);
+NodeBase*	getSibling(NodeBase* node);
 
 NodeBase* 	minimumNode(NodeBase*  node);
 const NodeBase* 	minimumNode(const NodeBase*  node);
 NodeBase* 	maximumNode(NodeBase*  node);
 const NodeBase* 	maximumNode(const NodeBase*  node);
+
+NodeBase*	incrementNode(NodeBase* node);
+NodeBase*	decrementNode(NodeBase* node);
 
 } /* end of namespace RBT */

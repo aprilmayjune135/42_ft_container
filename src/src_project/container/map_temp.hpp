@@ -287,7 +287,7 @@ class map_temp {
 		void	print() const { tree.print(); };
 
 
-}; /* end of class map_temp */
+}; /* end of class map */
 
 
 } /* end of namespace ft */
@@ -305,5 +305,11 @@ void testMapTemp() {
 		map.insert(pair);
 	}
 	map.print();
-
+	PRINT << "\n";
+	PRINT << "delete\n";
+	for (std::size_t i = 0; i < n; ++i) {
+		map.erase(array[i]);
+	}
+	map.print();
+	PRINT << "\n";
 }
