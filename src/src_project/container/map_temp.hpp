@@ -300,15 +300,16 @@ void testMapTemp() {
 
 	int	array[] = {33, 13, 53, 11, 21, 41, 61, 15, 31};
 	std::size_t n = sizeof(array) / sizeof(int);
+	n = 200;
 	for (std::size_t i = 0; i < n; ++i) {
-		t_pair	pair(array[i], 'a' + array[i] % 26);
+		t_pair	pair(i, 'a' + i % 26);
 		map.insert(pair);
 	}
 	map.print();
 	PRINT << "\n";
 	PRINT << "delete\n";
 	for (std::size_t i = 0; i < n; ++i) {
-		map.erase(array[i]);
+		map.erase(i);
 	}
 	map.print();
 	PRINT << "\n";

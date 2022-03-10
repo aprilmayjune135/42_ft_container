@@ -133,7 +133,7 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 **************************
 **		Next To Do		**
 **************************
-	- improve RBT delete code
+	- test RBT extensively
 
 ******************************
 **		General To Do		**
