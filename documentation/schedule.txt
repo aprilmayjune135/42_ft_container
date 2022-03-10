@@ -121,6 +121,11 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 
 2022-03-09 (Wed) RBT
 	- add extreme test
+	- start RBT
+		https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/
+
+2022-03-10 (Thu) RBT
+	- 
 
 
 **************************

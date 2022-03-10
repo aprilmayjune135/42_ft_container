@@ -298,8 +298,10 @@ void testMapTemp() {
 	typedef	ft::map_temp<int, char>	t_map;
 	t_map	map;
 
-	for (std::size_t i = 0; i < 10; ++i) {
-		t_pair	pair(i, 'a' + i % 26);
+	int	array[] = {33, 13, 53, 11, 21, 41, 61, 15, 31};
+	std::size_t n = sizeof(array) / sizeof(int);
+	for (std::size_t i = 0; i < n; ++i) {
+		t_pair	pair(array[i], 'a' + array[i] % 26);
 		map.insert(pair);
 	}
 	map.print();

@@ -125,7 +125,11 @@ class Tree {
 			else {
 				pointer	new_node = createNode(val);
 				root = insertNode(root, new_node);
+				// PRINT << "************************\n"; // TODO: to delete
+				// PRINT << ">> insert: " << val.first << '\n';  // TODO: to delete
 				recolorNode(new_node);
+				// print();  // TODO: to delete
+				// PRINT << "************************\n\n";  // TODO: to delete
 				return ft::make_pair<iterator, bool>(iterator(new_node), true);
 			}			
 		};
@@ -238,20 +242,57 @@ class Tree {
 			}
 		};	
 
-		void	recolorNode(base_pointer node) {
-			if (!node) {
-				std::cout << "NULL!!!\n";
-				exit(2);
+		void	rightRotate(base_pointer x) {
+			base_pointer y = x->left;
+			y->parent = x->parent;
+			x->left = y->right;
+			if (!isEdge(x->left)) {
+				x->left->parent = x;
 			}
+			if (isSentinel(x->parent)) {
+				root = y;
+			}			
+			else if (isLeftChild(x)) {
+				x->parent->left = y;
+			}
+			else {
+				x->parent->right = y;
+			}
+			y->right = x;
+			x->parent = y;
+		}
+
+		void	leftRotate(base_pointer x) {
+			base_pointer y = x->right;
+			y->parent = x->parent;
+			x->right = y->left;
+			if (!isEdge(x->right)) {
+				x->right->parent = x;
+			}
+			if (isSentinel(x->parent)) {
+				root = y;
+			}			
+			else if (isLeftChild(x)) {
+				x->parent->left = y;
+			}
+			else {
+				x->parent->right = y;
+			}
+			y->left = x;
+			x->parent = y;
+		}
+
+		void	recolorNode(base_pointer node) {
 			// scenario 2: Parent is black => do nothing
 			// scenario 3: Parent is red (proof of Grandparent exists (because root cannot be red), and Grandparent has to be black (cannot be two red together))
-			while (isRed(node->parent)) {
+			while (node != root && isRed(node->parent)) {
 				// scenario 3.1: Parent is red, Uncle is red
-				base_pointer uncle = getUncle(node);
+				base_pointer	uncle = getUncle(node);
 				if (isRed(uncle)) {
 					node->parent->parent->color = RBT_RED;
 					node->parent->color = RBT_BLACK;
 					uncle->color = RBT_BLACK;
+					node = node->parent->parent;
 				}
 				// scenario 3.2: Parent is red, Uncle is black
 				else {
@@ -259,26 +300,25 @@ class Tree {
 						// scenario 3.2.2: Parent is right child and Node is left child
 						if (isLeftChild(node)) {
 							node = node->parent;
-							node = rightRotate(node);
+							rightRotate(node);
 						}
 						// scenario 3.2.1: Parent is right child and Node is right child
-						node->parent->parent = leftRotate(node->parent->parent);
-						getUncle(node)->color = RBT_RED;
-						node->parent = RBT_BLACK;
+						node->parent->parent->color = RBT_RED;
+						node->parent->color = RBT_BLACK;
+						leftRotate(node->parent->parent);
 					}
 					else {
 						// scenario 3.2.4: Parent is left child and Node is right child
 						if (isRightChild(node)) {
 							node = node->parent;
-							node = leftRotate(node);
+							leftRotate(node);
 						}
 						// scenario 3.2.3: Parent is left child and Node is left child
-						node->parent->parent = rightRotate(node->parent->parent);
-						getUncle(node)->color = RBT_RED;
-						node->parent = RBT_BLACK;
+						node->parent->parent->color = RBT_RED;
+						node->parent->color = RBT_BLACK;
+						rightRotate(node->parent->parent);
 					}
 				}
-				node = node->parent->parent;
 			}
 			// scenario 1: node is the root
 			if (node == root) {
@@ -373,6 +413,47 @@ class Tree {
 			std::swap(x->color, y->color);
 		}
 
+		base_pointer	incrementNode(base_pointer node) {
+			if (!node) {
+				return NULL;
+			}
+			if (!isEdge(node) && node->right) {
+				node = node->right;
+				while (!isEdge(node->left)) {
+					node = node->left;
+				}
+				return node;
+			}
+			else {
+				base_pointer temp = node->parent;
+				while (node == temp->right) {
+					node = temp;
+					temp = temp->parent;
+				}
+				return temp;
+			}
+		}
+
+		base_pointer	decrementNode(base_pointer node) {
+			if (!node) {
+				return NULL;
+			}
+			if (!isEdge(node) && node->left) {
+				node = node->left;
+				while (!isEdge(node->right)) {
+					node = node->right;
+				}
+				return node;
+			}
+			else {
+				base_pointer temp = node->parent;
+				while (node == temp->left) {
+					node = temp;
+					temp = temp->parent;
+				}
+				return temp;
+			}
+		}
 		// base_pointer	deleteNode(base_pointer node, const value_type& val) {
 		// 	if (isEdge(node)) {
 		// 		return node;

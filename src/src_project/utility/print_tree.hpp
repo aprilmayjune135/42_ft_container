@@ -59,7 +59,6 @@ void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
 template <class T>
 void	printNode(RBT::NodeBase* root, Trunk* prev, bool isLeft) {
 	if (!root || isSentinel(root)) {
-		PRINT << "EMPTY TREE!\n";
 		return ;
 	}
 	std::string prev_str = "    ";
