@@ -37,11 +37,6 @@ else
 		MAKE_STD="make standard_extreme"
 		FT_OUT="./ft_extreme.out"
 		STD_OUT="./std_extreme.out"
-		# display art
-		echo $MAGENTA_BOLD"\n ☕ Start EXTREME mode, it's gonna take a while, sit back and relax :) ☕"$RESET_COLOR
-		echo $YELLOW
-		cat ./src/src_project/utility/cat.txt
-		echo $RESET_COLOR
 	else
 		MAKE_FT="make"
 		MAKE_STD="make standard"
@@ -52,6 +47,9 @@ else
 	# run ft program
 	$MAKE_FT
 	echo $MAGENTA_BOLD">> Executing ft program..."$RESET_COLOR
+		if [ "$1" == "extreme" ]; then
+			./script_helper/extreme_message.sh
+		fi
 		# calcualte time
 		START_TIME_FT=$(date +%s)
 		$FT_OUT
@@ -62,6 +60,9 @@ else
 	# run std program
 	$MAKE_STD
 	echo $MAGENTA_BOLD">> Executing std program..."$RESET_COLOR
+		if [ "$1" == "extreme" ]; then
+			./script_helper/extreme_message.sh
+		fi
 		# calcualte time
 		START_TIME_STD=$(date +%s)
 		$STD_OUT

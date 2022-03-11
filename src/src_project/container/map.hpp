@@ -10,7 +10,7 @@
 
 namespace ft {
 
-namespace algorithm = AVL;
+namespace algorithm = AVL; //choose between "AVL" or "RBT"
 
 template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator< pair<const Key, T> > >
 class map {
@@ -248,7 +248,6 @@ class map {
 			}
 		};
 
-		//TODO: to evaluate whether to directly use iterator++?
 		node_base_pointer	findLowerBound(node_base_pointer node, const key_type& k) const {
 			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
 				if (!node->left) {
@@ -267,7 +266,6 @@ class map {
 			}
 		};
 
-		//TODO: to evaluate whether to directly use iterator++?
 		node_base_pointer	findUpperBound(node_base_pointer node, const key_type& k) const {
 			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
 				if (!node->left) {

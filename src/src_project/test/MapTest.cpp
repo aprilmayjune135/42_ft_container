@@ -314,6 +314,16 @@ void	MapTest::testModifiers() {
 			MapTest::t_pair_int	pair(i, 'a' + i % 26);
 			map.insert(pair);
 		}
+		for (std::size_t i = 0; i < max_size + 10; ++i) {
+			t_int::iterator it = map.find(i);
+			if (it != map.end()) {
+				PRINT << 'Y';
+			}
+			else {
+				PRINT << 'N';
+			}
+		}
+		PRINT << '\n';
 		printContainerSize(map);
 		for (std::size_t i = 0; i < max_size; ++i) {
 			map.erase(i);
@@ -335,8 +345,7 @@ void	MapTest::testPerTypeOperator(const Source< ft::map<Key, T> >& src) {
 
 	logTitleSubSection("find & count");
 	t_map	map(src.data);
-	const_iterator it_src = src.data.begin();
-	for (int i = 0; i < 10; ++i) {
+	for (const_iterator it_src = src.data.begin(); it_src != src.data.end(); ++it_src) {
 		Key	k = it_src->first;
 		iterator it = map.find(k);
 		if (it != map.end()) {
@@ -355,7 +364,6 @@ void	MapTest::testPerTypeOperator(const Source< ft::map<Key, T> >& src) {
 			PRINT << "[NotFound] ";
 		}
 		PRINT << map.count(k) << ' ';
-		++it_src;
 	}
 
 	logTitleSubSection("lower/upper bound");

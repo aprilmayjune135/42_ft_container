@@ -123,11 +123,11 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- add extreme test
 	- start RBT
 		https://algorithmtutor.com/Data-Structures/Tree/Red-Black-Trees/
+		https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/?ref=lbp
 
 2022-03-10 (Thu) RBT
 	- RBT insert Done
 	- RBT delete Done
-		https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/?ref=lbp
 
 2022-03-11 (Fri) RBT
 	- debug RBT deleteNode(): fix parent->left/right connection
@@ -141,7 +141,9 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 ******************************
 **		General To Do		**
 ******************************
-- map::insert-hint
+- map
+	- insert-hint how to implement
+	- lower/upper bound: is it better to directly iterator through or use tranverse tree (faster?)
 - is_integral (how to implement with iterator_traits)
 - catch
 - TODO: to figure out a way to make the selection applicable for both ft.out & std.out

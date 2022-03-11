@@ -8,7 +8,6 @@
 
 namespace RBT {
 
-
 /*
 5 rules for RBT
 	- Every node is either Black or Red
@@ -17,7 +16,6 @@ namespace RBT {
 	- Red node cannot have red parent or children
 	- Every path from a node to NULL node has the same number of black nodes
 */
-
 
 struct NodeBase {
 	NodeBase*	left;

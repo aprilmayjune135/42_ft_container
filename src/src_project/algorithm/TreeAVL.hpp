@@ -267,7 +267,7 @@ class Tree {
 			}
 			if (compare(new_node->value, static_cast< pointer >(node)->value)) {
 				node->left = insertNode(node->left, new_node);
-				node->left->parent = node; //TODO: to evaluate efficiency: check if node->left->parent == NULL first?
+				node->left->parent = node;
 			}
 			else if (compare(static_cast< pointer >(node)->value, new_node->value)) {
 				if (node->right == &sentinel) {
