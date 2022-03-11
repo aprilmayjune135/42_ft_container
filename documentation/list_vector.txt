@@ -1,50 +1,51 @@
 ******************************
 **		Member functions	**
 ******************************
+{guarantee}
 >> Basic:
-        (constructor)
+        (constructor) {strong}
     [t] (1) empty container constructor (default constructor)
     [t] (2) fill constructor
     [t] (3) range constructor
     [t] (4) copy constructor
-    [v]	(destructor)
-    [t]	operator=
+    [v]	(destructor) {no-throw}
+    [t]	operator=  {basic}
 
->> Iterators:
+>> Iterators:  {no-throw}
     [t]	begin (regular + const)
     [t]	end (regular + const)
     [t]	rbegin (regular + const)
     [t]	rend (regular + const)
 
 >> Capacity:
-    [t]	size
-    [t]	max_size
-    [t]	resize
-    [t]	capacity
-    [t]	empty
-    [t]	reserve
+    [t]	size {no-throw}
+    [t]	max_size {no-throw}
+    [t]	resize {no-throw(n < size), strong(if relocation)}
+    [t]	capacity {no-throw}
+    [t]	empty {no-throw}
+    [t]	reserve {throw length_error(n>max_size), strong}
 
 >> Element access:
-    [t]	operator[]
-    [t]	at
-    [t]	front
-    [t]	back
+    [t]	operator[] {no-throw}
+    [t]	at {throw out_of_range(n>=size), strong}
+    [t]	front {no-throw}
+    [t]	back {no-throw}
 
 >> Modifiers:
-    [t]	assign
+    [t]	assign  {basic}
         [t]	range
         [t]	fill
-    [t]	push_back
-    [t]	pop_back
-    [t]	insert
+    [t]	push_back {strong}
+    [t]	pop_back {no-throw}
+    [t]	insert {strong}
         [t] single element
         [t]	fill
         [t]	range
-    [t]	erase
+    [t]	erase {no-throw}
         [t] single element
         [t]	range
-    [t]	swap
-    [t]	clear
+    [t]	swap {no-throw}
+    [t]	clear {no-throw}
 
 >> Allocator:
     [v]	get_allocator

@@ -309,7 +309,7 @@ void	MapTest::testModifiers() {
 	#ifdef EXTREME
 		logTitleSubSection("insert/erase - large amount");
 		t_int	map;
-		std::size_t max_size = 1000000;
+		std::size_t max_size = 100000;
 		for (std::size_t i = 0; i < max_size; ++i) {
 			MapTest::t_pair_int	pair(i, 'a' + i % 26);
 			map.insert(pair);

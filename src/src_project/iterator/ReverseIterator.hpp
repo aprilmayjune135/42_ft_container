@@ -71,14 +71,12 @@ class ReverseIterator {
 			return *this;
 		};
 
-	//TODO: to delete
-	// /**** operator - relational ****/
-	// 	friend bool	operator==(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator == rhs.base_iterator; };
-	// 	friend bool	operator!=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator != rhs.base_iterator; };
-	// 	friend bool	operator<(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator < rhs.base_iterator; };
-	// 	friend bool	operator<=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator <= rhs.base_iterator; };
-	// 	friend bool	operator>(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator > rhs.base_iterator; };
-	// 	friend bool	operator>=(const ReverseIterator& lhs, const ReverseIterator& rhs) { return lhs.base_iterator >= rhs.base_iterator; };
+	/**** operator - relational ****/
+		template <class Iterator1, class Iterator2>
+		friend bool	operator==(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base_iterator == rhs.base_iterator; };
+
+		template <class Iterator1, class Iterator2>
+		friend bool	operator<(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base_iterator < rhs.base_iterator; };
 };
 
 
@@ -87,22 +85,17 @@ template <class Iterator>
 const ReverseIterator<Iterator> operator+(typename ReverseIterator<Iterator>::difference_type n, const ReverseIterator<Iterator>& a) {
 	return a + n;
 }
-template <class Iterator1, class Iterator2>
-bool	operator==(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() == rhs.base(); }
 
 template <class Iterator1, class Iterator2>
-bool	operator!=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() != rhs.base(); }
+bool	operator!=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return !(lhs == rhs); }
 
 template <class Iterator1, class Iterator2>
-bool	operator<(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() < rhs.base(); }
+bool	operator<=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return !(rhs < lhs); }
 
 template <class Iterator1, class Iterator2>
-bool	operator<=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() <= rhs.base(); }
+bool	operator>(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return rhs < lhs; }
 
 template <class Iterator1, class Iterator2>
-bool	operator>(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() > rhs.base(); }
-
-template <class Iterator1, class Iterator2>
-bool	operator>=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return lhs.base() >= rhs.base(); }
+bool	operator>=(const ReverseIterator<Iterator1>& lhs, const ReverseIterator<Iterator2>& rhs) { return !(lhs < rhs); }
 
 } /* end of namespace ft */

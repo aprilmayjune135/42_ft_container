@@ -131,12 +131,13 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 
 2022-03-11 (Fri) RBT
 	- debug RBT deleteNode(): fix parent->left/right connection
-	
+	- vector: add exception
+
 
 **************************
 **		Next To Do		**
 **************************
-	- test RBT extensively
+	- set
 
 ******************************
 **		General To Do		**
@@ -144,17 +145,11 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 - map
 	- insert-hint how to implement
 	- lower/upper bound: is it better to directly iterator through or use tranverse tree (faster?)
-- is_integral (how to implement with iterator_traits)
-- catch
-- TODO: to figure out a way to make the selection applicable for both ft.out & std.out
-- ReverseIterator, operator overload (1 template parameter or 2?)
-- vector <bool>
-- exception implement in vector, map
-
 
 ******************************
 **		Final check			**
 ******************************
+- TODO
 - leaks
 - check "friend" use if is valid
 - function body in .hpp file

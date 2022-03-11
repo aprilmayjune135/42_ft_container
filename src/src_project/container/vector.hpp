@@ -6,6 +6,7 @@
 #include <memory>
 #include <cassert>
 #include <algorithm>
+#include <stdexcept>
 
 namespace ft {
 
@@ -95,6 +96,7 @@ class vector {
 		void	destroyElement(size_type index);
 		void	constructData(size_type position, size_type n, const_reference val);
 		void	destroyData(size_type position, size_type n);
+		pointer	allocateHelper(size_type n);
 		void	allocateCapacity(size_type n);
 		void	deallocateCapacity();
 		void	destructAll();
@@ -254,19 +256,17 @@ typename vector<T, Alloc>::const_reference	vector<T, Alloc>::operator[](size_typ
 
 template <class T, class Alloc>
 typename vector<T, Alloc>::reference	vector<T, Alloc>::at(size_type n) {
-	// TODO: add throw exception
-	// if (n >= size) {
-	// 
-	// }
+	if (n >= data_size) {
+		throw std::out_of_range("vector.at(size_t n): n exceeds container size.");
+	}
 	return *(data + n);
 }
 
 template <class T, class Alloc>
 typename vector<T, Alloc>::const_reference	vector<T, Alloc>::at(size_type n) const {
-	// TODO: add throw exception
-	// if (n >= size) {
-	// 
-	// }
+	if (n >= data_size) {
+		throw std::out_of_range("vector.at(size_t n): n exceeds container size.");
+	}
 	return *(data + n);
 }
 
@@ -480,9 +480,18 @@ void	vector<T, Alloc>::destroyData(size_type position, size_type n) {
 		destroyElement(i);
 	}
 }
+
+template <class T, class Alloc>
+typename vector<T, Alloc>::pointer	vector<T, Alloc>::allocateHelper(size_type n) {
+	if (n > max_size()) {
+		throw std::length_error("vector: allocate target size is larger than max_size.");
+	}
+	return allocator.allocate(n);
+}
+
 template <class T, class Alloc>
 void	vector<T, Alloc>::allocateCapacity(size_type n) {
-	data = allocator.allocate(n);
+	data = allocateHelper(n);
 	data_capacity = n;
 }
 
@@ -505,7 +514,7 @@ void	vector<T, Alloc>::destructAll() {
 template <class T, class Alloc>
 void	vector<T, Alloc>::reallocateCapacity(size_type n) {
 	size_type	current_size = data_size;
-	pointer	new_data = allocator.allocate(n);
+	pointer	new_data = allocateHelper(n);
 	for (size_type i = 0; i < current_size; ++i) {
 		allocator.construct(new_data + i, *(data + i));
 	}
@@ -573,7 +582,7 @@ void	vector<T, Alloc>::insertWithCurrentCapacity(iterator position, size_type n,
 template <class T, class Alloc>
 void	vector<T, Alloc>::insertWithNewCapacity(iterator position, size_type n, const_reference val) {
 	size_type	new_capacity = data_capacity + std::max(n, data_capacity);
-	pointer	new_data = allocator.allocate(new_capacity);
+	pointer		new_data = allocateHelper(new_capacity);
 	size_type	new_size = data_size + n;
 	size_type	pos_insert = static_cast<size_type>(position - begin());
 	size_type	pos_insert_end = pos_insert + n;
@@ -612,7 +621,7 @@ template <class InputIterator>
 void	vector<T, Alloc>::insertWithNewCapacity(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy) {
 	size_type	n = iteratorDistance(first, last);
 	size_type	new_capacity = data_capacity + std::max(n, data_capacity);
-	pointer	new_data = allocator.allocate(new_capacity);
+	pointer		new_data = allocateHelper(new_capacity);
 	size_type	new_size = data_size + n;
 	size_type	pos_insert = static_cast<size_type>(position - begin());
 	size_type	pos_insert_end = pos_insert + n;
