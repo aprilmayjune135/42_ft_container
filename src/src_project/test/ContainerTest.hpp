@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#define EXTREME_MAP 100000
+#define EXTREME_SET 100000
 
 class ContainerTest {
 	public:

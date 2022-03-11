@@ -2,6 +2,7 @@
 #include "VectorTest.hpp"
 #include "MapTest.hpp"
 #include "StackTest.hpp"
+#include "SetTest.hpp"
 #include "../utility/get_input.hpp"
 #include "../utility/log_formatting.hpp"
 
@@ -13,6 +14,8 @@ std::string	getContainerName(ContainerType container) {
 			return "map";
 		case STACK:
 			return "stack";
+		case SET:
+			return "set";
 		default:
 			return "All containers";
 	}
@@ -39,28 +42,8 @@ std::string	getCategoryName(CategoryType category) {
 	}
 }
 
-void	displayContainer() {
-	utility::printBlue("Available container type:");
-	utility::printBlue("0. All");
-	utility::printBlue("1. Vector");
-	utility::printBlue("2. Map");
-	utility::printBlue("3. Stack");
-}
-
-void	displayCategory() {
-	utility::printBlue("Available test category type:");
-	utility::printBlue("0. All");
-	utility::printBlue("1. Constructor");
-	utility::printBlue("2. Iterator");
-	utility::printBlue("3. Capacity");
-	utility::printBlue("4. Element_Access");
-	utility::printBlue("5. Modifiers");
-	utility::printBlue("6. Allocator");
-	utility::printBlue("7. Operator");
-}
-
 static bool	checkContainerScope(const int& n) {
-	return (n >= 0 && n <= 3);
+	return (n >= 0 && n <= 4);
 }
 
 static bool	checkCategoryScope(const int& n) {
@@ -82,12 +65,19 @@ void	TestCase::testStack(int category) {
 	test.test(category);
 }
 
+void	TestCase::testSet(int category) {
+	SetTest test;
+	test.test(category);
+}
+
 void	TestCase::testContainer(int container, int category) {
 	void (TestCase::*func_array[])(int) = {
 		&TestCase::testVector,
 		&TestCase::testMap,
-		&TestCase::testStack
+		&TestCase::testStack,
+		&TestCase::testSet
 	};
+
 	if (container == 0) {
 		for (int i = 0; i < ALL_CONTAINER; ++i) {
 			logTitleContainer(getContainerName(static_cast<ContainerType>(i)));
@@ -101,13 +91,5 @@ void	TestCase::testContainer(int container, int category) {
 }
 
 void	TestCase::run() {
-	// TODO: to figure out a way to make the selection applicable for both ft.out & std.out
-	// displayContainer();
-	// int container = utility::getInput<int>("Choose container (index): ", checkContainerScope);
-	// displayCategory();
-	// int category = utility::getInput<int>("Choose test category (index): ", checkCategoryScope);
-	// testContainer(container, category);
-
 	testContainer(0, 0);
-
 }

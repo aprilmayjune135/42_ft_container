@@ -9,18 +9,18 @@
 
 namespace ft {
 
-namespace algorithm_map = AVL; //choose between "AVL" or "RBT"
+namespace algorithm_set = RBT; //choose between "AVL" or "RBT"
 
-template <class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator< pair<const Key, T> > >
-class map {
+template <class T, class Compare = std::less<T>, class Alloc = std::allocator<T> >
+class set {
 	/*****************************************************/ 
 	/**					member types					**/ 
 	/*****************************************************/
 	public:
-		typedef Key										key_type;
-		typedef T										mapped_type;
-		typedef pair<const key_type, mapped_type>		value_type;
+		typedef T										key_type;
+		typedef T										value_type;
 		typedef Compare									key_compare;
+		typedef Compare									value_compare;
 		typedef Alloc									allocator_type;
 		typedef value_type&								reference;
 		typedef const value_type&						const_reference;
@@ -28,22 +28,8 @@ class map {
 		typedef const value_type*						const_pointer;
 		typedef std::size_t								size_type;
 
-		class value_compare: public std::binary_function<value_type, value_type, bool> {
-			friend class map;
-			protected:
-				Compare	comp;
-				value_compare(Compare c): comp(c) {};
-			public:
-				typedef bool 		result_type;
-				typedef value_type	first_argument_type;
-				typedef value_type	second_argument_type;
-				bool operator() (const value_type& x, const value_type& y) const {
-					return comp(x.first, y.first);
-				};
-		};
-
-		typedef algorithm_map::Node<value_type>				node_type;
-		typedef algorithm_map::Tree<value_type, value_compare, allocator_type> tree_type;
+		typedef algorithm_set::Node<value_type>				node_type;
+		typedef algorithm_set::Tree<value_type, value_compare, allocator_type> tree_type;
 		
 		typedef	typename tree_type::iterator				iterator;
 		typedef	typename tree_type::const_iterator			const_iterator;
@@ -69,29 +55,29 @@ class map {
 	/**			constructor	& destructor & operator		**/ 
 	/*****************************************************/
 		/**** empty constructor ****/
-		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
+		explicit set(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()):
 			compare(comp),
 			allocator(alloc),
 			tree(value_comp(), allocator) {};
 
 		/**** range constructor ****/
 		template <class InputIterator>
-		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(), typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0):
+		set(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(), typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0):
 			compare(comp),
 			allocator(alloc),
 			tree(first, last, value_comp(), allocator) {};	
 
 		/**** copy constructor ****/
-		map(const map& src):
+		set(const set& src):
 			compare(src.compare),
 			allocator(src.allocator),
 			tree(value_comp(), allocator) { *this = src; };
 
 		/**** detructor ****/
-		~map() {};
+		~set() {};
 
 		/**** operator = ****/
-		map&	operator=(const map& rhs) {
+		set&	operator=(const set& rhs) {
 			tree = rhs.tree;
 			return *this;
 		};
@@ -116,13 +102,6 @@ class map {
 		size_type	size() const { return  tree.size(); };
 
 		size_type	max_size() const { 	return tree.max_size(); };
-
-	/*****************************************************/ 
-	/**					element access					**/ 
-	/*****************************************************/
-		mapped_type&	operator[] (const key_type& k) {
-			return (*((insert(ft::make_pair<const Key, T>(k, mapped_type()))).first)).second;
-		};
 
 	/*****************************************************/ 
 	/**						modifiers					**/ 
@@ -160,7 +139,7 @@ class map {
 		}
 
 		/**** swap ****/
-		void	swap(map& x) {
+		void	swap(set& x) {
 			tree.swap(x.tree);
 		};
 
@@ -172,7 +151,7 @@ class map {
 	/*****************************************************/
 		key_compare		key_comp() const { return compare; };
 
-		value_compare	value_comp() const { return value_compare(compare); };
+		value_compare	value_comp() const { return compare; };
 
 	/*****************************************************/ 
 	/**						operation					**/ 
@@ -236,10 +215,10 @@ class map {
 			if (isEdge(node)) {
 				return node;
 			}
-			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+			if (compare(k, static_cast<node_pointer>(node)->value)) {
 				return findNode(node->left, k);
 			}
-			else if (compare( static_cast<node_pointer>(node)->value.first, k)) {
+			else if (compare( static_cast<node_pointer>(node)->value, k)) {
 				return findNode(node->right, k);
 			}
 			else {
@@ -248,13 +227,13 @@ class map {
 		};
 
 		node_base_pointer	findLowerBound(node_base_pointer node, const key_type& k) const {
-			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+			if (compare(k, static_cast<node_pointer>(node)->value)) {
 				if (!node->left) {
 					return node;
 				}
 				return findLowerBound(node->left, k);
 			}
-			else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
+			else if (compare(static_cast<node_pointer>(node)->value, k)) {
 				if (isEdge(node->right)) {
 					return incrementNode(node);
 				}
@@ -266,13 +245,13 @@ class map {
 		};
 
 		node_base_pointer	findUpperBound(node_base_pointer node, const key_type& k) const {
-			if (compare(k, static_cast<node_pointer>(node)->value.first)) {
+			if (compare(k, static_cast<node_pointer>(node)->value)) {
 				if (!node->left) {
 					return node;
 				}
 				return findUpperBound(node->left, k);
 			}
-			else if (compare(static_cast<node_pointer>(node)->value.first, k)) {
+			else if (compare(static_cast<node_pointer>(node)->value, k)) {
 				if (isEdge(node->right)) {
 					return incrementNode(node);
 				}
@@ -283,7 +262,7 @@ class map {
 			}
 		};
 
-}; /* end of class map */
+}; /* end of class set */
 
 
 } /* end of namespace ft */

@@ -72,3 +72,26 @@ void	printStack(C& stack) {
 	}
 	PRINT << '\n';
 }
+
+template <class C>
+void	printSetData(const C& set) {
+	for (typename C::const_iterator it = set.begin(); it != set.end(); ++it) {
+		PRINT << *it << " ";
+	}
+	PRINT << '\n';
+}
+
+template <class C>
+void	printSetDataReverse(const C& set) {
+	for (typename C::const_reverse_iterator it = set.rbegin(); it != set.rend(); ++it) {
+		PRINT << *it << " ";
+	}
+	PRINT << '\n';
+}
+
+template <class C>
+void	printSet(const C& set) {
+	printContainerSize(set);
+	printSetData(set);
+	printSetDataReverse(set);
+}

@@ -132,24 +132,23 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 2022-03-11 (Fri) RBT
 	- debug RBT deleteNode(): fix parent->left/right connection
 	- vector: add exception
-
+	- set (code + test)
+	- review TODO
 
 **************************
 **		Next To Do		**
 **************************
-	- set
+- map
+	- insert-hint how to implement
+	- lower/upper bound: is it better to directly iterator through or use tranverse tree (faster?)
 
 ******************************
 **		General To Do		**
 ******************************
-- map
-	- insert-hint how to implement
-	- lower/upper bound: is it better to directly iterator through or use tranverse tree (faster?)
 
 ******************************
 **		Final check			**
 ******************************
 - TODO
 - leaks
-- check "friend" use if is valid
 - function body in .hpp file

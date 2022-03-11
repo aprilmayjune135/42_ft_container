@@ -1,0 +1,47 @@
+******************************
+**		Member functions	**
+******************************
+>> Basic:
+        (constructor)
+    [t] (1) empty container constructor (default constructor)
+    [t] (2) range constructor
+    [t] (3) copy constructor
+    [t]	(destructor)
+    [t]	operator=
+
+>> Iterators:
+    [t]	begin (regular + const)
+    [t]	end (regular + const)
+    [t]	rbegin (regular + const)
+    [t]	rend (regular + const)
+
+>> Capacity:
+    [t]	size
+    [v]	max_size
+    [t]	empty
+
+>> Modifiers:
+    [t]	insert
+        [t] single element
+        [o]	hint
+        [t]	range
+    [t]	erase
+        [t] 1
+        [t]	2
+        [t] 3
+    [t]	swap
+    [t]	clear
+
+>> Observer:
+    [v] key_comp
+    [v] value_comp
+
+>> Operations:
+    [t] find (regular + const)
+    [t] count
+    [t] lower_bound (regular + const)
+    [t] upper_bound (regular + const)
+    [t] equal_range (regular + const)
+
+>> Allocator:
+    [t]	get_allocator

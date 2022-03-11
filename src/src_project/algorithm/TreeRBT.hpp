@@ -2,8 +2,7 @@
 #include "NodeIteratorRBT.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../pair/pair.hpp"
-#include "../utility/print_tree.hpp" //TODO: to delete
-
+#include "../utility/print_tree.hpp"
 #include <memory>
 #include <algorithm>
 
@@ -208,7 +207,7 @@ class Tree {
 		pointer	createNode(const value_type& val) {
 			node_type	node_value(NULL, &sentinel, val);
 			node_allocator_type	node_allocator;
-			pointer	new_node = node_allocator.allocate(1); //TODO: throw exception?
+			pointer	new_node = node_allocator.allocate(1);
 			node_allocator.construct(new_node, node_value);
 			tree_size++;
 			return new_node;
@@ -216,7 +215,7 @@ class Tree {
 
 		void	removeNode(pointer node) {
 			node_allocator_type	node_allocator;
-			node_allocator.destroy(node); //TODO: throw exception? note clear() has no-throw gaurantee
+			node_allocator.destroy(node);
 			node_allocator.deallocate(node, 1);
 			node = NULL;
 			tree_size--;

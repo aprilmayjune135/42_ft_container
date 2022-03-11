@@ -5,6 +5,7 @@ enum ContainerType {
 	VECTOR,
 	MAP,
 	STACK,
+	SET,
 	ALL_CONTAINER
 };
 
@@ -34,4 +35,5 @@ class TestCase {
 		void	testVector(int category);
 		void	testMap(int category);
 		void	testStack(int category);
+		void	testSet(int category);
 };

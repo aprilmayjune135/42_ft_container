@@ -7,7 +7,6 @@
 
 namespace utility {
 
-// TODO: to review
 // https://www.techiedelight.com/c-program-print-binary-tree/
 struct Trunk {
 	Trunk* 		prev;
@@ -55,7 +54,7 @@ void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
 	printNode<T>(root->left, trunk, false);
 }
 
-
+/* Note: only print out key */
 template <class T>
 void	printNode(RBT::NodeBase* root, Trunk* prev, bool isLeft) {
 	if (!root || isSentinel(root)) {
@@ -78,8 +77,8 @@ void	printNode(RBT::NodeBase* root, Trunk* prev, bool isLeft) {
 
 	showTrunk(trunk);
 	PRINT << " ";
-	PRINT << static_cast< RBT::Node<T>* >(root)->value.first; //TODO: to delete
-	// printPair(static_cast< RBT::Node<T>* >(root)->value); //TODO: to uncomment
+	PRINT << static_cast< RBT::Node<T>* >(root)->value.first; // for map
+	// PRINT << static_cast< RBT::Node<T>* >(root)->value; // for set
 	static_cast< RBT::Node<T>* >(root)->color == RBT_RED ? (PRINT << "[R]") : (PRINT << "[B]");
 	if (isSentinel(root->right)) {
 		PRINT << '$';
