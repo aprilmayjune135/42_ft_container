@@ -1,5 +1,6 @@
 #pragma once
 #include "../algorithm/NodeAVL.hpp"
+#include "../algorithm/NodeRBT.hpp"
 #include "print_container.hpp"
 #include <string>
 #include <iostream>
@@ -40,6 +41,46 @@ void	printNode(AVL::NodeBase* root, Trunk* prev, bool isLeft) {
 	PRINT << " ";
 	printPair(static_cast< AVL::Node<T>* >(root)->value);
 	// PRINT << static_cast< AVL::Node<T>* >(root)->height;
+	if (isSentinel(root->right)) {
+		PRINT << '$';
+	}
+	if (isSentinel(root->parent)) {
+		PRINT << '*';
+	}
+	PRINT << '\n';
+	if (prev) {
+		prev->str = prev_str;
+	}
+	trunk->str = "    |";
+	printNode<T>(root->left, trunk, false);
+}
+
+
+template <class T>
+void	printNode(RBT::NodeBase* root, Trunk* prev, bool isLeft) {
+	if (!root || isSentinel(root)) {
+		return ;
+	}
+	std::string prev_str = "    ";
+	Trunk* trunk = new Trunk(prev, prev_str);
+	printNode<T>(root->right, trunk, true);
+	if (!prev) {
+		trunk->str = "———";
+	}
+	else if(isLeft) {
+		trunk->str = ".———";
+		prev_str = "    |";
+	}
+	else {
+        trunk->str = "`———";
+		prev->str = prev_str;
+	}
+
+	showTrunk(trunk);
+	PRINT << " ";
+	PRINT << static_cast< RBT::Node<T>* >(root)->value.first; //TODO: to delete
+	// printPair(static_cast< RBT::Node<T>* >(root)->value); //TODO: to uncomment
+	static_cast< RBT::Node<T>* >(root)->color == RBT_RED ? (PRINT << "[R]") : (PRINT << "[B]");
 	if (isSentinel(root->right)) {
 		PRINT << '$';
 	}

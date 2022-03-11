@@ -1,6 +1,7 @@
 #pragma once
 #include "../pair/pair.hpp"
 #include "../algorithm/TreeAVL.hpp"
+#include "../algorithm/TreeRBT.hpp"
 #include "../iterator/ReverseIterator.hpp"
 #include "../iterator/lexicographic_compare.hpp"
 #include <memory>

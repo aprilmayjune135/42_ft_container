@@ -39,16 +39,4 @@ NodeBase*	leftRotate(NodeBase* x);
 NodeBase*	incrementNode(NodeBase* node);
 NodeBase*	decrementNode(NodeBase* node);
 
-//TODO: to delete?
-// template <class T>
-// Node<T>*	treeSearch(Node<T>* node, const T& value) {
-// 	if (!node || value == node->value) {
-// 		return node;
-// 	}
-// 	if (value < node->value) {
-// 		return treeSearch(node->left, value);
-// 	}
-// 	return treeSearch(node->right, value);
-// }
-
 } /* end of namespace AVL */
