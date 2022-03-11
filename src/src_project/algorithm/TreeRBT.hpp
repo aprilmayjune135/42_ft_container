@@ -488,21 +488,23 @@ class Tree {
 		void	deleteNode(base_pointer root_node, const value_type& val) {
 			base_pointer	node = deleteNodeLocator(root_node, val);
 			recolorDeleteNode(node);
-			// take care of root
+			base_pointer temp = node->left ? node->left : node->right;
+			// special case: when node is root
 			if (node == root) {
 				root = (node->left ? node->left : node->right);
 			}
 			else {
 				// take care of parent
 				if (isRightChild(node)) {
-					node->parent->right = node->right;
+					node->parent->right = temp;
 				}
 				else {
-					node->parent->left = node->left;
+					node->parent->left = temp;
 				}
 			}
 			// scenario 1: leaf node
 			if (isEdge(node->left) && isEdge(node->right)) {
+				// special case: when node is the max
 				if (isSentinel(node->right)) {
 					sentinel.parent = node->parent;
 				}
@@ -510,7 +512,7 @@ class Tree {
 			}
 			// scenario 2: has 1 child node
 			else if (isEdge(node->left) || isEdge(node->right)) {
-				base_pointer temp = node->left ? node->left : node->right;
+				// special case: when node is the max
 				if (isSentinel(node->right)) {
 					temp->right = node->right;
 					sentinel.parent = temp;
