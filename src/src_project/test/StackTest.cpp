@@ -210,10 +210,11 @@ void	StackTest::testPerTypeOperator(const StackSource<T>& src) {
 	stack_vector_std_less.pop();
 	stack_list_less.pop();
 	stack_deque_less.pop();
-	stack_vector_ft_more.push(stack_vector_ft_more.top());
-	stack_vector_std_more.push(stack_vector_std_more.top());
-	stack_list_more.push(stack_list_more.top());
-	stack_deque_more.push(stack_deque_more.top());
+	T value = stack_vector_ft_more.top();
+	stack_vector_ft_more.push(value);
+	stack_vector_std_more.push(value);
+	stack_list_more.push(value);
+	stack_deque_more.push(value);
 
 	logTitleSection(src.type);
 	PRINT << (stack_vector_ft == stack_vector_ft_less) << ' ';
