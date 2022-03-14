@@ -75,6 +75,7 @@
 		"vector": "cpp",
 		"filesystem": "cpp",
 		"memory_resource": "cpp",
-		"list": "cpp"
+		"list": "cpp",
+		"__functional_03": "cpp"
 	}
 }

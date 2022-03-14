@@ -55,7 +55,13 @@ class vector {
 			data(NULL),
 			data_size(0),
 			data_capacity(0) {
-				assign(n, val);
+				try {
+					assign(n, val);
+				}
+				catch (const std::exception& e) {
+					destructAll();
+					throw e;
+				}
 			};
 
 		/* range constructor */
@@ -65,7 +71,13 @@ class vector {
 			data(NULL),
 			data_size(0),
 			data_capacity(0) {
-				assign<InputIterator>(first, last);
+				try {
+					assign<InputIterator>(first, last);
+				}
+				catch (const std::exception& e) {
+					destructAll();
+					throw e;
+				}
 			};
 
 		/* copy constructor */
@@ -74,7 +86,13 @@ class vector {
 			data(NULL),
 			data_size(0),
 			data_capacity(0) {
-				*this = src;
+				try {
+					*this = src;
+				}
+				catch (const std::exception& e) {
+					destructAll();
+					throw e;
+				}
 			};
 
 		/* destructor */

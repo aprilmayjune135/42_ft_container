@@ -139,13 +139,11 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 	- change vector.hpp format
 	- change insert_hint for RBT
 	- check TODO/function body in hpp
+	- final check on leaks
 
 **************************
 **		Next To Do		**
 **************************
-- map
-	- insert-hint how to implement
-	- lower/upper bound: is it better to directly iterator through or use tranverse tree (faster?)
 
 ******************************
 **		General To Do		**
@@ -154,4 +152,3 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 ******************************
 **		Final check			**
 ******************************
-- leaks

@@ -5,6 +5,7 @@
 #include "../utility/print_tree.hpp"
 #include <memory>
 #include <algorithm>
+#include <stdexcept>
 
 namespace AVL {
 
@@ -58,7 +59,15 @@ class Tree {
 			allocator(alloc),
 			sentinel(&sentinel, &sentinel, 0),
 			root(&sentinel),
-			tree_size (0) { insert<InputIterator>(first, last); };
+			tree_size (0) {
+				try {
+					insert<InputIterator>(first, last);
+				}
+				catch (const std::exception& e) {
+					clear();
+					throw e;
+				}
+			};
 
 		~Tree() {
 			clear();

@@ -69,7 +69,7 @@ TEST_CASE("Exception", "vector")
 		check = false;
 		t_vector vector_2(vector.max_size() + 1);
 	}
-	catch (const std::length_error& e) {
+	catch (const std::exception& e) {
 		check = true;
 	}
 	REQUIRE(check);
