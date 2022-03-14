@@ -70,6 +70,8 @@ class NodeIterator {
 			return old;
 		};
 
+	/**** utility ****/
+		base_pointer	getPointer() const { return this->p; };
 };
 
 } /* end of namespace RBT */

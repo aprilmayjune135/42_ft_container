@@ -129,7 +129,6 @@ class Tree {
 			}			
 		};
 
-		//TODO: to implement for position (lower/upper bound???)
 		iterator	insert(iterator position, const value_type& val) {
 			iterator	it = find(val);
 			if (it != end()) {
@@ -137,7 +136,15 @@ class Tree {
 			}
 			else {
 				pointer	new_node = createNode(val);
-				root = insertNode(root, new_node);
+				iterator next = position;
+				++next;
+				if (position != end() && compare(*position, val) && compare(val, *next)) {
+					base_pointer hint = position.getPointer();
+					hint = insertNode(hint, new_node);
+				}
+				else {
+					root = insertNode(root, new_node);
+				}
 				recolorInsertNode(new_node);
 				return iterator(new_node);
 			}

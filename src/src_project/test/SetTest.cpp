@@ -194,9 +194,10 @@ void	SetTest::testPerTypeModifiers(const Source< ft::set<T> >& src) {
 	logTitleSubSection("insert - single value");
 	t_set	set;
 	const_iterator	it = src.data.begin();
+	ft::pair<iterator, bool> pair;
 	for (int i = 0; i < 5; ++i) {
 		const_iterator temp = it;
-		ft::pair<iterator, bool> pair = set.insert(*it); // inserting new value
+		pair = set.insert(*it); // inserting new value
 		PRINT << *pair.first << ' ';
 		PRINT << pair.second << ' ';
 		pair = set.insert(*temp); // inserting existing value
@@ -207,11 +208,15 @@ void	SetTest::testPerTypeModifiers(const Source< ft::set<T> >& src) {
 	PRINT << '\n';
 	printSet(set);
 
-	logTitleSubSection("insert - range");
-	set.insert(src.data.begin(), src.data.end());
+	logTitleSubSection("insert - hint");
+	iterator	hint = set.insert(pair.first, *it);
+	PRINT << *hint << ' ';
+	++it;
+	hint = set.insert(set.begin(), *it);
+	PRINT << *hint << ' ';
 	printSet(set);
 
-	logTitleSubSection("insert - hint");
+	logTitleSubSection("insert - range");
 	set.insert(src.data.begin(), src.data.end());
 	printSet(set);
 

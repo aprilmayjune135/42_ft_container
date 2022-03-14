@@ -2,6 +2,7 @@
 #include "../utility/Print.hpp"
 #include "../utility/print_container.hpp"
 #include "../utility/log_formatting.hpp"
+#include "../utility/Timer.hpp"
 
 /*********************************************/ 
 /**				Source Constructor			**/ 
@@ -218,9 +219,10 @@ void	MapTest::testPerTypeModifiers(const Source< ft::map<Key, T> >& src) {
 	logTitleSubSection("insert - single value");
 	t_map	map;
 	const_iterator	it = src.data.begin();
+	ft::pair<iterator, bool> pair;
 	for (int i = 0; i < 5; ++i) {
 		const_iterator temp = it;
-		ft::pair<iterator, bool> pair = map.insert(*it); // inserting new value
+		pair = map.insert(*it); // inserting new value
 		printPair(*pair.first);
 		PRINT << pair.second << ' ';
 		pair = map.insert(*temp); // inserting existing value
@@ -231,11 +233,15 @@ void	MapTest::testPerTypeModifiers(const Source< ft::map<Key, T> >& src) {
 	PRINT << '\n';
 	printMap(map);
 
-	logTitleSubSection("insert - range");
-	map.insert(src.data.begin(), src.data.end());
+	logTitleSubSection("insert - hint");
+	iterator	hint = map.insert(pair.first, *it);
+	printPair(*hint);
+	++it;
+	hint = map.insert(map.begin(), *it);
+	printPair(*hint);
 	printMap(map);
 
-	logTitleSubSection("insert - hint");
+	logTitleSubSection("insert - range");
 	map.insert(src.data.begin(), src.data.end());
 	printMap(map);
 

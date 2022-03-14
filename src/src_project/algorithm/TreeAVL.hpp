@@ -128,7 +128,7 @@ class Tree {
 			}			
 		};
 
-		//TODO: to implement for position (lower/upper bound???)
+		// Note: due to AVL algorithm insertion need to recalculate height of each node, the process has to start from root.
 		iterator	insert(iterator position, const value_type& val) {
 			iterator	it = find(val);
 			if (it != end()) {

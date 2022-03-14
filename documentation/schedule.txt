@@ -137,6 +137,7 @@ https://www.cs.odu.edu/~zeil/cs361/latest/Public/treetraversal/index.html
 
 2022-03-14 (Mon) review
 	- change vector.hpp format
+	- change insert_hint for RBT
 
 **************************
 **		Next To Do		**

@@ -31,5 +31,5 @@ void	ContainerTest::test(int category) {
 		(this->*func_array[category - 1])();
 	}
 	std::cout << BLUE_BOLD << "[ " << container_type << " ] running time is: " 
-				<< WHITE_BOLD << timer.elapsed() << BLUE_BOLD << " seconds\n" << RESET_COLOR;
+				<< WHITE_BOLD << timer.elapsed_s() << BLUE_BOLD << " seconds\n" << RESET_COLOR;
 }
