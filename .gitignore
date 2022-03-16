@@ -2,3 +2,4 @@
 **/dep/
 **/*.out
 *.log
+.vscode
