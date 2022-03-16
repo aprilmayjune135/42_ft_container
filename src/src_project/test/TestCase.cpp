@@ -42,14 +42,6 @@ std::string	getCategoryName(CategoryType category) {
 	}
 }
 
-static bool	checkContainerScope(const int& n) {
-	return (n >= 0 && n <= 4);
-}
-
-static bool	checkCategoryScope(const int& n) {
-	return (n >= 0 && n <= 7);
-}
-
 void	TestCase::testVector(int category) {
 	VectorTest test;
 	test.test(category);

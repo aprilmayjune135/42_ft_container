@@ -60,6 +60,7 @@ class Tree {
 			sentinel(&sentinel, &sentinel, 0),
 			root(&sentinel),
 			tree_size (0) {
+				(void)dummy;
 				try {
 					insert<InputIterator>(first, last);
 				}
@@ -139,6 +140,7 @@ class Tree {
 
 		// Note: due to AVL algorithm insertion need to recalculate height of each node, the process has to start from root.
 		iterator	insert(iterator position, const value_type& val) {
+			(void)position;
 			iterator	it = find(val);
 			if (it != end()) {
 				return it;
@@ -152,6 +154,7 @@ class Tree {
 
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last, typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			while (first != last) {
 				insert(*first);
 				++first;

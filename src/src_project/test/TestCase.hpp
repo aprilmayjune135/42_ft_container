@@ -30,7 +30,6 @@ class TestCase {
 
 		void	run();
 	private:
-		TestCase(const TestCase& src) {};
 		void	testContainer(int container, int category);
 		void	testVector(int category);
 		void	testMap(int category);

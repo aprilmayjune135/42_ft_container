@@ -65,7 +65,9 @@ class set {
 		set(InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type(), typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0):
 			compare(comp),
 			allocator(alloc),
-			tree(first, last, value_comp(), allocator) {};	
+			tree(first, last, value_comp(), allocator) {
+				(void)dummy;
+			};	
 
 		/**** copy constructor ****/
 		set(const set& src):
@@ -117,6 +119,7 @@ class set {
 
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last, typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			return tree.insert(first, last);
 		};
 

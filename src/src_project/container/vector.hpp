@@ -71,6 +71,7 @@ class vector {
 			data(NULL),
 			data_size(0),
 			data_capacity(0) {
+				(void)dummy;
 				try {
 					assign<InputIterator>(first, last);
 				}
@@ -183,6 +184,7 @@ class vector {
 
 		template <class InputIterator>
 		void	assign(InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			size_type n = iteratorDistance(first, last);
 			prepareAssign(n);
 			for (size_type i = 0; i < n; ++i) {
@@ -226,6 +228,7 @@ class vector {
 
 		template <class InputIterator>
 		void	insert(iterator position, InputIterator first, InputIterator last, typename iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			size_type n = iteratorDistance(first, last);
 			if (data_size + n <= data_capacity) {
 				insertWithCurrentCapacity<InputIterator>(position, first, last, dummy);
@@ -400,8 +403,6 @@ class vector {
 			size_type	new_size = data_size + n;
 			size_type	pos_insert = static_cast<size_type>(position - begin());
 			size_type	pos_insert_end = pos_insert + n;
-			size_type	pos_new_end = new_size - 1;
-			size_type	pos_current_end = data_size - 1;
 			for (size_type i = 0; i < pos_insert; ++i) {
 				allocator.construct(new_data + i, *(data + i));
 			}
@@ -420,6 +421,7 @@ class vector {
 		template <class InputIterator>
 		void	insertWithCurrentCapacity(iterator position, InputIterator first, InputIterator last, typename 
 		iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			size_type	n = iteratorDistance(first, last);
 			size_type	pos_insert = static_cast<size_type>(position - begin());
 			moveElements(pos_insert, pos_insert + n, data_size - pos_insert);
@@ -432,14 +434,13 @@ class vector {
 		template <class InputIterator>
 		void	insertWithNewCapacity(iterator position, InputIterator first, InputIterator last, typename 
 		iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			size_type	n = iteratorDistance(first, last);
 			size_type	new_capacity = data_capacity + std::max(n, data_capacity);
 			pointer		new_data = allocateHelper(new_capacity);
 			size_type	new_size = data_size + n;
 			size_type	pos_insert = static_cast<size_type>(position - begin());
 			size_type	pos_insert_end = pos_insert + n;
-			size_type	pos_new_end = new_size - 1;
-			size_type	pos_current_end = data_size - 1;
 			for (size_type i = 0; i < pos_insert; ++i) {
 				allocator.construct(new_data + i, *(data + i));
 			}

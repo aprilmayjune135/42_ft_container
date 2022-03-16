@@ -5,6 +5,8 @@ namespace ft {
 
 template <class InputIterator1, class InputIterator2>
 bool	lexicographic_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2, typename iterator_traits<InputIterator1>::iterator_category* dummy1 = 0, typename iterator_traits<InputIterator2>::iterator_category* dummy2 = 0) {
+	(void)dummy1;
+	(void)dummy2;
 	while (first1 != last1) {
 		if (first2 == last2 || *first2 < *first1) {
 			return false;
@@ -20,6 +22,8 @@ bool	lexicographic_compare(InputIterator1 first1, InputIterator1 last1, InputIte
 
 template <class InputIterator1, class InputIterator2, class Compare>
 bool	lexicographic_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2, Compare comp, typename iterator_traits<InputIterator1>::iterator_category* dummy1 = 0, typename iterator_traits<InputIterator2>::iterator_category* dummy2 = 0) {
+	(void)dummy1;
+	(void)dummy2;
 	while (first1 != last1) {
 		if (first2 == last2 || comp(*first2, *first1)) {
 			return false;

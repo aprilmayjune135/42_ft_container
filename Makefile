@@ -18,7 +18,7 @@ endif
 
 ###### CFLAG ######
 CFLAG = -Wall -Wextra -Werror -pedantic 
-CFLAG += -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-unused-local-typedef
+#CFLAG += -Wno-unused-variable -Wno-unused-parameter -Wno-unused-function -Wno-unused-local-typedef
 ifdef CATCH
 	CFLAG += -std=c++17
 else
@@ -117,7 +117,7 @@ clean:
 	rm -rf $(DIR_OBJ) $(DIR_DEP)
 
 fclean: clean
-	rm -f $(EXECS)
+	rm -f $(EXECS) *.log
 
 re: fclean all
 

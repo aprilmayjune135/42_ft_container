@@ -176,7 +176,6 @@ void	VectorTest::testCapacity() {
 /*********************************************/
 template <class T>
 void	VectorTest::testPerTypeElementAccess(Source< ft::vector<T> > src) {
-	typedef ft::vector<T>		t_vector;
 	logTitleSection(src.type);
 
 	logTitleSubSection("front/back");

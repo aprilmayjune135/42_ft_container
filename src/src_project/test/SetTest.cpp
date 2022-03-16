@@ -171,6 +171,7 @@ void	SetTest::testCapacity() {
 /*********************************************/
 template<class T>
 void	SetTest::testPerTypeElementAccess(const Source< ft::set<T> >& src) {
+	(void)src;
 }
 
 void	SetTest::testElementAccess() {

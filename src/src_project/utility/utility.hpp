@@ -5,6 +5,7 @@
 /* return only unsigned int, assume last is always bigger than first */
 template <class InputIterator>
 std::size_t	iteratorDistance(InputIterator first, InputIterator last, typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+	(void)dummy;
 	std::size_t	ret = 0;
 	while (first != last) {
 		++first;

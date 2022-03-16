@@ -60,6 +60,7 @@ class Tree {
 			sentinel(&sentinel, &sentinel, RBT_BLACK),
 			root(&sentinel),
 			tree_size (0) { 
+				(void)dummy;
 				try {
 					insert<InputIterator>(first, last);
 				}
@@ -161,6 +162,7 @@ class Tree {
 
 		template <class InputIterator>
 		void	insert(InputIterator first, InputIterator last, typename ft::iterator_traits<InputIterator>::iterator_category* dummy = 0) {
+			(void)dummy;
 			while (first != last) {
 				insert(*first);
 				++first;
